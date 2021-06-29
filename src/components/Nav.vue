@@ -1,5 +1,5 @@
 <template>
-    <div class='Nav'>
+    <div class='nav-containner'>
         <router-link to='/'>
              <h1>
                 <img src="/assets/images/icon-left-font.png" alt="Logo Groupomania">
@@ -19,7 +19,7 @@
 
 
 export default {
-    name:  'Nav',
+    name:  'nav-container',
     methods : {
         logout(){
             localStorage.removeItem('user');
