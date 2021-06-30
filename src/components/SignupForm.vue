@@ -3,8 +3,12 @@
         <form @submit.prevent = signup()>
             <img src="/assets/images/icon-left-font.png" alt="Logo Groupomania">
             
+
+            <label for="signup-firstname">Votre nom :</label>
+            <input type="text" id="signup-firstname" placeholder="name" required autofocus >
+
             <label for="signup-name">Votre nom :</label>
-            <input type="text" id="signup-firstname" v-model="name" required autofocus >
+
 
             <label for="signup-surname"> Votre prénom :</label>
             <input type="text" id="signup-surname" v-model="prenom" required autofocus>
@@ -13,6 +17,14 @@
             <input type="email" id="signup-email" v-model="email" required>
 
             <label for="signup-password">Votre mot de passe :</label>
+
+            <input type="password" id="signup-password"  plceholder="password" required> 
+
+            <label for="password-confirm">Confirmer votre mot de passe</label>
+            <input type="password" id="password-confirm" placeholder="password_confirmation" required>
+
+            <div class="error-message">{{message}}</div>
+
             <input type="password" id="signup-password"  v-model="password" required> 
 
             <label for="password-confirm">Confirmer votre mot de passe</label>
@@ -25,6 +37,16 @@
 </template>
 <script>
 
+import axios from 'axios'
+
+export default {
+    name : 'SignupForm',
+
+    data(){
+        return {
+            message : "",
+
+
 
 export default {
     data(){
@@ -35,9 +57,50 @@ export default {
             password : "",
             password_confirmation : "",
             is_admin: null
+
         }
     },
     methods : {
+
+        signup() {
+            
+            const firstname = document.getElementById("signup-firstname").value;
+            const surname = document.getElementById("signup-surname").value;
+            const email = document.getElementById("signup-email").value;
+            const password = document.getElementById("signup-password").value;
+            const passwordConfirm = document.getElementById("password-confirm").value;
+
+            if(password === passwordConfirm) {
+                axios.post(`${this.$apiUrl}/auth/signup`,
+                {
+                    firstname,
+                    surname,
+                    email,
+                    password,
+                    passwordConfirm
+
+                },
+                {
+                    headers : {
+                        'Content-Type' : 'application/json'
+                    }
+                }
+                )
+                .then(res => {
+                    if(res.status === 201){
+                        location.href = '/'
+                    }
+                })
+                .catch((error) => {
+                    if (error.res.status === 401) {
+                        this.message = "Email non disponible"
+                    }
+                });
+            }
+            else if(password != passwordConfirm) {
+                this.message = " Vérifier votre émail ou/et votre mot de passe"
+            }
+
         signup() => {
             let data = {
                 name: this.name,
@@ -49,6 +112,7 @@ export default {
             this.$store.dispatch('signup', data)
             .then(() => this.$router.push('/'))
             .catch(error => console.log(error))
+
         }
     }
 }
