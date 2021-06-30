@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import Post from '../views/Post.vue'
 import Home from '../views/Home.vue';
-import Post from '../views/Post.vue';
+
 
 Vue.use(VueRouter)
 
@@ -23,7 +24,7 @@ const routes = [
   },
   {
     path : '/profil',
-    name : 'profil',
+    name : 'Profil',
     components : () => import('../views/Profil.vue')
   }
 ]
