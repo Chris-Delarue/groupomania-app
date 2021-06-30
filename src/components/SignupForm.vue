@@ -17,19 +17,19 @@
             <input type="email" id="signup-email" v-model="email" required>
 
             <label for="signup-password">Votre mot de passe :</label>
+            <input type="password" id="signup-password"  pl aceholder="Mot de passe" required> 
 
-            <input type="password" id="signup-password"  plceholder="password" required> 
+            <label for="password-confirm">Confirmer votre mot de passe</label>
+            <input type="password" id="password-confirm" placeholder="Confirmer le mot de passe" required>
+
+            <div class="error-message">{{message}}</div>
+
+            <input type="password" id="signup-password"  placeholder="password" required> 
 
             <label for="password-confirm">Confirmer votre mot de passe</label>
             <input type="password" id="password-confirm" placeholder="password_confirmation" required>
 
             <div class="error-message">{{message}}</div>
-
-            <input type="password" id="signup-password"  v-model="password" required> 
-
-            <label for="password-confirm">Confirmer votre mot de passe</label>
-            <input type="password" id="password-confirm" v-model="password_confirmation" required>
-
 
             <button id="signup-btn" type="submit">S'inscrire</button>
         </form>
@@ -45,21 +45,9 @@ export default {
     data(){
         return {
             message : "",
-
-
-
-export default {
-    data(){
-        return {
-            name : "",
-            prenom : "",
-            email : "",
-            password : "",
-            password_confirmation : "",
-            is_admin: null
-
         }
     },
+
     methods : {
 
         signup() {
@@ -100,19 +88,6 @@ export default {
             else if(password != passwordConfirm) {
                 this.message = " Vérifier votre émail ou/et votre mot de passe"
             }
-
-        signup() => {
-            let data = {
-                name: this.name,
-                prenom : this.prenom,
-                email : this.email,
-                password : this.password,
-                is_admin : this.is_admin
-            }
-            this.$store.dispatch('signup', data)
-            .then(() => this.$router.push('/'))
-            .catch(error => console.log(error))
-
         }
     }
 }

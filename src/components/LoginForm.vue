@@ -1,34 +1,68 @@
 <template>
-    <div class="login-form">
-        <form class="login" @submit.prevent= login()>
-            <h1>Se connecter</h1>
-            <label>Email</label>
-            <input required v-model="email" type="email" placeholder="Email"/>
+    <div class="form-group">
+        <form @submit.prevent = login()>
+            <img src="/assets/images/icon-left-font.png" alt="Logo Groupomania">
 
-            <label> Mot de passe</label>
-            <input required v-model="password" type="password" placeholder="Mot de passe">
-            
-            <button type="submit">Se connecter</button>
+            <label for="signup-email">Votre email :</label>
+            <input type="email" id="login-email" placeholder="email" required>
+
+            <label for="signup-password">Votre mot de passe :</label>
+            <input type="password" id="login-password"  placeholder="mot de passe" required> 
+
+            <div class="error-message">{{message}}</div>
+
+            <button id="signup-btn" type="submit">Se connecter</button>
         </form>
-
     </div>
 </template>
-
 <script>
+import axios from 'axios'
+
 export default {
+    name : 'LoginForm',
+
     data(){
         return {
-            email : "",
-            password : ""
+            message : "",
         }
+        
     },
-    methods :  {
-        login () {
-            let email = this.email
-            let password = this.password
-            this.$store.dispatch('login', {email, password })
-            .then(() => this.$router.push('/'))
-            .catch(error => console.log(error))
+
+    methods : {
+        login() {
+            
+            
+            const email = document.getElementById("login-email").value;
+            const password = document.getElementById("login-password").value;
+            
+
+            axios.post(`${this.$apiUrl}/auth/login`,
+                {
+                     email,
+                     password
+                },
+                {
+                     headers : {
+                            'Content-Type' : 'application/json'
+                    }
+                }
+            )
+            .then(res => {
+                localStorage.setItem('user', JSON.stringify(res.data));
+                location.reload();
+            })
+            .catch((error) => {
+                if (error.res.status === 404) {
+                    this.message = "Utilisateur non reconnu"
+                }
+                
+                if(error.res.status === 401) {
+                    this.message = " Vérifier votre émail ou/et votre mot de passe"
+                }
+                if(error.res.status === 500) {
+                     this.message = "Error serveur"
+                }
+            })
         }
     }
 }
