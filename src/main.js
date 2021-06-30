@@ -13,7 +13,7 @@ if(localStorage.user != undefined) {
 
   Vue.prototype.$user = JSON.parse(localStorage.user);
 
-  Vue.prototype.$user = JSON.parse(localStorage.user)
+  Vue.prototype.$user = JSON.parse(localStorage.user);
 
 
 }
