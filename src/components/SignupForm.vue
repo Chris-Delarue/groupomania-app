@@ -1,35 +1,25 @@
 <template>
     <div class="signup-group">
-        <form @submit.prevent = signup()>
-            <img src="/assets/images/icon-left-font.png" alt="Logo Groupomania">
-            
-
+         
+        <form class="form" @submit.prevent = signup()>
+           
             <label for="signup-firstname">Votre nom :</label>
-            <input type="text" id="signup-firstname" placeholder="name" required autofocus >
-
-            <label for="signup-name">Votre nom :</label>
-
+            <input type="text" id="signup-firstname" placeholder="nom" required autofocus >
 
             <label for="signup-surname"> Votre prénom :</label>
-            <input type="text" id="signup-surname" v-model="prenom" required autofocus>
+            <input type="text" id="signup-surname" placeholder="prenom" required autofocus>
 
             <label for="signup-email">Votre email :</label>
-            <input type="email" id="signup-email" v-model="email" required>
+            <input type="email" id="signup-email" placeholder="email" required>
 
             <label for="signup-password">Votre mot de passe :</label>
-            <input type="password" id="signup-password"  pl aceholder="Mot de passe" required> 
+            <input type="password" id="signup-password"  placeholder="Mot de passe" required> 
 
             <label for="password-confirm">Confirmer votre mot de passe</label>
             <input type="password" id="password-confirm" placeholder="Confirmer le mot de passe" required>
 
             <div class="error-message">{{message}}</div>
 
-            <input type="password" id="signup-password"  placeholder="password" required> 
-
-            <label for="password-confirm">Confirmer votre mot de passe</label>
-            <input type="password" id="password-confirm" placeholder="password_confirmation" required>
-
-            <div class="error-message">{{message}}</div>
 
             <button id="signup-btn" type="submit">S'inscrire</button>
         </form>
@@ -92,3 +82,38 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+
+
+.form{
+    width: 700px;
+    margin:  2rem auto;
+    border : solid 1px;
+    border-radius: 20px;
+     display: flex;
+    flex-flow: column;
+    justify-content: center;
+    padding-top:.8rem;
+
+}
+input{
+    height: 30px;
+    width: 60%;
+    border-radius: 10px;
+    text-align: center;
+    border: solid 2px red;
+    margin:.5rem auto .8rem auto;
+   
+}
+
+#signup-btn{
+    height:30px;
+    border-radius: 10px;
+    width:20%;
+    margin: 1rem auto;
+}
+
+
+
+</style>

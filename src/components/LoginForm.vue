@@ -1,8 +1,9 @@
 <template>
     <div class="form-group">
-        <form @submit.prevent = login()>
-            <img src="/assets/images/icon-left-font.png" alt="Logo Groupomania">
-
+         <img src="/images/icon-left-font.png" alt="Logo Groupomania"/>
+       
+        <form class="form" @submit.prevent = login()>
+            
             <label for="signup-email">Votre email :</label>
             <input type="email" id="login-email" placeholder="email" required>
 
@@ -11,10 +12,12 @@
 
             <div class="error-message">{{message}}</div>
 
-            <button id="signup-btn" type="submit">Se connecter</button>
+            <button id="login-btn" type="submit">Se connecter</button>
+        
         </form>
     </div>
 </template>
+
 <script>
 import axios from 'axios'
 
@@ -67,3 +70,32 @@ export default {
     }
 }
 </script>
+
+<style lang="css" >
+
+.form{
+    width: 700px;
+    margin:  auto;
+    border : solid 1px;
+    border-radius: 20px;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    padding-top: .8rem;
+}
+input{
+    height: 30px;
+    width: 60%;
+    border-radius: 10px;
+    text-align: center;
+    border: solid 2px red;
+    margin:.5rem auto .8rem auto;
+   
+}
+#login-btn{
+    height:30px;
+    border-radius: 10px;
+    width:20%;
+    margin: 1rem auto;
+}
+</style>
