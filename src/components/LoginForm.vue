@@ -1,7 +1,10 @@
 <template>
     <div class="form-group">
-         <img src="/images/icon-left-font.png" alt="Logo Groupomania"/>
-       
+         
+        <img class="logo" src="/images/icon-above-font.png" alt="Logo Groupomania"/>
+
+        <nav><router-link to="/">Se connecter</router-link> | <router-link to="/signup" class="active">S'inscrire</router-link></nav>
+
         <form class="form" @submit.prevent = login()>
             
             <label for="signup-email">Votre email :</label>
@@ -12,7 +15,7 @@
 
             <div class="error-message">{{message}}</div>
 
-            <button id="login-btn" type="submit">Se connecter</button>
+            <button id="login-btn" v-on:@click="login()">Se connecter</button>
         
         </form>
     </div>
@@ -33,7 +36,6 @@ export default {
 
     methods : {
         login() {
-            
             
             const email = document.getElementById("login-email").value;
             const password = document.getElementById("login-password").value;
@@ -75,13 +77,16 @@ export default {
 
 .form{
     width: 700px;
-    margin:  auto;
+    margin:  10rem auto;
     border : solid 1px;
     border-radius: 20px;
     display: flex;
     flex-flow: column;
     justify-content: center;
     padding-top: .8rem;
+}
+.logo{
+    margin: 3rem auto;
 }
 input{
     height: 30px;

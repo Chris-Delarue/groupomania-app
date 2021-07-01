@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Post from '../views/Post.vue'
+import Post from '../views/Post.vue';
 import Home from '../views/Home.vue';
+
 
 
 Vue.use(VueRouter)
@@ -15,17 +16,22 @@ const routes = [
   {
     path: '/post/:userId',
     name: 'Post',
-    components: Post
+    component: Post
   },
   {
     path :'/signup',
     name : 'Signup',
-    components : () => import('../views/Signup.vue')
+    component: () => import(`../views/Signup.vue`)
   },
+  {
+    path :'/login',
+    name : 'Login',
+    component : () => import(`../views/Login.vue`)
+  }
   {
     path : '/profil',
     name : 'Profil',
-    components : () => import('../views/Profil.vue')
+    component: () => import(`../views/Profil.vue`)
   }
 ]
 

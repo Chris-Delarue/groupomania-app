@@ -6,7 +6,7 @@ import router from './router';
 
 Vue.config.productionTip = false
 
-Vue.prototype.$apiUrl = process.env.API;
+Vue.prototype.$apiUrl = 'http://localhost:3000/api/';
 
 if(localStorage.user != undefined) {
   Vue.prototype.$token = JSON.parse(localStorage.user).token;
@@ -20,5 +20,6 @@ if(localStorage.user != undefined) {
 
 new Vue({
   router,
+  base : process.env.BASE_URL,
   render: h => h(App)
 }).$mount('#app');
