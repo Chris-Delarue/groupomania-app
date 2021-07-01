@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <LoginForm v-if="!connected"/>
-    <SignupForm v-if="!connected"/>
+  
     <Nav v-if="connected"/>
     <NewPost v-if="connected"/>
     <Post v-if="connected"/>
@@ -12,7 +12,7 @@
 // @ is an alias to /src
 import LoginForm from '@/components/LoginForm.vue';
 import  Nav from '@/components/Nav.vue';
-import SignupForm from '@/components/SignupForm.vue';
+//import SignupForm from '@/components/SignupForm.vue';
 
 
 export default {
@@ -20,9 +20,16 @@ export default {
   components: {
 
     LoginForm,
+
+    //SignupForm,
+     //Post,
+   Nav,
+    //NewPost
+
     //Post,
    // Nav,
    // NewPost
+
   },
   data(){
     return{

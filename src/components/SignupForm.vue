@@ -1,8 +1,11 @@
 <template>
     <div class="signup-group">
          
+            <img  src="/images/icon-above-font.png" class="logo" alt="Logo Groupomania"/>
+            <nav><router-link to="/">Se connecter</router-link> | <router-link to="/signup" class="active">S'inscrire</router-link></nav>
+
         <form class="form" @submit.prevent = signup()>
-           
+            
             <label for="signup-firstname">Votre nom :</label>
             <input type="text" id="signup-firstname" placeholder="name" required autofocus >
 
@@ -17,12 +20,15 @@
             <input type="password" id="signup-password"  placeholder="Mot de passe" required> 
 
             <label for="password-confirm">Confirmer votre mot de passe</label>
-            <input type="password" id="password-confirm" placeholder="Confirmer le mot de passe" required>
+            <input type="password" id="signup-password-confirm" placeholder="Confirmer le mot de passe" required>
 
 
-            <div class="error-message">{{message}}</div>
+
+            <button id="signup-btn"  @click="signup()">S'inscrire</button>
+          <div class="error-message">{{message}}</div>
 
             <button id="signup-btn" type="submit">S'inscrire</button>
+
         </form>
     </div>
 </template>
@@ -47,7 +53,7 @@ export default {
             const surname = document.getElementById("signup-surname").value;
             const email = document.getElementById("signup-email").value;
             const password = document.getElementById("signup-password").value;
-            const passwordConfirm = document.getElementById("password-confirm").value;
+            const passwordConfirm = document.getElementById("signup-password-confirm").value;
 
             if(password === passwordConfirm) {
                 axios.post(`${this.$apiUrl}/auth/signup`,

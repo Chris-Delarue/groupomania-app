@@ -9,7 +9,7 @@
 import SignupForm from '@/components/SignupForm.vue';
 
 export default {
-    name: 'SignupForm',
+    name: 'Signup',
 
     components : {
         SignupForm
