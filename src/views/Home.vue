@@ -20,10 +20,9 @@ export default {
   components: {
 
     LoginForm,
-    SignupForm,
-     //Post,
-   Nav,
-    //NewPost
+    //Post,
+   // Nav,
+   // NewPost
   },
   data(){
     return{

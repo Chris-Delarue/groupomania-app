@@ -4,13 +4,14 @@
         <form class="form" @submit.prevent = signup()>
            
             <label for="signup-firstname">Votre nom :</label>
-            <input type="text" id="signup-firstname" placeholder="nom" required autofocus >
+            <input type="text" id="signup-firstname" placeholder="name" required autofocus >
 
+           
             <label for="signup-surname"> Votre prénom :</label>
             <input type="text" id="signup-surname" placeholder="prenom" required autofocus>
 
             <label for="signup-email">Votre email :</label>
-            <input type="email" id="signup-email" placeholder="email" required>
+            <input type="email" id="signup-email" placeHolder="email" required>
 
             <label for="signup-password">Votre mot de passe :</label>
             <input type="password" id="signup-password"  placeholder="Mot de passe" required> 
@@ -18,8 +19,8 @@
             <label for="password-confirm">Confirmer votre mot de passe</label>
             <input type="password" id="password-confirm" placeholder="Confirmer le mot de passe" required>
 
-            <div class="error-message">{{message}}</div>
 
+            <div class="error-message">{{message}}</div>
 
             <button id="signup-btn" type="submit">S'inscrire</button>
         </form>
