@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Post from '../views/Post.vue';
+
 import Home from '../views/Home.vue';
+
 
 
 
@@ -14,9 +15,9 @@ const routes = [
     component: Home
   },
   {
-    path: '/post/:userId',
-    name: 'Post',
-    component: Post
+    path: '/post',
+    name: 'Posts',
+    component: () => import (`../views/Post.vue`)
   },
   {
     path :'/signup',
@@ -27,7 +28,7 @@ const routes = [
     path :'/login',
     name : 'Login',
     component : () => import(`../views/Login.vue`)
-  }
+  },
   {
     path : '/profil',
     name : 'Profil',
@@ -38,7 +39,7 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
-  base: process.env.BASE_URL,
+ 
   routes
 })
 
