@@ -1,33 +1,77 @@
 <template>
   <div id="app">
-   
-    <router-view/>
+    
+    <app-nav>
+    </app-nav>
+     
+  <div class="container">
+     <router-view/>
+     </div>
     </div>
- 
+
 </template>
 
+<script>
+import Nav from './components/Nav'
+export default{
+ name : "App",
+ components : {
 
+   appNav : Nav
 
+   
+ }
+}
+</script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+body{
+  background-color: #e1e1e1;
 }
-
-#nav {
-  padding: 30px;
+.form-wrapper{
+  border-radius: 7px;
 }
-
-#nav a {
+.form-wrapper label{
   font-weight: bold;
-  color: #2c3e50;
 }
+.error-message li{
+  list-style: none;
+  width: 100%;
+  text-align: center;
+}
+.error-message ul{
+  padding-left: 0;
+  margin-bottom: 0;
+}
+.logo{
+    width:200px;
+    margin: 1rem auto;
+    height:200px;
+   
+  }
+  img{
+    width:200px;
+    height:200px;
+  }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+@media (max-width: 768px){
+  .form-wrapper .text-right{
+    text-align: center !important;
+  }
+  .logo{
+    width:200px;
+    margin: 1rem auto;
+    height:200px;
+   
+  }
+  img{
+    width:200px;
+    height:200px;
+  }
+
+  .form-wrapper .btn-primary{
+    display: block;
+    margin: 0 auto;
+  }
 }
 </style>
