@@ -11,7 +11,14 @@
             </button>
         
             <div class="collapse navbar-collapse"   id="navbarSupportedContent">
-                <ul v-if="!isLoggedIn"   class="navbar-nav mr-auto text-right">
+                <ul v-if="isLoggedIn" class="navbar-nav mr-auto text-right">
+                    <li class="nav-item" >
+                        <router-link  to="/profil" class="nav-link">Mon compte</router-link></li>
+                    <li class="nav-item" >
+                        <a class="nav-link" @click.prevent="logout">Se deconnecter</a>
+                    </li>
+                </ul>
+                <ul v-if="!isLoggedIn"  class="navbar-nav mr-auto text-right">
                     <li class="nav-item">
                         <router-link to="/login">Se connecter</router-link>
                     </li>
@@ -19,13 +26,7 @@
                          <router-link to="/signup">Inscription</router-link> 
                     </li>
                 </ul>
-                <ul v-else class="navbar-nav mr-auto text-right">
-                    <li class="nav-item" >
-                        <router-link  to="/profil" class="nav-link">Mon compte</router-link></li>
-                    <li class="nav-item" >
-                        <a class="nav-link" @click.prevent="logout">Se deconnecter</a>
-                    </li>
-                </ul>
+                
             </div> 
         </div>    
     </nav>
@@ -37,21 +38,18 @@
 
 export default {
     name: 'Nav',
-    
-  
-
     data () {
         return {
-            brand : process.env.VUE_APP_APPNAME
-            
+            brand : process.env.VUE_APP_APPNAME,
         }
     },
    
     methods : {
         logout(){
             localStorage.removeItem('user');
-            location.href='/';
-        }
+            location.href="/"
+        },
+        
     }
 }
 </script>
@@ -69,8 +67,12 @@ export default {
     }
 
 
-#logout-btn {
-    color:red;
+.nav-link{
+    cursor: pointer;
 }
+a .nav-item a:hover {
+    color: red;
+}
+
 </style>
 

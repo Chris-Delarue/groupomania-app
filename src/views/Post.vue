@@ -4,7 +4,7 @@
         
         <Posts v-if="loggedIn"/>
         <Nav v-if="loggedIn"/>
-        <OnePost v-if="loggedin"/>
+        <OnePost v-if="loggedIn"/>
         <Comments v-if="loggedIn"/>
     </div>
 </template>

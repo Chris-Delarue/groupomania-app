@@ -69,6 +69,7 @@ export default {
     data() {
         return {
             message : "",
+            
         };
     },
 
@@ -98,14 +99,14 @@ export default {
                     }
                 }
                 )
-                .then(res => {
-                    if(res.status === 201){
+                .then(response => {
+                    if(response.status === 201){
                         location.href = '/login'
                         this.message = "Bienvenue sur votre réseau."
                     }
                 })
                 .catch((error) => {
-                    if (error.status === 401) {
+                    if (error.response.status === 401) {
                         this.message= "Email non disponible"
                     }
                 });
@@ -122,12 +123,11 @@ export default {
 
  .error-message{
         background-color: rgba(233, 77, 103, 0.301);
-       
         height:40px;
         width:90%;
         margin: auto auto 1rem auto;
         color: black;
-    }
+}
 
 
 

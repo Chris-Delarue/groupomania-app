@@ -15,8 +15,8 @@ const routes = [
     component: Home
   },
   {
-    path: '/post',
-    name: 'Posts',
+    path: '/post/:postId',
+    name: 'Post',
     component: () => import (`../views/Post.vue`)
   },
   {
@@ -39,8 +39,8 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
- 
+  base: process.env.BASE_URL,
   routes
-})
+});
 
 export default router;
