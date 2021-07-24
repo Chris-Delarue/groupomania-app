@@ -1,20 +1,20 @@
 
-import httpClient from '../httpClient';
+import httpClient from '../api/httpClient';
 
 export default {
     getAllPost() {
-        return httpClient().get("/post");
+        return httpClient.get("/post");
     },
     getOnePost(postId) {
-        return httpClient().get("/post", + postId);
+        return httpClient.get("/post", + postId);
     },
     newPost(data) {
-        return httpClient().post("/post", data);
+        return httpClient.post("/post", data);
     },
     modifyPost(postId, data) {
-        return httpClient().put("/post", + postId, data);
+        return httpClient.put("/post", + postId, data);
     },
     deletePost(postId) {
-        return httpClient().delete("/post", + postId);
+        return httpClient.delete("/post", + postId);
     }
 }

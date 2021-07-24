@@ -43,10 +43,11 @@
                                 v-model="passwordConfirm"/>
                             </div>
                         </div>
-                        <div class="error-message">{{message}}</div>
+                        <div class="alert-message" v-html="errorMessage"/>
+                        <div class="alert-message" v-html="message"></div>
                         <div class="row">
                             <div class="col-12 col-sm-4">
-                                <button type="submit" class="btn btn-primary">S'incrire</button>
+                                <button type="submit" class="btn btn-primary">S'inscrire</button>
                             </div>
                             <div class="col-12 col-sm-8 text-right">
                                 <a href="/login">Vous avez déja un compte</a>
@@ -61,68 +62,58 @@
 
 <script>
 
-import axios from 'axios'
+import auth from "../api/auth"
 
 export default {
     name: 'SignupForm',
 
     data() {
         return {
-            message : "",
+            firstname: "",
+            surname: "",
+            email: "",
+            password: "",
+            passwordConfirm: "",
+            errorMessage : null,
+            message: null,
         };
     },
 
     methods: {
 
-        signup() {
+         async signup() {
             
-            const firstname = document.getElementById("signup-firstname").value;
-            const surname = document.getElementById("signup-surname").value;
-            const email = document.getElementById("signup-email").value;
-            const password = document.getElementById("signup-password").value;
-            const passwordConfirm = document.getElementById("signup-passwordConfirm").value;
+            try{
+                const response = await auth.signup({
+                    firstname : this.firstname,
+                    surname : this.surname,
+                    email: this.email,
+                    password: this.password,
+                    passwordConfirm : this.passwordConfirm,
+                }); 
+                this.message = "bienvenue sur votre réseau !!";
+                this.$store.dispatch("setToken", response.data.token);
 
-            if(password === passwordConfirm) {
-                axios.post(`${this.$apiUrl}/auth/signup`,
-                {
-                    firstname,
-                    surname,
-                    email,
-                    password,
-                    passwordConfirm
-                },
-                {
-                    headers : {
-
-                        'Content-Type' : 'application/json'
-                    }
-                }
-                )
-                .then(res => {
-                    if(res.status === 201){
-                        location.href = '/login'
-                        this.message = "Bienvenue sur votre réseau."
-                    }
-                })
-                .catch((error) => {
-                    if (error.status === 401) {
-                        this.message= "Email non disponible"
-                    }
-                });
+                let router = this.$router;
+                setTimeout(function() {
+                    router.push("/login");
+                }, 2000);
+            } catch (error) {
+                this.errorMessage ="oopps !!" ;
+                setTimeout(() => {
+                    this.errorMessage = "";
+                }, 2000)
             }
-            else if(password != passwordConfirm) {
-               this.message = " Vérifier votre émail ou/et votre mot de passe"
-           }
-        }
-    }
-}
+        },
+    },
+};
 </script>
 
 <style scoped>
 
- .error-message{
+ .alert-message{
         background-color: rgba(233, 77, 103, 0.301);
-       
+        text-align: center;   
         height:40px;
         width:90%;
         margin: auto auto 1rem auto;

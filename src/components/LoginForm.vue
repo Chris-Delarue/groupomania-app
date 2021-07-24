@@ -17,7 +17,8 @@
            <label for="password">Mot de passe</label>
            <input type="password" class="form-control" name="password" id="login-password" v-model="password" >
           </div>
-          <div class="error-message">{{message}}</div>
+          <div class="alert-message" v-html="errorMessage"/>
+          <div class="alert-message" v-html="message"></div>
           <div class="row">
             <div class="col-12 col-sm-4">
               <button type="submit" class="btn btn-primary">Se connecter</button>
@@ -33,7 +34,7 @@
 </template>
 <script>
 
-import axios from 'axios'
+import auth from '../api/auth'
 
 
 export default {
@@ -42,54 +43,43 @@ export default {
     data(){
         return {
             email : "",
-            password : ""
+            password : "",
+            errorMessage: null,
+            message: null,
         }
     },
   
     methods : {
-        login() {
-            const email = document.getElementById("login-email").value;
-            const password = document.getElementById("login-password").value;
-            
+      async login() {
+        try {
+          const response = await auth.login({
+            email: this.email,
+            password: this.password,
+          });
+          this.message = "Merci de votre retour";
 
-            axios.post(`${this.$apiUrl}/auth/login`,
-                {
-                     email,
-                     password
-                },
-                {
-                     headers : {
-                            'Content-Type' : 'application/json'
-                    }
-                }
-            )
-            .then(res => {
-                localStorage.setItem('user', JSON.stringify(res.data));
-                location.href ="/Posts";
-                this.message = "Vous êtes connecté !";
-                console.log(localStorage.setItem())
-               
-            })
-            .catch((error) => {
-                if (error.res.status === 404) {
-                    this.message = "Utilisateur non reconnu";
-                }
-                
-                if(error.res.status=== 401) {
-                    this.message = " Vérifier votre émail ou/et votre mot de passe";
-                }
-                if(error.res.status  === 500) {
-                     this.message = "Error serveur";
-                }
-            })
-        }
-    }
-}
+          this.$store.dispatch("setToken" , response.data.token)
+
+          let router = this.$router;
+          setTimeout(function () {
+            router.push("/post");
+          }, 2000) 
+        } catch (error) {
+          this.errorMessage = "Etes vous bien inscrit !!";
+          setTimeout(() => {
+            this.email = "",
+            this.password= "",
+            this.errorMessage = ""
+        }, 1000 )
+      }  
+    },
+  },
+};
 </script>
 
 <style scoped>
 
-.error-message{
+.alert-message{
       background-color: rgba(233, 77, 103, 0.301);
       height:40px;
       width: 100%;
