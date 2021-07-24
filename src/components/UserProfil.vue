@@ -1,8 +1,8 @@
 <template>
     <div class="Userprofil">
         <div class="infoProfil">
-            <h1>Bonjour,</h1>
-            <h2>{{this.$user.firstname}}</h2> <h2>{{this.$user.surname}}</h2>
+            <h1>Bonjour</h1>
+            <h2>{{this.$user.firstname}},</h2>
         </div>
 
         <div class="deleteProfil" @click.prevent="deleteAccount">Supprimer votre compte</div>
@@ -20,7 +20,7 @@ export default {
     methods : {
         deleteAccount() {
 
-            const userId = this.$userId.userId;
+            const userId = this.$user.userId;
 
             axios.delete(`${this.apiUrl}/auth/${userId}`,
             {
@@ -37,3 +37,11 @@ export default {
     
 }
 </script>
+
+<style scoped>
+.deleteProfil{
+    color:  red;
+    cursor: pointer;
+}
+
+</style>
