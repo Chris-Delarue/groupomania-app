@@ -1,6 +1,6 @@
 <template>
     <div class="posts">
-        <article class="post" v-for = "post in posts" :key="post.postId">
+        <article class="post" v-for="post in posts" :key="post.postId">
             <router-link :to="{ name: 'Post', params: {postId: post.postId}}">
                 <div class="post-header">
                     <span class="info-P">Posté le {{dataFormat(post.createdAt)}} par {{post.firstname}} par {{post.surname}}</span>
@@ -8,60 +8,60 @@
                 </div>
                 <h2 class="post-title">{{post.title}}</h2>
                 <div class="post-content" v-html="textlimit(post.content)"></div>
+                <div>
+                    <div class="alert-message" v-html="errorMessage"/>
+                    <div class="alert-message" v-html="message"/>
+                </div>
             </router-link>
-         </article>       
+        </article> 
     </div>
 </template>
 
 <script>
 
-import axios from 'axios'
+import post from "../api/post";
 
 export default {
     name : 'Posts',
-    data() {
+
+   
+    data: function () {
         return {
             posts : [],
-            visible : false
+            errorMessage : null,
+            message: null,
         }
     },
 
-    mounted() {
-      
-        this.getAllPost();
-    },
     methods : {
-        getAllPost() {
-            axios.get(`${this.$apiUrl}/post/`,
-                {
-                headers : {
-                'Content-Type' : 'application/json',
-                'Authorization' : `Bearer ${this.$token}`
-                }
-            }
-            )
-            .then(res => {
-            this.posts = res.data
-            console.log(res.data)
-            })
-            .catch(error =>{
+        async allFeed() {
+            try {
+                const response = await post.getAllPost();
+                this.posts = response.data;
+                
+            }catch (error) {
+                this.errorMessage = "Something went wrong"
                 console.log(error)
-
-            })
-        },
+            }
+        },   
+    },
+            
         textLimit(content) {
             let text = content;
             const maxLength = 400;
             if(text.length > maxLength) {
                 return text.substring(0, maxLength - 3) +"..."
             }
+            else {
+                return text;
+            }
         },
         dataFormat(createdAt) {
-            const date = new date(createdAt)
+            const date = new Date(createdAt)
             return date.toLocateDateString(['fr-FR' , {day: '2-digit', month:'short', year: 'numeric', hour: '2-digit', minute: '2-digit'}])
         }
-    }
 }
+
 
 </script>
 
@@ -70,13 +70,22 @@ export default {
 
 
 .posts{
-    height: 50px;
-    width: 500px;
-    border: solid 1px;
+    height: 200px;
+    width:auto;
+    border: solid 1px red;
 }
 .post{
-    width:100px;
+   
     border: solid 1px;
+    height: 50px;
 }
+ .alert-message{
+        background-color: rgba(233, 77, 103, 0.301);
+        text-align: center;   
+        height:40px;
+        width:90%;
+        margin: auto auto 1rem auto;
+        color: black;
+    }
 
 </style>

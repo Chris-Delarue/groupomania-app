@@ -1,8 +1,7 @@
 <template>
     <div class="profil">
-        <LoginForm v-if="!loggedIn"/>
+       <LoginForm v-if="!loggedIn"/>
 
-        <!--<Nav v-if="loggedIn"/>-->
         <UserProfil v-if="loggedIn"/>
       
     </div>
@@ -11,7 +10,7 @@
 <script>
 
 import LoginForm from'@/components/LoginForm.vue';
-//import Nav from '@/components/Nav.vue';
+
 import UserProfil from '@/components/UserProfil.vue';
 
 
@@ -19,9 +18,8 @@ export default {
     name : 'Profil',
     components : {
         LoginForm,
-        //Nav,
-        UserProfil
-       
+        UserProfil,
+   
     },
     data() {
         return {
@@ -33,16 +31,15 @@ export default {
     },
     methods : {
         checkLoggedInOk() {
-            if(localStorage.user !== undefined) {
+            if(sessionStorage !== undefined) {
                 this.loggedIn = true;
                 console.log('Utilisateur connecté !')
             }
-            else if(localStorage.user == undefined) {
-                this.loggedIn = false;
+            else if(sessionStorage == undefined) {
+               this.loggedIn = false;
                 console.log('Utilisateur non connecté !')
             }
         }
     }
 }
-
 </script>

@@ -24,7 +24,7 @@
               <button type="submit" class="btn btn-primary">Se connecter</button>
             </div>
             <div class="col-12 col-sm-8 text-right">
-              <a href="/signup">Vous n'avez pas encore de compte?</a>
+              <a  class="textPasCompte" href="/signup">Vous n'avez pas encore de compte?</a>
             </div>
           </div>
         </form>
@@ -55,11 +55,11 @@ export default {
           const response = await auth.login({
             email: this.email,
             password: this.password,
+            
           });
-          this.message = "Merci de votre retour";
-
-          this.$store.dispatch("setToken" , response.data.token)
-
+          this.message = "Merci de votre retour !!";
+          this.$store.dispatch("setToken", response.data)
+      
           let router = this.$router;
           setTimeout(function () {
             router.push("/post");
@@ -81,10 +81,21 @@ export default {
 
 .alert-message{
       background-color: rgba(233, 77, 103, 0.301);
-      height:40px;
+      height:20px;
       width: 100%;
-      margin: auto auto 1rem auto;
+      margin: auto;
       color: black;
+      text-align: center;
+}
+.btn {
+  margin-top: .8rem;
+
+}
+.textPasCompte{
+  margin: .5rem ;
+}
+.text-right {
+  margin-top: .5rem;
 }
 
 </style>

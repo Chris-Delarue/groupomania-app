@@ -9,7 +9,7 @@ export default {
         return httpClient.post("/auth/login", data);
     },
     deleteAccount : userId =>  {
-        return httpClient.delete("/auth", + userId);
+        return httpClient.delete("/auth/" + userId);
     }
 }
 

@@ -1,47 +1,60 @@
 <template>
-    <div class="Userprofil">
-        <div class="infoProfil">
-            <h1>Bonjour</h1>
-            <h2>{{this.$user.firstname}},</h2>
+    <div class="UserProfil" >
+        <div class="text">
+            <h1>Bonjour {{ }}</h1>
         </div>
-
+            
         <div class="deleteProfil" @click.prevent="deleteAccount">Supprimer votre compte</div>
     </div>
 </template>
 
 <script>
 
-import axios from 'axios' ;
-
 
 export default {
-    mane: 'UserProfil',
+    name: 'UserProfil',
+ 
 
-    methods : {
-        deleteAccount() {
-
-            const userId = this.$user.userId;
-
-            axios.delete(`${this.apiUrl}/auth/${userId}`,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization' : `Bearer ${this.$token}`
-                }
-            })
-            .then(localStorage.removeItem('user'))
-            .then(location.href = "/");
-
+    data() {
+        return {
+            
         }
-    }
-    
+    },
+  
+    methods : {
+
+        deleteAccount() {
+            this.$store.dispatch("deleteAccount").then(() => {
+                sessionStorage.clear();
+                this.$router.push('/');
+                location.reload();
+            })
+            .catch(() => console.log('Impossible de vous supprimer du réseau !!'))
+        }
+    },
 }
+
 </script>
 
 <style scoped>
+
+.UserProfil{
+   
+    width: 30%;
+    height:auto;
+    margin: 5rem auto;
+    padding: .8rem;
+}
 .deleteProfil{
     color:  red;
-    cursor: pointer;
+    text-align: center;
+    border: solid 1px red;
+    border-radius: 30px;
+    padding:.5rem;
+    margin:.5rem auto;
+}
+.text {
+    
 }
 
 </style>

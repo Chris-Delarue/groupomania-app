@@ -4,9 +4,7 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 
 
-
-
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -17,30 +15,44 @@ const routes = [
   {
     path: '/post',
     name: 'Posts',
-    component: () => import (`../views/Post.vue`)
+    component: () => import ('../views/Post.vue'),
+    beforeEnter: (to, from, next) => {
+      if(!sessionStorage.getItem("vuex")) {
+        next("/");
+      }else{
+        next();
+      }
+    }
+
   },
   {
     path :'/signup',
     name : 'Signup',
-    component: () => import(`../views/Signup.vue`)
+    component: () => import('../views/Signup.vue')
   },
   {
     path :'/login',
     name : 'Login',
-    component : () => import(`../views/Login.vue`)
+    component : () => import('../views/Login.vue')
   },
   {
     path : '/profil',
     name : 'Profil',
-    component: () => import(`../views/Profil.vue`)
+    component: () => import('../views/Profil.vue'),
+    beforeEnter: (to, from, next) => {
+      if(!sessionStorage.getItem("vuex")) {
+        next("/");
+      }else{
+        next();
+      }
+    }
   }
-]
-
+];
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
 export default router;
