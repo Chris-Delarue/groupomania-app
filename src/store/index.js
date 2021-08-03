@@ -1,16 +1,18 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from "vuex-persistedstate";
+//import auth from '../api/auth';
 
 
-Vue.use(Vuex)
+
+Vue.use(Vuex);
 
 export default new Vuex.Store({
     strict : true,
     state : {
         token: null,
-        user : null,
-  
+        user: null,
+    
     },
     plugins : [createPersistedState ({
         storage : window.sessionStorage,
@@ -18,22 +20,25 @@ export default new Vuex.Store({
 
     getters : {
        
-        isLogged: state => state.token != null && state.user != null
-        
+        isLogged: state => state.token !== null ,
+       
     },
     mutations : {
 
-        setToken : (state, token) => state.token = token,
-        
-        logout : state => state.token == null && state.user == null || window.sessionStorage.clear()
-      
-    },
+        SET_TOKEN : (state, token) => state.token = token, 
+
+        LOGOUT : state => state.token == null && state.user == null,
+        },
+
     actions : {
-        SET_TOKEN({commit}, token) {
-            commit("setToken", token);
+        setToken({commit}, token) {
+            commit("SET_TOKEN", token);
         },
-        LOGOUT({commit}) {
-            commit("logout");
+
+        logout({commit}) {
+            commit("LOGOUT");
+        
         },
-    }
-})
+    
+    },
+});

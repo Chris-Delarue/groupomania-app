@@ -1,33 +1,35 @@
 <template>
     <div class="Post">
         <LoginForm v-if="!loggedIn"/>
-        
+
+        <NewPost v-if="loggedIn"/>
         <Posts v-if="loggedIn"/>
-        <Nav v-if="loggedIn"/>
-        <OnePost v-if="loggedin"/>
+       
+        <OnePost v-if="loggedIn"/>
         <Comments v-if="loggedIn"/>
+        
     </div>
 </template>
 
 <script>
 
 import LoginForm from '@/components/LoginForm.vue';
-import Nav from '@/components/Nav.vue';
+
 import OnePost from '@/components/OnePost.vue';
 import Comments from '@/components/Comments.vue';
 import Posts from '@/components/Posts.vue';
-
+import NewPost from '@/components/NewPost';
 
 
 export default{
    name :'Post',
 
-   component : {
+   components : {
      LoginForm,
-     Nav,
      Posts,
      OnePost,
-     Comments
+     Comments,
+     NewPost
    },
    data() {
      return{
@@ -37,11 +39,11 @@ export default{
    },
    methods : {
      checkLoggedInOk() {
-       if(localStorage.user !== undefined) {
+       if(sessionStorage !== undefined) {
          this.loggedIn = true;
          console.log('Vous êtes connecté');
        }
-       else if(localStorage.user == undefined) {
+       else if(sessionStorage == undefined) {
          this.loggedIn = false;
          console.log('Vous n\'êtes pas connecté !')
        }
@@ -52,3 +54,9 @@ export default{
    }
 }
 </script>
+
+<style  scoped>
+
+
+
+</style>

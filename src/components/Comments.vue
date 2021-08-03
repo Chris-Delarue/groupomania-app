@@ -1,6 +1,6 @@
 <template>
-    <div class="container">
-        <div class="comments">
+    <div class="comments">
+        <div class="comment">
             <form  @submit.prevent= newComment()>
                 <label for="new-comment">Votre commentaire : </label>
                 <textarea name="newComment" id="new-comment" placeholder="Votre commentaire..." required></textarea>
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+
 
 export default {
         name: 'Comments',
@@ -36,46 +36,13 @@ export default {
         },
         methods: {
             newComment() {
-                const postId = parseInt(this.$route.params.postId);
-                const userId = this.$user.userId;
-                const content = document.getElementById('new-comment').value;
-
-                axios.post(`${this.$apiURL}/post/${postId}/comment`,{
-                userId,
-                content
-                },
-                {
-                    headers : {
-                        'Content-type' : 'application/json',
-                        'Authorization' : `Bearer ${this.$token}`
-                    }
-                }
-            )
-            .then(this.getComment());
+                
         },
         getComment() {
-            const postId = parseInt(this.$route.params.postId) ;
-            axios.get(`${this.$apiURL}/post/${postId}/comments`,
-            {
-                headers : {
-                        'Content-type' : 'application/json',
-                        'Authorization' : `Bearer ${this.$token}`
-                    }
-                }
-            )
-            .then(res => {
-                this.comments = res.data
-            });
+            
         },
-        deleteComment(commentId) {
-            axios.delete(`${this.$apiUrl}/post/comment/${commentId}`, {
-                headers: {
-                    'Content-Type' : 'appication/json',
-                    'Authorization' : `Bearer ${this.$token}`
-                }
-            }
-            )
-            .then(this.getComment());
+        deleteComment() {
+           
         },
         dataFormat(createdAt) {
             const date = new date(createdAt)
