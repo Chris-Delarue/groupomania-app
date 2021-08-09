@@ -21,6 +21,8 @@ export default new Vuex.Store({
     getters : {
        
         isLogged: state => state.token !== null ,
+
+        token : state => state.token,
        
     },
     mutations : {
@@ -31,8 +33,8 @@ export default new Vuex.Store({
         },
 
     actions : {
-        setToken({commit}, token) {
-            commit("SET_TOKEN", token);
+        login({commit}, data) {
+            commit("SET_TOKEN", data.token);
         },
 
         logout({commit}) {

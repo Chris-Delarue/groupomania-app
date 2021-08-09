@@ -1,7 +1,7 @@
 <template>
     <div class="comments">
         <div class="comment">
-            <form  @submit.prevent= newComment()>
+            <form  @submit.prevent="newComment">
                 <label for="new-comment">Votre commentaire : </label>
                 <textarea name="newComment" id="new-comment" placeholder="Votre commentaire..." required></textarea>
                 <button type="submit" id="send-comment">Envoyer</button>
@@ -38,17 +38,24 @@ export default {
             newComment() {
                 
         },
-        getComment() {
+            getComment() {
             
         },
-        deleteComment() {
+            deleteComment() {
            
         },
-        dataFormat(createdAt) {
-            const date = new date(createdAt)
-            return date.toLocateDateString(['fr-FR' , {day: '2-digit', month:'short', year: 'numeric', hour: '2-digit', minute: '2-digit'}
+            dataFormat(createdAt) {
+                const date = new date(createdAt)
+                return date.toLocateDateString(['fr-FR' , {day: '2-digit', month:'short', year: 'numeric', hour: '2-digit', minute: '2-digit'}
             ])
         }
     }
 }
 </script>
+
+<style scoped>
+
+.comments{
+    border: solid 1px;
+}
+</style>

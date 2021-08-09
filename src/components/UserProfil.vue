@@ -5,31 +5,51 @@
         </div>
             
         <div class="deleteProfil" @click.prevent="deleteAccount">Supprimer votre compte</div>
+       
+          <div class="alert-message" v-html="errorMessage"/>
+          <div class="alert-message" v-html="message"></div>
     </div>
 </template>
 
 <script>
 
-
+import auth from '../api/auth';
 export default {
     name: 'UserProfil',
  
 
     data() {
         return {
-            
+            message: null,
+            errorMessage: null,
+           
         }
     },
   
     methods : {
 
-        deleteAccount() {
-            this.$store.dispatch("deleteAccount").then(() => {
-                sessionStorage.clear();
-                this.$router.push('/');
-                location.reload();
-            })
-            .catch(() => console.log('Impossible de vous supprimer du réseau !!'))
+         async deleteAccount() {
+
+            try {
+                 const response = await auth.deleteAccount({
+                   
+                
+                 
+                })
+                    this.message = "Votre compte à été supprimé !!"
+                    console.log(response.data)
+                    this.$store.dispatch("logout")
+                    sessionStorage.clear();
+                    let router = this.$router;
+                    setTimeout(function() {
+                    router.push("/");
+                    }, 2000);
+                    
+                    
+            }catch (error) {
+                    this.errorMessage = "oppss vous êtes toujours là !!"
+            } 
+
         }
     },
 }
@@ -40,21 +60,34 @@ export default {
 
 .UserProfil{
    
-    width: 30%;
+    width: 100%;
     height:auto;
     margin: 5rem auto;
     padding: .8rem;
+    border: solid 1px;
+    text-align: center;
 }
 .deleteProfil{
+    width: 100%;
     color:  red;
-    text-align: center;
     border: solid 1px red;
     border-radius: 30px;
     padding:.5rem;
-    margin:.5rem auto;
+    margin:5rem auto 5rem auto;
+}
+.alert-message{
+      background-color: rgba(233, 77, 103, 0.301);
+      height:20px;
+      width: 100%;
+      margin:  auto;
+      color: black;
+      text-align: center;
 }
 .text {
-    
+    width: 100%;
+    margin: auto;
 }
+
+
 
 </style>

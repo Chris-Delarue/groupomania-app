@@ -42,7 +42,6 @@
 
 <script>
 
-import axios from 'axios';
 import Editor from '@tinymce/tinymce-vue';
 
 export default {
@@ -61,65 +60,29 @@ export default {
 
         }
     },
-    mounted() {
-        this.getOnePost();
-        },
-    
+  
     methods: {
         getOnePost(){
-            const postId = this.$route.params.postId;
-
-            axios.get(`${this.$apiUrl}/post/${postId}`,
-            {
-                headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${this.$token}`
-                }
-            }) 
-            .then(res =>{
-                this.post = res.data[0];
-
-                if(this.$user.$userId === this.post.userdId || this.$user.isAdmin == 1) {
-                    this.authorize = true;
-                }
-                else{
-                    this.authorized = false;
-                }
-            });
+            
         },
         deletePost() {
-            const postId = this.$route.params.postId;
-
-            axios.delete(`${this.$apiUrl}/post/${postId}`,
-            {
-                headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${this.$token}`
-                    }
-            })
-            .then(location.href ="/")
+            
         },
         modifyPost() {
-            const postId = this.$route.params.postId;
-            const title = document.getElementById("modify-title").value;
-            const content = this.contentModified;
-
-            axios.put(`${this.$apiUrl}/post/${postId}`,
-            {
-                postId,
-                title,
-                content
-            },
-            {
-                headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${this.$token}`
-                    }    
-                }
-            )
-            .then(location.href ="/")
+            
         },
     }
 }
 
 </script>
+
+<style scoped>
+
+.onePost{
+
+    border: solid 1px;
+    margin: 1rem auto;
+    width: 100%;
+    height:2rem;
+}
+</style>

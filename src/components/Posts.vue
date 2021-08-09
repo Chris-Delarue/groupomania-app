@@ -8,13 +8,15 @@
                 </div>
                 <h2 class="post-title">{{post.title}}</h2>
                 <div class="post-content" v-html="textlimit(post.content)"></div>
-                <div>
-                    <div class="alert-message" v-html="errorMessage"/>
-                    <div class="alert-message" v-html="message"/>
-                </div>
+                
             </router-link>
+            <div>
+                <div class="alert-message" v-html="errorMessage"/>
+                 <div class="alert-message" v-html="message"/>
+            </div>
         </article> 
     </div>
+    
 </template>
 
 <script>
@@ -24,20 +26,30 @@ import post from "../api/post";
 export default {
     name : 'Posts',
 
-   
     data: function () {
         return {
             posts : [],
             errorMessage : null,
             message: null,
+            visible: false
         }
     },
-
+    mounted() {
+        if(sessionStorage.vuex != undefined) {
+            this.allFeed();
+        }
+    },
+   
     methods : {
         async allFeed() {
             try {
                 const response = await post.getAllPost();
-                this.posts = response.data;
+                
+                console.log(response.data);
+                let router = this.$router;
+                setTimeout(function() {
+                router.push("/post");
+                }, 2000);
                 
             }catch (error) {
                 this.errorMessage = "Something went wrong"
@@ -78,6 +90,7 @@ export default {
    
     border: solid 1px;
     height: 50px;
+    width: 50px;
 }
  .alert-message{
         background-color: rgba(233, 77, 103, 0.301);

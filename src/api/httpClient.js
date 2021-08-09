@@ -7,8 +7,9 @@ const httpClient = axios.create({
     headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-    Authorization: `${store.state.token}`,
+        Authorization: `Bearer ${store.getters.token}`
     }
- })
+ });
+
 
  export default httpClient;
