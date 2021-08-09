@@ -2,7 +2,7 @@
     <div class="newPost">
         <div class="newPost-btn" @click.prevent="visible = true">Créer un nouveau post
         </div>
-        
+       
         <transition name="fade">
             <div class="overlay" v-if="visible">
                 <div class="form-container">
@@ -12,9 +12,10 @@
                             <label for="titlePost" class="titlePost" >Title :</label>
                             <input type="text" name="titlePost"  id="titlePost" v-model="title">
                         </div>
-       
+
                         <editor 
-                            apiKey = "2j4glsouwhxyvl5e5dbfsbwx752e8b5aybqgsya7k63r2i05"
+                        
+                            :apiKey="key"
                             v-model="content"
                             :init="{
                             height: 500,
@@ -65,40 +66,55 @@ export default {
         },
         data() {
             return {
+
+                key : process.env.VUE_APP_TYNI,
                 visible : false,
                 title: "",
                 content: "",
                 errorMessage: null,
-                message: null
+                message: null,
+               
+              
             }
         },
+        
         methods: {
-            async publishPost() {
+        
+            async publishPost() { 
 
-                try {
-                    const response = await post.newPost({
-                        title: this.title,
-                        content : this.content,
-                    });
-                    this.post = response.data;
-                    let router = this.$router;
-                        setTimeout(function() {
-                     router.push("/post");
-                    }, 2000);
-
-                    this.message= "Votre post a été publié !!";
+             try {
+                 const response = await post.newPost({
                     
-                }catch (error) {
-                    this.errorMessage = "oppss!!"
-                }      
-        },
-    },
+
+                    title:      this.title,
+                    content :   this.content
+            })
+                
+                console.log(response.data)
+                this.message = "Votre post a été publié !!";  
+                
+                let router = this.$router;
+                setTimeout(function() {
+                router.push("/post");
+                }, 2000);
+                
+                    
+            }catch (error){
+                    this.errorMessage = "oppss!!";
+                    console.log(error)
+                }
+        } 
+       
+    }
 
 }
 </script>  
 
 <style scoped>
-
+.user-container {
+    height:50px;
+    border:solid 1px;
+}
 .newPost{
     padding : 20px 20px 0px 20px;
     height:auto;

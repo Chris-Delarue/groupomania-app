@@ -51,14 +51,15 @@ export default {
   
     methods : {
       async login() {
+        
         try {
           const response = await auth.login({
-            email: this.email,
+            email:    this.email,
             password: this.password,
             
           });
           this.message = "Merci de votre retour !!";
-          this.$store.dispatch("setToken", response.data)
+          this.$store.dispatch("login", response.data)
       
           let router = this.$router;
           setTimeout(function () {

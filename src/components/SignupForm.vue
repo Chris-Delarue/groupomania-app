@@ -92,7 +92,7 @@ export default {
                     passwordConfirm : this.passwordConfirm,
                 }); 
                 this.message = "bienvenue sur votre réseau !!";
-                this.$store.dispatch("setToken", response.data.token);
+                this.$store.dispatch("login", response.data);
 
                 let router = this.$router;
                 setTimeout(function() {
