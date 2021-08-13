@@ -56,6 +56,8 @@ export default {
 <style scoped>
 
 .comments{
-    border: solid 1px;
+    height: 200px;
+    width:auto;
+    border: solid 1px red;
 }
 </style>

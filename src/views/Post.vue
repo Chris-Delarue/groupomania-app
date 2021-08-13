@@ -5,7 +5,7 @@
         <NewPost v-if="loggedIn"/>
         <Posts v-if="loggedIn"/>
        
-        <OnePost v-if="loggedIn"/>
+        <!--<OnePost v-if="loggedIn"/>-->
         <Comments v-if="loggedIn"/>
         
     </div>
@@ -15,9 +15,8 @@
 
 import LoginForm from '@/components/LoginForm.vue';
 
-import OnePost from '@/components/OnePost.vue';
-import Comments from '@/components/Comments.vue';
-import Posts from '@/components/Posts.vue';
+//import OnePost from '@/components/OnePost.vue';
+import Comments from '@/components/Comments.vue';import Posts from '@/components/Posts.vue';
 import NewPost from '@/components/NewPost';
 
 
@@ -25,11 +24,11 @@ export default{
    name :'Post',
 
    components : {
-     LoginForm,
-     Posts,
-     OnePost,
-     Comments,
-     NewPost
+      LoginForm,
+      Posts,
+      //OnePost,
+      Comments,
+      NewPost
    },
    data() {
      return{
@@ -55,8 +54,4 @@ export default{
 }
 </script>
 
-<style  scoped>
 
-
-
-</style>

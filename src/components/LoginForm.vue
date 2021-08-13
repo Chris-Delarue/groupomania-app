@@ -81,7 +81,7 @@ export default {
 <style scoped>
 
 .alert-message{
-      background-color: rgba(233, 77, 103, 0.301);
+      background-color: rgba(98, 245, 130, 0.301);
       height:20px;
       width: 100%;
       margin: auto;

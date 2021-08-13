@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-
 import Home from '../views/Home.vue';
+
 
 
 Vue.use(VueRouter);
@@ -15,16 +15,27 @@ const routes = [
   {
     path: '/post',
     name: 'Posts',
-    component: () => import ('../views/Post.vue'),
+    component: () => import('../views/Post.vue'),
     beforeEnter: (to, from, next) => {
-      if(!sessionStorage.getItem("vuex")) {
+     if(!sessionStorage.getItem("vuex")) {
         next("/");
       }else{
         next();
       }
     }
-
   },
+  //{
+    //path:'/post/:postId',
+    //name : 'PostId',
+    //component: () => import('../views/Post.vue'),
+    ///beforeEnter: (to, from, next) => {
+      //if(!sessionStorage.getItem("vuex")) {
+        //next("/");
+     // }else{
+        //next();
+      //}
+    //}
+  //},
   {
     path :'/signup',
     name : 'Signup',
