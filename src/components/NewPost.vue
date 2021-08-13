@@ -84,19 +84,13 @@ export default {
 
              try {
                  const response = await post.newPost({
-                    
-
                     title:      this.title,
                     content :   this.content
             })
                 
                 console.log(response.data)
                 this.message = "Votre post a été publié !!";  
-                
-                let router = this.$router;
-                setTimeout(function() {
-                router.push("/post");
-                }, 2000);
+                location.reload();
                 
                     
             }catch (error){
@@ -111,10 +105,7 @@ export default {
 </script>  
 
 <style scoped>
-.user-container {
-    height:50px;
-    border:solid 1px;
-}
+
 .newPost{
     padding : 20px 20px 0px 20px;
     height:auto;
@@ -146,7 +137,7 @@ button {
     
 }
 .alert-message{
-      background-color: rgba(233, 77, 103, 0.301);
+      background-color: rgba(98, 245, 130, 0.301);
       height:30px;
       width: 40%;
       margin: auto ;

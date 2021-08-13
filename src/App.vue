@@ -3,9 +3,10 @@
     
     <app-nav>
     </app-nav>
+   
      
     <div class="container">
-      <router-view/>
+     <router-view/>
     </div>
   </div>
 
@@ -14,11 +15,15 @@
 <script>
 import Nav from './components/Nav'
 
+
+
 export default{
  name : "App",
  components : {
 
    appNav : Nav
+  
+
 
    
  }

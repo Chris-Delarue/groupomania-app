@@ -14,6 +14,7 @@
 <script>
 
 import auth from '../api/auth';
+
 export default {
     name: 'UserProfil',
  
@@ -31,13 +32,10 @@ export default {
          async deleteAccount() {
 
             try {
-                 const response = await auth.deleteAccount({
-                   
+                 const response = await auth.deleteAccount()
                 
-                 
-                })
                     this.message = "Votre compte à été supprimé !!"
-                    console.log(response.data)
+                    console.log(response.userId)
                     this.$store.dispatch("logout")
                     sessionStorage.clear();
                     let router = this.$router;
@@ -76,7 +74,7 @@ export default {
     margin:5rem auto 5rem auto;
 }
 .alert-message{
-      background-color: rgba(233, 77, 103, 0.301);
+      background-color: rgba(98, 245, 130, 0.301);
       height:20px;
       width: 100%;
       margin:  auto;

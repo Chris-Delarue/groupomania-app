@@ -13,7 +13,7 @@
             <editor
                     :initialValue="this.post.content"
                     v-model="contentModified"
-                    apiKey="2j4glsouwhxyvl5e5dbfsbwx752e8b5aybqgsya7k63r2i05"
+                    :apiKey="key"
                     :init="{
                     height: 500,
                     menubar: false,
@@ -53,6 +53,7 @@ export default {
     },
     data() {
         return {
+            key : process.env.VUE_APP_TYNI,
             contentModified : "",
             post: [],
             authorized: false,
@@ -63,6 +64,7 @@ export default {
   
     methods: {
         getOnePost(){
+            
             
         },
         deletePost() {
