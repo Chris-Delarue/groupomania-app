@@ -14,12 +14,15 @@
                         </div>
 
                         <editor 
-                        
                             :apiKey="key"
                             v-model="content"
                             :init="{
                             height: 500,
                             menubar: false,
+                            forced_root_block : false,
+                            force_br_newlines : true,
+                            force_p_newlines : false,
+                            
                             plugins: [
                                 'advlist autolink lists link image charmap',
                                 'searchreplace visualblocks code fullscreen',
@@ -55,7 +58,8 @@
 
 <script>
 import Editor from'@tinymce/tinymce-vue';
-import post from '../api/post'
+import post from '../api/post';
+
 
 
 export default {
@@ -73,8 +77,6 @@ export default {
                 content: "",
                 errorMessage: null,
                 message: null,
-               
-              
             }
         },
         
@@ -97,7 +99,8 @@ export default {
                     this.errorMessage = "oppss!!";
                     console.log(error)
                 }
-        } 
+        },
+      
        
     }
 

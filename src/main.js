@@ -6,6 +6,12 @@ import store from './store/index';
 
 Vue.config.productionTip = false
 
+const moment = require('moment');
+require('moment/locale/fr');
+
+Vue.use(require('vue-moment'), {
+  moment
+});
 
 new Vue({
   router,

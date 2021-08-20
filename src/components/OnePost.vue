@@ -30,6 +30,7 @@
                     }"
                 >
                     <textarea  id="Modify-contentPost" v-model="this.post.content"></textarea>
+
             </editor>
         </div>
 
@@ -37,12 +38,16 @@
         <button v-if="modify" @click.prevent="modify = false">Annuler</button>
         <button v-if="modify" @click.prevent="modifyPost">Envoyer les modifications</button>
         <button v-if="modify" class="delete-btn" @click.prevent="deletePost">Supprimer le post</button>
+        <div class="alert-message"  v-html="errorMessage"/>
+        <div class="alert-message"  v-html="message">
+        </div>
     </div>
 </template>
 
 <script>
 
 import Editor from '@tinymce/tinymce-vue';
+import post from '@/api/post';
 
 export default {
 
@@ -56,21 +61,35 @@ export default {
             key : process.env.VUE_APP_TYNI,
             contentModified : "",
             post: [],
+            message: null,
+            errorMessage: null,
             authorized: false,
             modify: false
 
         }
     },
-  
+    mounted(){
+        if(sessionStorage.vuex != undefined)
+        this.getOnePost();
+    },
     methods: {
-        getOnePost(){
-            
+        async getOnePost(){
+            try {
+                const response = await  post.getOnePost();
+
+                    this.post = response.data
+                    console.log(response.data)
+                    this.message ="!!"
+
+            }catch (error) {
+                this.errorMessage = "ooppss !!"
+                console.log(error)
+            }
+        },
+        modifyPost(){
             
         },
         deletePost() {
-            
-        },
-        modifyPost() {
             
         },
     }
@@ -82,9 +101,9 @@ export default {
 
 .onePost{
 
-    border: solid 1px;
+    border: solid 1px rgba(4, 128, 31, 0.301);
     margin: 1rem auto;
-    width: 100%;
-    height:2rem;
+    width: auto;
+    height:auto;
 }
 </style>

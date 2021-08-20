@@ -7,13 +7,13 @@ export default {
         return httpClient.get("/comment");
     },
    
-    newComment :(commentId, data) =>{
+    newComment :  data =>{
         console.log(store.getters.token);
-        return httpClient.post("/comment" + commentId, data);
+        return httpClient.post("/comment",  data);
     },
    
     deleteComment :commentId => {
         console.log(store.getters.token);
         return httpClient.delete("/comment" + commentId);
     }
-}
+};
