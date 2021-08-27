@@ -7,9 +7,9 @@ export default {
         console.log(store.getters.token);
         return httpClient.get("/post");
     },
-    getOnePost :postId => {
+    getOnePost :(postId, data ) => {
         console.log(store.getters.token);
-        return httpClient.get("/post/" + postId);
+        return httpClient.get("/post/" + postId, data);
     },
     newPost :data => {
         console.log(store.getters.token);

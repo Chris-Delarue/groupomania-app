@@ -1,8 +1,6 @@
 <template>
     <div class="row">
-        <h1 class=" logo" >
-        <img src="../assets/images/icon-above-font.png" alt="Logo Groupomania">
-          </h1>
+        
         <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 mt-5 pt-3 pb-3 bg-white from-wrapper">
               
             <div class="container">

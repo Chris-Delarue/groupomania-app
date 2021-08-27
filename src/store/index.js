@@ -23,13 +23,16 @@ export default new Vuex.Store({
         isLogged: state => state.token !== null ,
 
         token : state => state.token,
-       
+
+        user : state => state.user, 
+
     },
     mutations : {
 
         SET_TOKEN : (state, token) => state.token = token, 
 
         LOGOUT : state => state.token == null && state.user == null,
+
         },
 
     actions : {
@@ -39,8 +42,7 @@ export default new Vuex.Store({
 
         logout({commit}) {
             commit("LOGOUT");
-        
         },
-    
+
     },
 });

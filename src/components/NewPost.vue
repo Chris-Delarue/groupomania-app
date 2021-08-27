@@ -84,6 +84,12 @@ export default {
         
             async publishPost() { 
 
+            if(this.content.length === 0) {
+                    alert(
+                        "Vous ne pouvez pas envoyer de message vide !!"
+                    )
+            }else {
+
              try {
                  const response = await post.newPost({
                     title:      this.title,
@@ -92,15 +98,14 @@ export default {
                 
                 console.log(response.data)
                 this.message = "Votre post a été publié !!";  
-                location.reload();
-                
+                location.reload()
                     
             }catch (error){
                     this.errorMessage = "oppss!!";
                     console.log(error)
                 }
-        },
-      
+        }
+      },
        
     }
 
@@ -141,8 +146,8 @@ button {
 }
 .alert-message{
       background-color: rgba(98, 245, 130, 0.301);
-      height:30px;
-      width: 40%;
+      height:fit-content;
+      width: fit-content;
       margin: auto ;
       color: black;
       text-align: center;

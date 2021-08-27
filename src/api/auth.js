@@ -9,9 +9,9 @@ export default {
     login : data => {
         return httpClient.post("/auth/login", data);
     },
-    deleteAccount : userId =>  {
+    deleteAccount : userId  =>  {
         console.log(store.getters.token);
         return httpClient.delete("/auth/" + userId);
     }
-}
+};
 
