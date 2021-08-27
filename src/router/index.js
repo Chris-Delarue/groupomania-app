@@ -12,30 +12,19 @@ const routes = [
     name: 'Home',
     component: Home
   },
+ 
   {
-    path: '/post',
-    name: 'Posts',
+    path:'/post/:postId',
+    name : 'Post',
     component: () => import('../views/Post.vue'),
     beforeEnter: (to, from, next) => {
-     if(!sessionStorage.getItem("vuex")) {
+      if(!sessionStorage.getItem("vuex")) {
         next("/");
-      }else{
+     }else{
         next();
       }
     }
   },
-  //{
-    //path:'/post/:postId',
-    //name : 'PostId',
-    //component: () => import('../views/Post.vue'),
-    ///beforeEnter: (to, from, next) => {
-      //if(!sessionStorage.getItem("vuex")) {
-        //next("/");
-     // }else{
-        //next();
-      //}
-    //}
-  //},
   {
     path :'/signup',
     name : 'Signup',
@@ -63,7 +52,7 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes,
+  routes
 });
 
 export default router;

@@ -81,11 +81,11 @@ export default {
                 visible : false,
                 message: null,
                 content: "",
-                users: "",
+                users: ""
             }
         },
        mounted() {
-            if(sessionStorage.vuex != undefined) {
+            if(sessionStorage != undefined) {
             this.getAllComment();
             }
         },
@@ -97,7 +97,6 @@ export default {
                this.comments = response.data
                console.log(response.data)
                 
-                this.message = "Tous les commentaires !!"
                 
                }catch (error) {
                 this.errorMessage = "Something went wrong !!"
@@ -106,20 +105,28 @@ export default {
        },
                 async publishComment() { 
 
-             try {
-                 const response = await comment.newComment({
+               if(this.content.length === 0) {
+                    alert(
+                        "Vous ne pouvez pas envoyer de message vide !!"
+                    )
+                }else {       
+
+                try {
+                     const response = await comment.newComment({
                     
-                    content : this.content
-            })
+                    content : this.content,
+                    users : this.users
+                    })
                 
-                console.log(response)
-                this.message = "Votre commentaire a été publié !!";  
-                location.reload();
+                    console.log(response)
+                    this.message = "Votre commentaire a été publié !!";  
+                    location.reload();
                 
-            }catch (error){
+                }catch (error){
                     this.errorMessage = "oppss!!";
                     console.log(error)
                 }
+            }
         },
             deleteComment() {
         },

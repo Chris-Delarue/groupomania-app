@@ -1,9 +1,7 @@
 <template>
+
     <div class="UserProfil" >
-        <div class="text">
-            <h1>Bonjour {{ }}</h1>
-        </div>
-            
+        
         <div class="deleteProfil" @click.prevent="deleteAccount">Supprimer votre compte</div>
        
           <div class="alert-message" v-html="errorMessage"/>
@@ -13,7 +11,7 @@
 
 <script>
 
-import auth from '../api/auth';
+import auth from '@/api/auth';
 
 export default {
     name: 'UserProfil',
@@ -23,19 +21,22 @@ export default {
         return {
             message: null,
             errorMessage: null,
-           
+          
         }
     },
-  
+ 
     methods : {
+
 
          async deleteAccount() {
 
+             const userId = this.$route.params.userId
+
             try {
-                 const response = await auth.deleteAccount()
-                
+                 const response = await auth.deleteAccount(`${userId}`)
+
                     this.message = "Votre compte à été supprimé !!"
-                    console.log(response.userId)
+                    console.log(response.data)
                     this.$store.dispatch("logout")
                     sessionStorage.clear();
                     let router = this.$router;
@@ -72,6 +73,7 @@ export default {
     border-radius: 30px;
     padding:.5rem;
     margin:5rem auto 5rem auto;
+    cursor: pointer;;
 }
 .alert-message{
       background-color: rgba(98, 245, 130, 0.301);

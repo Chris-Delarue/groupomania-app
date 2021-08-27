@@ -1,7 +1,10 @@
 <template>
     <div class="profil">
-       <LoginForm v-if="!loggedIn"/>
 
+        <div class=" logo" >
+        <img src="../assets/images/icon-above-font.png" alt="Logo Groupomania">
+          </div>
+        <LoginForm v-if="!loggedIn"/>
         <UserProfil v-if="loggedIn"/>
       
     </div>
@@ -31,15 +34,31 @@ export default {
     },
     methods : {
         checkLoggedInOk() {
-            if(sessionStorage !== undefined) {
+            if(sessionStorage.vuex !== undefined) {
                 this.loggedIn = true;
                 console.log('Utilisateur connecté !')
             }
-            else if(sessionStorage == undefined) {
+            else if(sessionStorage.vuex == undefined) {
                this.loggedIn = false;
                 console.log('Utilisateur non connecté !')
             }
         }
-    }
+    },
 }
 </script>
+
+<style scoped>
+
+img{
+  width: 100%;
+  height:100%;
+  border-radius: 100px;
+}
+.logo{
+  width: 30%;
+  height:30%;
+  margin: 1rem auto;
+  border: solid 2px green;
+  border-radius : 100px;
+}
+</style>
