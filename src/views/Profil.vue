@@ -5,6 +5,7 @@
         <img src="../assets/images/icon-above-font.png" alt="Logo Groupomania">
           </div>
         <LoginForm v-if="!loggedIn"/>
+        
         <UserProfil v-if="loggedIn"/>
       
     </div>
@@ -15,6 +16,7 @@
 import LoginForm from'@/components/LoginForm.vue';
 
 import UserProfil from '@/components/UserProfil.vue';
+import { mapGetters } from "vuex";
 
 
 export default {
@@ -24,26 +26,13 @@ export default {
         UserProfil,
    
     },
-    data() {
-        return {
-            loggedIn : true
-        }
+  
+    computed: {
+
+      ...mapGetters({loggedIn: "isLogged"}),
+        
     },
-    created() {
-        this.checkLoggedInOk()
-    },
-    methods : {
-        checkLoggedInOk() {
-            if(sessionStorage.vuex !== undefined) {
-                this.loggedIn = true;
-                console.log('Utilisateur connecté !')
-            }
-            else if(sessionStorage.vuex == undefined) {
-               this.loggedIn = false;
-                console.log('Utilisateur non connecté !')
-            }
-        }
-    },
+    
 }
 </script>
 

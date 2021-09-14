@@ -12,7 +12,7 @@ export default new Vuex.Store({
     state : {
         token: null,
         user: null,
-    
+        
     },
     plugins : [createPersistedState ({
         storage : window.sessionStorage,
@@ -24,7 +24,7 @@ export default new Vuex.Store({
 
         token : state => state.token,
 
-        user : state => state.user, 
+        user : state => state.user,
 
     },
     mutations : {
@@ -32,6 +32,8 @@ export default new Vuex.Store({
         SET_TOKEN : (state, token) => state.token = token, 
 
         LOGOUT : state => state.token == null && state.user == null,
+
+        SET_USER : (state, user) => state.user = user
 
         },
 
@@ -43,6 +45,10 @@ export default new Vuex.Store({
         logout({commit}) {
             commit("LOGOUT");
         },
+
+        setUser({commit}, user) {
+            commit("SET_USER", user);
+        }
 
     },
 });

@@ -15,8 +15,10 @@
            <label for="password">Mot de passe</label>
            <input type="password" class="form-control" name="password" id="login-password" v-model="password" >
           </div>
+          <div>
           <div class="alert-message" v-html="errorMessage"/>
-          <div class="alert-message" v-html="message"></div>
+          <div class="alert-message" v-html="message"/>
+          </div>
           <div class="row">
             <div class="col-12 col-sm-4">
               <button type="submit" class="btn btn-primary">Se connecter</button>
@@ -32,7 +34,7 @@
 </template>
 <script>
 
-import auth from '../api/auth'
+import auth from '@/api/auth'
 
 
 export default {
@@ -43,7 +45,7 @@ export default {
             email : "",
             password : "",
             errorMessage: null,
-            message: null,
+            message: null
         }
     },
   
@@ -54,24 +56,20 @@ export default {
           const response = await auth.login({
             email:    this.email,
             password: this.password,
-            
           });
-          this.message = "Merci de votre retour !!";
+          
           this.$store.dispatch("login", response.data)
-      
-          let router = this.$router;
-          setTimeout(function () {
-            router.push("/");
-          }, 2000) 
-          location.reload();
+          this.$store.dispatch("setUser", response.data)
+         // this.message = "";
+          setTimeout(() => {
+                this.message ="Merci de votre retour !!"}, 2000)
+
+          this.$router.push({name : "Home"}).catch(() => {})
+          
           
         } catch (error) {
           this.errorMessage = "Etes vous bien inscrit !!";
-          setTimeout(() => {
-            this.email = "",
-            this.password= "",
-            this.errorMessage = ""
-        }, 1000 )
+          
       }  
     },
   },
@@ -94,7 +92,9 @@ export default {
 }
 .textPasCompte{
   margin: .5rem ;
+  text-decoration: none;
 }
+
 .text-right {
   margin-top: .5rem;
 }

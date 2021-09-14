@@ -41,13 +41,14 @@
                                 v-model="passwordConfirm"/>
                             </div>
                         </div>
+                        <div>
                         <div class="alert-message" v-html="errorMessage"/>
-                        <div class="alert-message" v-html="message"></div>
+                        <div class="alert-message" v-html="message"/></div>
                         <div class="row">
                             <div class="col-12 col-sm-4">
                                 <button type="submit" class="btn btn-primary">S'inscrire</button>
                             </div>
-                            <div class="col-12 col-sm-8 text-right">
+                            <div class="col-12 col-sm-8 text-right text-signup">
                                 <a href="/login">Vous avez déja un compte</a>
                             </div>
                         </div>
@@ -60,7 +61,7 @@
 
 <script>
 
-import auth from "../api/auth"
+import auth from "@/api/auth"
 
 export default {
     name: 'SignupForm',
@@ -90,12 +91,11 @@ export default {
                     passwordConfirm : this.passwordConfirm,
                 }); 
                 this.message = "bienvenue sur votre réseau !!";
+                setTimeout(() => {
+                this.message =""}, 2000)
                 this.$store.dispatch("login", response.data);
-
-                let router = this.$router;
-                setTimeout(function() {
-                    router.push("/login");
-                }, 2000);
+                this.$router.push({name:"Login"})
+                
             } catch (error) {
                 this.errorMessage ="oopps !!" ;
                 setTimeout(() => {
@@ -112,11 +112,21 @@ export default {
  .alert-message{
         background-color: rgba(98, 245, 130, 0.301);
         text-align: center;   
-        height:40px;
+        height:20px;
         width:90%;
-        margin: auto auto 1rem auto;
+        margin: auto ;
         color: black;
     }
+.btn-primary {
+    margin-top:1rem;
+}
+.text-signup {
+    margin-top: 1rem;
+}
+.text-signup > a {
+    
+    text-decoration: none;
+}
 
 
 
