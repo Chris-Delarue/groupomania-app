@@ -1,5 +1,5 @@
 <template>
-    <div class="login">
+    <div class="">
          <div class=" logo" >
         <img src="../assets/images/icon-above-font.png" alt="Logo Groupomania">
           </div>

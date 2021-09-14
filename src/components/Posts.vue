@@ -5,15 +5,15 @@
             <div class="alert-message" v-html="message"/>
         </div> 
         <div class="post" v-for="post in posts" :key="post.postId">
-            <router-link :to="{ name: 'Post', params: {postId: post.postId}}">
+            <router-link class="router-link" :to="{ name: 'Post', params: {postId: post.postId}}">
             <div class="post-header">    
                 <span class="info-P">Posté le : {{post.createdAt | moment("DD.MM.YYYY à HH:mm")}} par : {{post.firstname}} {{post.surname}}</span>
                     
             </div>
                 <h2 class="post-title">{{post.title}}</h2>
-            <div class="post-content">{{post.content}} </div>
+            <div class="post-content" v-html="post.content"></div>
             <div>
-            <span class="post-modify" v-if="post.userId ">Modifier</span>
+            <span class="post-modify" v-if="$store.state.user.userId == post.userId ">Modifier</span>
             <span class="postComment" >Commenter</span>
             </div>
             </router-link>
@@ -50,28 +50,30 @@ export default {
     methods : {
         async allPost() {
             
-            try {
-                const response = await post.getAllPost();
+                post.getAllPost()
+                .then(response => {
 
                 this.posts = response.data
                 console.log(response.data)
                
                 this.message = "Voici tous les postes actualisés !!"
-
-                }catch (error) {
-                this.errorMessage = "Something went wrong !!"
-                console.log(error)
-            }
+               
+                })
+                .catch (error => {
+                    console.log(error)
+                    this.errorMessage = "Something went wrong !!"
+            })
         }, 
     },
 }
 </script>
 <style scoped>
 
+
 .posts{
     width:auto;
     border: solid 1px rgba(4, 128, 31, 0.301);
-
+   
 }
 .post{
   
@@ -90,18 +92,22 @@ export default {
     color: black;
     text-align: center;
 }
+.router-link{
+    text-decoration: none;
+}
 .post-header {
     width: auto;
     height: auto;
     padding:.5rem;
     color: black;
-}
+}  
 .post-title  {
     margin: 0;
     padding: .5rem;
     color: green;
     font-size: 20px;
     text-align: left;
+
 }
 .post-content  {
     overflow: hidden;

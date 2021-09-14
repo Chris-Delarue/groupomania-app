@@ -21,10 +21,12 @@
                     :apiKey="key"
                     :init="{
                     height: 500,
-                    menubar: false,
+                    entity_encoding : 'raw',
                     forced_root_block : false,
                     force_br_newlines : true,
-                    force_p_newlines : false,    
+                    force_p_newlines : false,  
+                    paste_as_text: true,  
+                    language: 'fr_FR',
 
                      plugins: [
                                 'advlist autolink lists link image charmap',
@@ -35,7 +37,7 @@
                             toolbar:
                                 'undo redo | formatselect | bold italic | \
                                 alignleft aligncenter alignright | \
-                                bullist numlist outdent indent | link image | print preview media fullpage | ' +
+                                bullist numlist outdent indent  | print preview media fullpage | ' +
                                 'forecolor backcolor emoticons |help',
                             menu: {
                             favs: {title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons'}
@@ -45,14 +47,17 @@
  
                             }"
                             >
-                            <textarea  id="Modify-contentPost" v-model="this.post.content"></textarea>
+                          <textarea id="content-modified" v-model="this.post.content"></textarea> 
                         </editor>
+                        
         </div>
 
-        <button v-if="authorized && !modify" @click.prevent="modify = true">Modifier</button>
+        <button v-if="$store.state.user.userId == post.userId" @click.prevent="modify = true">Modifier</button>
         <button v-if="modify" @click.prevent="modify = false">Annuler</button>
         <button v-if="modify" @click.prevent="modifyPost">Envoyer les modifications</button>
         <button v-if="modify" class="delete-btn" @click.prevent="deletePost">Supprimer le post</button>
+        
+            
         <div class="alert-message"  v-html="errorMessage"/>
         <div class="alert-message"  v-html="message">
         </div>
@@ -63,6 +68,8 @@
 
 import Editor from '@tinymce/tinymce-vue';
 import post from '@/api/post';
+
+
 
 export default {
 
@@ -76,49 +83,42 @@ export default {
         return {
             key : process.env.VUE_APP_TYNI,
             contentModified : "",
-         
             post: [],
             message: null,
             errorMessage: null,
-            authorized: false,
             modify: false,
-            userId:"",
-            isAdmin:""
-           
+    
         }
     },
 
-     mounted(){
+    mounted(){
 
         if(sessionStorage.vuex != undefined)
         this.getOnePost();
     },
 
     methods: {
+
         async getOnePost(){
 
             const postId = this.$route.params.postId
             
-            try {
-                const response = await post.getOnePost(`${postId}`)
+             post.getOnePost(`${postId}` 
 
-                    this.post = response.data[0]
-                    console.log(response.data)
+             )
+            .then(response => {
+                    
+                this.post = response.data[0]
+                console.log(response.data)
 
-                    this.message ="";
+                this.message ="";
 
-                    if( this.userId === this.post.userId || this.isAdmin == 0) {
-                        this.authorized = true;
-                    }else {
-                        this.authorized = false;
-                    }
-
-            }catch (error) {
+            })
+            .catch (error =>{
                 this.errorMessage = "ooppss !!"
                 console.log(error)
-            }
-        
-    },
+            })
+        },
         async modifyPost(){
 
             if(this.contentModified.length === 0) {
@@ -131,31 +131,57 @@ export default {
                 const title = document.querySelector('#modify-title').value
                 const content = this.contentModified
                 
-
-            try {
-                const response = await post.modifyPost(`${postId}`,{
+                post.modifyPost(`${postId}`,{
                     
-                 postId,
-                 title,
-                 content
+                    postId,
+                    title,
+                    content
                    
                 })
-                console.log(response.data)
-                 let router = this.$router;
-                setTimeout(function () {
-                router.push("/");
-                }, 2000) 
-                location.reload();
-            
-            } catch (error) {
-                console.log(error)
-                this.errorMessage = "ooppss vous n'avez pas l'autorisation de modifier ce post !!"
+                .then(response => {
+                    console.log(response.data)
+                    let router = this.$router;
+                    setTimeout(function () {
+                    router.push("/");
+                    }, 2000) 
+
+                })
+                .catch(error => {
+                    console.log(error)
+                    this.errorMessage = "ooppss vous n'avez pas l'autorisation de modifier ce post et/ou le post est trop long!!"
+                    let router = this.$router;
+                    setTimeout(function () {
+                    router.push("/");
+                    }, 2000) 
+                })
             }
-        }
-    },
-        deletePost() {
-            
-    },
+        },
+        async deletePost() {
+
+            if(confirm("Êtes-vous sûr de vouloir supprimer votre post ?")){
+
+                const postId = this.$route.params.postId
+
+                post.deletePost(`${postId}`,)
+
+                .then(() => {
+                    this.message = "Nous avons supprimer votre post !!" 
+                    let router = this.$router;
+                    setTimeout(function () {
+                    router.push("/");
+                    }, 2000) 
+                })
+
+                .catch (error => {
+                    console.log(error)
+                    this.errorMessage = "Votre post n'a pas été supprimé  et/ou vous n'avez pas l'autorisation !!"
+                    let router = this.$router;
+                    setTimeout(function () {
+                    router.push("/");
+                    }, 2000) 
+                })
+            }
+        },
     }
 }
 
@@ -178,7 +204,7 @@ img{
 
 .onePost{
 
-    border: solid 1px rgba(4, 128, 31, 0.301);
+    border: solid 2px rgba(4, 128, 31, 0.301);
     margin: 1rem auto;
     width: auto;
     height:auto;
@@ -190,7 +216,7 @@ img{
     height:auto;
     text-align: left;
     box-shadow: 0px 0px 50px -7px rgba(0,0,0,0.1);
-    border-bottom: solid red 5px;
+    /*border-bottom: solid red 5px;*/
 
 }
 .titlePost{
@@ -232,7 +258,7 @@ img{
     margin: .8rem;
 
 }
-#Modify-contentPost{
+#content-modified{
     margin-top :20px;
     height: 200px;
     width: calc(100%-22px);

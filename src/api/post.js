@@ -22,5 +22,20 @@ export default {
     deletePost : postId => {
         console.log(store.getters.token);
         return httpClient.delete("/post/" + postId);
+    },
+    getComment :postId=> {
+        console.log(store.getters.token);
+        return httpClient.get("/post/" + postId );
+    },
+   
+    newComment :  (postId, data) =>{
+        console.log(store.getters.token);
+        return httpClient.post("/post/" + postId ,  data);
+    },
+   
+    deleteComment : commentId => {
+        console.log(store.getters.token);
+        return httpClient.delete("/post/comment/" + commentId);
     }
-}
+};
+

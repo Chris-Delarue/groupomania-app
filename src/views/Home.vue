@@ -1,5 +1,5 @@
 <template>
-  <div class="home"> 
+  <div class="home" > 
       
         <h2 class="homeText">Bienvenue sur votre réseau social !!</h2>
         <div class="logo" >
@@ -8,19 +8,21 @@
       
     <LoginForm v-if="!loggedIn"/>
     
-
+   
     <NewPost v-if="loggedIn"/>
     <Posts v-if="loggedIn"/>
    
   
 
-    </div>
+  </div>
 </template>
 
 <script>
 import LoginForm from '@/components/LoginForm.vue';
 import NewPost from '@/components/NewPost.vue';
 import Posts from '@/components/Posts.vue';
+
+//import { mapGetters } from "vuex";
 
 
 export default {
@@ -31,30 +33,12 @@ export default {
     Posts,
     NewPost
     },
-    data() {
-      return {
-        loggedIn: true
-      }
-    },
-    created() {
-        this.checkLoggedInOk()
-    },
-    methods : {
-        checkLoggedInOk() {
-            if(sessionStorage.vuex !== undefined) {
-                this.loggedIn = true;
-                console.log('Utilisateur connecté !')
-            }
-            else if(sessionStorage.vuex == undefined) {
-               this.loggedIn = false;
-                console.log('Utilisateur non connecté !')
-            }
-        }
-    },
     
-   
-
-    
+    computed: {
+        loggedIn() { 
+            return this.$store.getters.isLogged
+            }
+    },
 }
 </script>
 

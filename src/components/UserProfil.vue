@@ -1,93 +1,62 @@
 <template>
+    <div class="modale">
+        <ModalDeleteAccount :revele="revele" :displayModale="displayModale"/>
+        <button class="userProfil_btn" v-on:click="displayModale"> Supprimer mon compte </button>
 
-    <div class="UserProfil" >
-        
-        <div class="deleteProfil" @click.prevent="deleteAccount">Supprimer votre compte</div>
-       
-          <div class="alert-message" v-html="errorMessage"/>
-          <div class="alert-message" v-html="message"></div>
     </div>
 </template>
 
+
 <script>
 
-import auth from '@/api/auth';
+
+import ModalDeleteAccount from './ModalDeleteAccount';
 
 export default {
     name: 'UserProfil',
+    components :{
+        ModalDeleteAccount
+    },
  
-
     data() {
         return {
             message: null,
             errorMessage: null,
-          
+            revele: false
+            
         }
     },
- 
+   
+
     methods : {
-
-
-         async deleteAccount() {
-
-             const userId = this.$route.params.userId
-
-            try {
-                 const response = await auth.deleteAccount(`${userId}`)
-
-                    this.message = "Votre compte à été supprimé !!"
-                    console.log(response.data)
-                    this.$store.dispatch("logout")
-                    sessionStorage.clear();
-                    let router = this.$router;
-                    setTimeout(function() {
-                    router.push("/");
-                    }, 2000);
-                    
-                    
-            }catch (error) {
-                    this.errorMessage = "oppss vous êtes toujours là !!"
-            } 
-
-        }
-    },
+        
+            displayModale() {
+                this.revele = !this.revele
+                
+            }
+    }
 }
 
 </script>
 
 <style scoped>
 
-.UserProfil{
-   
-    width: 100%;
-    height:auto;
-    margin: 5rem auto;
-    padding: .8rem;
-    border: solid 1px;
-    text-align: center;
+.modale {
+    display: flex;
+    justify-content: center;
+    margin-top:3rem;
 }
-.deleteProfil{
-    width: 100%;
+
+.userProfil_btn{
+    width:40%;
     color:  red;
     border: solid 1px red;
     border-radius: 30px;
     padding:.5rem;
-    margin:5rem auto 5rem auto;
-    cursor: pointer;;
+    cursor: pointer;
+    background-color:rgba(98, 245, 130, 0.301);
+    font-size:20px;
 }
-.alert-message{
-      background-color: rgba(98, 245, 130, 0.301);
-      height:20px;
-      width: 100%;
-      margin:  auto;
-      color: black;
-      text-align: center;
-}
-.text {
-    width: 100%;
-    margin: auto;
-}
-
 
 
 </style>

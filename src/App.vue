@@ -3,8 +3,6 @@
     
     <app-nav>
     </app-nav>
-   
-     
     <div class="container">
      <router-view/>
     </div>
@@ -31,14 +29,14 @@ export default{
 </script>
 
 <style>
-body{
-  background-color: #e1e1e1;
-}
+
 .form-wrapper{
   border-radius: 7px;
+  
 }
 .form-wrapper label{
   font-weight: bold;
+  
 }
 .error-message li{
   list-style: none;

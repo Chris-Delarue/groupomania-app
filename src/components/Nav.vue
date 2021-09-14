@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <div class="blocNamelogo">
                 <div class="navbar-brand" > {{ brand }}</div>
@@ -25,12 +25,12 @@
                         <a class="nav-link" id="logout-btn" @click.prevent="logout">Se deconnecter</a>
                     </li>
                 </ul>
-                <ul v-else class="navbar-nav mr-auto text-right">
+                <ul v-else class="navbar-nav mr-auto  text-right text-right-notin ">
                     <li class="nav-item">
-                        <router-link to="/login">Se connecter</router-link>
+                        <router-link class="textRouter" to="/login">Se connecter</router-link>
                     </li>
                      <li class="nav-item">
-                         <router-link to="/signup">S'inscrire</router-link> 
+                         <router-link class="textRouter" to="/signup">S'inscrire</router-link> 
                     </li>
                 </ul>
                
@@ -50,6 +50,7 @@ export default {
     data () {
         return {
             brand : process.env.VUE_APP_APPNAME,
+        
         }
     },
     computed : {
@@ -61,21 +62,19 @@ export default {
    
     methods : {
 
-       
         logout() {
            
-            this.$store.dispatch("logout").then(() => { 
             sessionStorage.clear();
-            this.$router.push('/');
-            location.reload();
-            })
-            .catch(() => console.log('Impossible de vous déconnecter !!'))
-        }, 
-    }
+            this.$router.push({name : "Login"})
+            location.reload()
+        },
+        
+    },
 }
 </script>
 
 <style scoped>
+
 
 .error-message{
     background-color: rgba(233, 77, 103, 0.301);
@@ -90,13 +89,22 @@ export default {
 .nav-name {
     color: white;
 }
+.textRouter{
+    text-decoration:  none;
+    color: green;
+}
 .nav-nameText{
     font-size: 15px;
 }
-.nav-link{
+/*.text-right-notin{
+    margin: auto;;
+    width: 30%;
+    display : flex;
+    justify-content: space-between
+}*/
+nav-link {
     width: fit-content;
     float:right;
-    
 }
 #logout-btn {
     color:red;
@@ -107,12 +115,15 @@ export default {
 .blocNamelogo {
     display: flex-flow;
 }
+
 .navbar-brand {
     font-size: 15px;
+    
 }
 
 .nav-nameText{
     font-size: 15px;
+    
 }
 }
 </style>

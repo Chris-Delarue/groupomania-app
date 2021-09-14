@@ -9,7 +9,7 @@
                     <span class="newPost-btn formClose" @click.prevent="visible= false">Fermer</span>
                     <form class="formPost" @submit.prevent="publishPost">
                         <div>
-                            <label for="titlePost" class="titlePost" >Title :</label>
+                            <label for="titlePost" class="titlePost" >Titre :</label>
                             <input type="text" name="titlePost"  id="titlePost" v-model="title">
                         </div>
 
@@ -17,11 +17,13 @@
                             :apiKey="key"
                             v-model="content"
                             :init="{
-                            height: 500,
-                            menubar: false,
-                            forced_root_block : false,
+                            entity_encoding : 'raw',
+                            height:500,
+                            paste_as_text: true,
+                            forced_root_block : '',
                             force_br_newlines : true,
                             force_p_newlines : false,
+                            language :'fr_FR',
                             
                             plugins: [
                                 'advlist autolink lists link image charmap',
@@ -32,7 +34,7 @@
                             toolbar:
                                 'undo redo | formatselect | bold italic | \
                                 alignleft aligncenter alignright | \
-                                bullist numlist outdent indent | link image | print preview media fullpage | ' +
+                                bullist numlist outdent indent | print preview media fullpage | ' +
                                 'forecolor backcolor emoticons |help',
                             menu: {
                             favs: {title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons'}
@@ -42,6 +44,7 @@
  
                             }"
                             >
+
                         </editor>
                         
                         <button id="newPost-btn" type="submit">Publier</button>
@@ -84,31 +87,30 @@ export default {
         
             async publishPost() { 
 
-            if(this.content.length === 0) {
+            if(this.content.length === 0) 
+           {
                     alert(
-                        "Vous ne pouvez pas envoyer de message vide !!"
+                        "Vous ne pouvez pas envoyer de message  vide !!"
                     )
             }else {
 
-             try {
-                 const response = await post.newPost({
+                post.newPost({
                     title:      this.title,
                     content :   this.content
-            })
-                
+                })
+                .then(response => {
+
                 console.log(response.data)
                 this.message = "Votre post a été publié !!";  
                 location.reload()
-                    
-            }catch (error){
-                    this.errorMessage = "oppss!!";
+                })        
+                .catch (error =>{
+                    this.errorMessage = "oppss une erreur est survenue !!";
                     console.log(error)
-                }
-        }
-      },
-       
+                })
+            }
+        }   
     }
-
 }
 </script>  
 
@@ -130,14 +132,21 @@ export default {
 }
 
 .titlePost{
-
     padding-top : 1rem;
     color: green;
 }
-input {
-    margin-left: 1rem;
-     border: none;
-    
+#titlePost {
+    margin-left: 2rem;
+}
+
+
+#newPostContent {
+    height:200px;
+    width: calc(100% - 20px);
+    padding: 10px;
+    resize: none;
+    overflow-y: scroll;
+    border: solid 1px red;
 }
 button {
     color: green;

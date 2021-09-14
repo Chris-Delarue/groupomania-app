@@ -1,140 +1,116 @@
 <template>
-    <div class="newComment">
-        <div class="newComment-btn" @click.prevent="visible = true"> Votre Commentaire
-        </div>
-       
-        <transition name="fade">
-            <div class="overlay" v-if="visible">
-                <div class="form-container">
-                    <span class="newComment-btn formClose" @click.prevent="visible= false">Fermer</span>
-                    <form class="formComment" @submit.prevent="publishComment">
-                        
-                        <editor 
-                            :apiKey="key"
-                            v-model="content"
-                            :init="{
-                            height: 500,
-                            menubar: false,
-                            forced_root_block : false,
-                            force_br_newlines : true,
-                            force_p_newlines : false,
-                            
-                            plugins: [
-                                'advlist autolink lists link image charmap',
-                                'searchreplace visualblocks code fullscreen',
-                                'print preview anchor insertdatetime media',
-                                'paste code help wordcount table'
-                            ],
-                            toolbar:
-                                'undo redo | formatselect | bold italic | \
-                                alignleft aligncenter alignright | \
-                                bullist numlist outdent indent | link image | print preview media fullpage | ' +
-                                'forecolor backcolor emoticons |help',
-                            menu: {
-                            favs: {title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons'}
-                            },
-                            menubar: 'favs file edit view insert format tools table help',
-                            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
- 
-                            }"
-                            >
-                        </editor>
-                        
-                        <button id="newComment-btn" type="submit">Publier</button>
-                        <div class="alert-message"  v-html="errorMessage"/>
-                        <div class="alert-message"  v-html="message">
-                        </div>
-                       
-                    </form> 
-                </div>
-            </div>
-        </transition>
+    <div  class="newComment">
+        <form @submit.prevent="publishComment">
+            <label for="new-comment">Rédiger un commentaire :</label>
+            <textarea name="newComment" id="new-comment" placeholder="Rédiger votre commentaire..." required></textarea>
+            <button type="submit" id="newComment-btn">Publier</button>
+        </form>
+        <div class="head-comment">
+        <h2 v-if="comments.length > 0" >Commentaires :</h2>
+       </div>
         <div class="comments" >
-            <div class="comment" v-for="comment in comments" :key="comment.commentId">
-                <div class="info-C">Commenté le :{{comment.createdAt | moment("DD  MM YYYY à HH:mm")}} Par : {{comment.firstname}} {{comment.surname}} 
-                    <button class="btn-sup-comment" @click.prevent="deleteComment" v-if="comment.userId == users.userId || true" :key="comment.commentId">Supprimer</button>
+            <div  class="comment" v-for="comment in comments" :key="comment.commentId">
+                <div class="info-C">Commenté le : {{comment.createdAt | moment("DD  MM YYYY à HH:mm")}} Par : {{comment.firstname}} {{comment.surname}}  
+                    <button class="btn-sup-comment" @click.prevent="deleteComment(comment.commentId)" v-if="$store.state.user.userId == comment.userId">Supprimer</button>
                 </div>
-                <div class="comment-text">
-                    {{comment.content}}
-                </div>
+                {{comment.content}}
             </div>
         </div>
-    </div>   
+    </div> 
 </template>
 
 <script>
 
-import Editor from'@tinymce/tinymce-vue';
-import comment from '@/api/comment';
+
+import post from '@/api/post';
 
 export default {
         name: 'Comments',
-        components: {
-            editor : Editor
-        },
-
-        data() {
-            return {
-                comments: [],
-                key : process.env.VUE_APP_TYNI,
-                errorMessage: null,
-                visible : false,
-                message: null,
-                content: "",
-                users: ""
-            }
-        },
-       mounted() {
+       
+    data() {
+        return {
+            comments: [],
+            key : process.env.VUE_APP_TYNI,
+            errorMessage: null,
+            content:"",
+            message: null,
+        }
+    },
+     mounted() {
             if(sessionStorage != undefined) {
             this.getAllComment();
             }
         },
-        methods: {
-                 async getAllComment() {
-           try {
-                const response = await comment.getComment();
-                
-               this.comments = response.data
-               console.log(response.data)
-                
-                
-               }catch (error) {
-                this.errorMessage = "Something went wrong !!"
-               console.log(error)
-            }
-       },
+        methods: { 
+            
                 async publishComment() { 
 
-               if(this.content.length === 0) {
-                    alert(
-                        "Vous ne pouvez pas envoyer de message vide !!"
-                    )
-                }else {       
-
-                try {
-                     const response = await comment.newComment({
+                    const postId = parseInt(this.$route.params.postId)
+                    const userId = this.$store.state.user.userId
+                    const content = document.getElementById('new-comment').value;
                     
-                    content : this.content,
-                    users : this.users
+                    console.log(postId)
+                    post.newComment(`${postId}/comment/`,{
+
+                        postId,
+                        content,
+                        userId
+                        })
+
+                    .then(response => {
+
+                        console.log(response.data)
+                        this.message = "Votre commentaire a été publié !!";  
+                        location.reload();
                     })
-                
-                    console.log(response)
-                    this.message = "Votre commentaire a été publié !!";  
-                    location.reload();
-                
-                }catch (error){
-                    this.errorMessage = "oppss!!";
-                    console.log(error)
-                }
-            }
+                        .catch (error=> {
+                        this.errorMessage = "oppss!!";
+                        console.log(error)
+                    })
+                    .then(this.getAllComment())
+            },
+                async getAllComment() {
+
+                   const postId = parseInt(this.$route.params.postId)
+
+                    post.getComment(`${postId}/comment/`)
+
+                .then(response => {
+
+                this.comments = response.data
+                console.log(response.data)
+            })
+               .catch (error => {
+                this.errorMessage = "Something went wrong !!"
+                console.log(error)
+            })
         },
-            deleteComment() {
+               
+            async deleteComment(commentId) {
+
+                
+            if(confirm("Êtes-vous sûr de vouloir supprimer votre commentaire ?")){
+
+                post.deleteComment(`${commentId}`,)
+
+                .then(() => {
+
+                this.message = "Nous avons supprimer votre commentaire !!" 
+                this.$router.push({name: "Home"})
+                    
+                })
+               .catch (error => {
+                this.errorMessage = "Something went wrong !!"
+               console.log(error)
+                })
+            }
         },
     },
 }
 </script>
 
-<style >
+<style scoped>
+
 
 .newCommnent{
     padding : 20px 20px 0px 20px;
@@ -142,21 +118,41 @@ export default {
     width:auto;
     margin: 1rem auto;
 }
-.newComment-btn{
-    cursor: pointer;
-    color: green;
-    padding-bottom: .5rem;
+label {
+    text-align : left !important;
 }
-#newComment-btn{
-    margin: .7rem auto;
-}
-
-input {
-    margin-left: 1rem;
-     border: none;
+textarea {
+    margin: 20px 0px 20px 0px;
+    height: 70px;
+    width: calc(100% - 22px);
+    padding: 10px;
+    resize: none;
+    overflow-y: scroll;
 }
 button {
-    color: green;
+    margin-top: 20px;
+    padding: 5px;
+    font-size: 1rem;
+    color: white;
+    background-color: green;
+    border: none;
+    border-radius: 10px;
+    transition-duration: 0.2s;
+    cursor: pointer;
+    margin: auto;
+}
+
+#newComment-btn{
+    margin: .8rem ;
+    color:white;
+}
+input {
+    margin-left: 1rem;
+    border: none;
+}
+button {
+    background-color: green;
+    color: white;
     border: none;
 }
 .alert-message{
@@ -167,20 +163,18 @@ button {
       color: black;
       text-align: center;
 }
-.fade-enter-active, .fade-leave-active {
-    transition : opacity .8s;
+.head-comment >h2{
+    display: flex;
+    justify-content: center;
 }
-.fade-enter, .fade-leave-to {
-    opacity : 0;
-}
+
 .comments { 
-    border :solid 5px red;
+    border :solid 2px rgba(4, 128, 31, 0.301);
     width:auto;
     height: auto;
 }
 .comment{
     position: relative;
-    border: solid 1px rgba(4, 128, 31, 0.301);
     width: auto;
     height: auto;
     margin :2rem;
@@ -190,8 +184,13 @@ button {
     width: auto;
 }
 .btn-sup-comment {
-    position: absolute;
-    right:0;
-    top:2;
+    float: right;
+}
+
+@media screen and (max-width:680px) {
+
+    .info-C {
+        font-size:12px;
+    }
 }
 </style>
