@@ -22,8 +22,6 @@ import LoginForm from '@/components/LoginForm.vue';
 import NewPost from '@/components/NewPost.vue';
 import Posts from '@/components/Posts.vue';
 
-//import { mapGetters } from "vuex";
-
 
 export default {
  
@@ -33,12 +31,16 @@ export default {
     Posts,
     NewPost
     },
+ 
     
-    computed: {
-        loggedIn() { 
-            return this.$store.getters.isLogged
-            }
-    },
+ computed: {
+
+    loggedIn() {
+   
+        return this.$store.getters.isLogged
+       
+    }
+  },
 }
 </script>
 

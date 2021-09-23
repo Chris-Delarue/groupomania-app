@@ -50,25 +50,30 @@ export default {
     data () {
         return {
             brand : process.env.VUE_APP_APPNAME,
-        
+          
         }
     },
+    
     computed : {
 
         isLoggedIn() { 
             return this.$store.getters.isLogged
-            },
+        },
+            
     },
    
     methods : {
 
-        logout() {
-           
-            sessionStorage.clear();
-            this.$router.push({name : "Login"})
-            location.reload()
+        logout(){
+        
+        return this.$store.dispatch('logout'),
+        
+        this.$router.push({ name: 'Login'}).catch(() =>{})
+       
         },
         
+               
+       
     },
 }
 </script>

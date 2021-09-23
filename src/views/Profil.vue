@@ -23,7 +23,8 @@ export default {
     name : 'Profil',
     components : {
         LoginForm,
-        UserProfil,
+        UserProfil
+       
    
     },
   

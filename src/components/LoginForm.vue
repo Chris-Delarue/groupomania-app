@@ -35,6 +35,8 @@
 <script>
 
 import auth from '@/api/auth'
+import httpClient from '@/api/httpClient';
+
 
 
 export default {
@@ -56,16 +58,18 @@ export default {
           const response = await auth.login({
             email:    this.email,
             password: this.password,
-          });
           
+          });
+
+         
           this.$store.dispatch("login", response.data)
           this.$store.dispatch("setUser", response.data)
-         // this.message = "";
-          setTimeout(() => {
-                this.message ="Merci de votre retour !!"}, 2000)
-
-          this.$router.push({name : "Home"}).catch(() => {})
           
+ 
+          httpClient.defaults.headers.common['Authorization'] = response.data.token;
+
+          this.$router.push({name : "Home"}).catch(()=>{});
+           
           
         } catch (error) {
           this.errorMessage = "Etes vous bien inscrit !!";
@@ -79,12 +83,12 @@ export default {
 <style scoped>
 
 .alert-message{
-      background-color: rgba(98, 245, 130, 0.301);
-      height:20px;
-      width: 100%;
-      margin: auto;
-      color: black;
-      text-align: center;
+  background-color: rgba(98, 245, 130, 0.301);
+  height:20px;
+  width: 100%;
+  margin: auto;
+  color: black;
+  text-align: center;
 }
 .btn {
   margin-top: .8rem;

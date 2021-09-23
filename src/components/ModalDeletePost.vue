@@ -5,13 +5,13 @@
 
         <div class="modale_card">
             <div class="blocModale_card_title">
-                <h2>Etes-vous sûr de vouloir supprimer votre compte ?</h2>
+                <h2>Etes-vous sûr de vouloir supprimer votre post ?</h2>
             </div>
             <div class="blocModale_card_title_close">
                 <i @click="displayModale" class="far fa-times-circle fa-2x blocModale_card_title_close"></i>
             </div>
         </div>
-        <button @click.prevent="deleteAccount" class="blocModale_card_btn"> oui, je supprime mon compte</button>
+        <button @click.prevent="deletePost" class="blocModale_card_btn"> oui, je supprime mon post</button>
         <div>
             <div class="alert-message" v-html="errorMessage"/>
             <div class="alert-message" v-html="message"/>
@@ -22,13 +22,11 @@
 
 <script>
 
-import auth from '@/api/auth';
-
-import httpClient from '@/api/httpClient';
+import post from '@/api/post';
 
 export default {
 
-    name: 'ModalDeleteAccount',
+    name: 'ModalDeletePost',
     props: ['revele', 'displayModale'],
 
     data() {
@@ -40,26 +38,29 @@ export default {
 
     methods: {
 
-        async deleteAccount() {
+        async deletePost() {
 
-            const userId = this.$store.state.user.userId 
             
-            auth.deleteAccount(`${userId}`)
-                
-            .then((response) => {
+                const postId = this.$route.params.postId
 
-                httpClient.defaults.headers.common['Authorization'] = response.data.token;
+                post.deletePost(`${postId}`,)
 
-                console.log(response)
-                this.message = "Nous avons supprimé votre compte !!" ;   
-                this.$store.dispatch('logout')
-                this.$router.push({name:"Login"});
+                .then(() => {
+
+                    
                 
-            })
-            .catch (error => {
-                console.log(error)
-                this.errorMessage = "Votre compte n'a pas été supprimé !!"
-            })
+                    this.message = "Nous avons supprimer votre post !!" 
+                    this.$router.push({name : "Home"});
+                   
+                })
+
+                .catch (error => {
+                    console.log(error)
+                    this.errorMessage = "Votre post n'a pas été supprimé  et/ou vous n'avez pas l'autorisation !!"
+                    this.$router.push({name : "Home"});
+                   
+                })
+            
         },
 
     }
@@ -73,25 +74,37 @@ export default {
 <style scoped>
 
 
+
 .bloc-modale {
+    border:solid 4px;
     position: fixed;
-    width:50%;
-    height:50%;
-    margin:2rem auto;
+    width:100%;
+    height:100%;
+    top:0;
+    bottom: 0;
+    left:0;
+    right:0;
+    margin: auto;
     display: flex;
     justify-content:center;
     align-items: center;
+    z-index:9999;
 }
 .overlay {
-    background: rgba(87, 90, 89, 0.5);
+    background: rgba(17, 17, 17, 0.5);
     position: fixed;
     top: 0 ;
     right:0;
     bottom:0;
     left:0;
 }
+
 .blocModale_card_title {
     text-align: center;
+}
+button {
+    border: solid 1px red;  
+    margin:20rem;
 }
 
 .blocModale_card_btn {
@@ -100,23 +113,21 @@ export default {
     bottom:0;
     left:2;
     right:2;
-    margin-bottom:5rem;
+  
     background-color: rgba(98, 245, 130, 0.301);
     color: red;
     border-radius: 30px;
     padding:.5rem;
     width:40%;
-   border:solid 1px red;
-
+    
 }
-
 .alert-message{
-    background-color: rgba(98, 245, 130, 0.301);
-    height:auto;
-    width: auto;
-    margin:  auto;
-    color: black;
-    text-align: center;
+      background-color: rgba(98, 245, 130, 0.301);
+      height:auto;
+      width: auto;
+      margin:  auto;
+      color: black;
+      text-align: center;
 }
 
 

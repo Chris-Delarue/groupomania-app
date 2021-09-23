@@ -4,6 +4,7 @@
     <app-nav>
     </app-nav>
     <div class="container">
+     
      <router-view/>
     </div>
   </div>
@@ -20,10 +21,7 @@ export default{
  components : {
 
    appNav : Nav
-  
 
-
-   
  }
 }
 </script>
