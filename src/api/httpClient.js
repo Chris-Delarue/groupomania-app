@@ -10,4 +10,6 @@ const httpClient = axios.create({
         Authorization: `Bearer ${store.getters.token}`
     }
  });
+
+ 
  export default httpClient;

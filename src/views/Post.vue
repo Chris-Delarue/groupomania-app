@@ -24,11 +24,6 @@ export default{
       Comments
       
    },
-   data() {
-     return{
-        authorized : true
-     }
-   },
   
     computed : {
 

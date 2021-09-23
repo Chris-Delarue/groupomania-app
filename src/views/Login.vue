@@ -6,7 +6,6 @@
          <h2>Bienvenue sur votre réseau social !!</h2>
         <LoginForm/>
 
-       
     </div>
 </template>
 
@@ -19,6 +18,7 @@ export default {
 
     components : {
         LoginForm
+       
     },
 }
 </script>

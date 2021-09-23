@@ -65,6 +65,7 @@ import post from '../api/post';
 
 
 
+
 export default {
         name : 'NewPost',
 
@@ -89,9 +90,10 @@ export default {
 
             if(this.content.length === 0) 
            {
-                    alert(
-                        "Vous ne pouvez pas envoyer de message  vide !!"
-                    )
+                    this.errorMessage ="Vous ne pouvez pas envoyer de message vide !!"
+                    setTimeout(() =>{
+                        this.errorMessage=""
+                    },2000)
             }else {
 
                 post.newPost({
@@ -99,10 +101,12 @@ export default {
                     content :   this.content
                 })
                 .then(response => {
-
                 console.log(response.data)
+
                 this.message = "Votre post a été publié !!";  
-                location.reload()
+                this.$router.go()
+                
+                
                 })        
                 .catch (error =>{
                     this.errorMessage = "oppss une erreur est survenue !!";

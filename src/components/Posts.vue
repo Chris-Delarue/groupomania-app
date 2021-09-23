@@ -13,7 +13,7 @@
                 <h2 class="post-title">{{post.title}}</h2>
             <div class="post-content" v-html="post.content"></div>
             <div>
-            <span class="post-modify" v-if="$store.state.user.userId == post.userId ">Modifier</span>
+            <span class="post-modify" v-if="$store.state.user.userId == post.userId || $store.state.user.isAdmin === true">Modifier</span>
             <span class="postComment" >Commenter</span>
             </div>
             </router-link>
@@ -42,9 +42,8 @@ export default {
     
     mounted() {
         
-        if(sessionStorage.vuex != undefined) {
         this.allPost()
-        }
+        
     },
     
     methods : {
@@ -57,7 +56,7 @@ export default {
                 console.log(response.data)
                
                 this.message = "Voici tous les postes actualisés !!"
-               
+              
                 })
                 .catch (error => {
                     console.log(error)

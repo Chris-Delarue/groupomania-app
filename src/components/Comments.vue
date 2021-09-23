@@ -1,7 +1,7 @@
 <template>
     <div  class="newComment">
         <form @submit.prevent="publishComment">
-            <label for="new-comment">Rédiger un commentaire :</label>
+            <label for="new-comment" class="header-new-comment">Répondre à un post :</label>
             <textarea name="newComment" id="new-comment" placeholder="Rédiger votre commentaire..." required></textarea>
             <button type="submit" id="newComment-btn">Publier</button>
         </form>
@@ -10,11 +10,17 @@
        </div>
         <div class="comments" >
             <div  class="comment" v-for="comment in comments" :key="comment.commentId">
-                <div class="info-C">Commenté le : {{comment.createdAt | moment("DD  MM YYYY à HH:mm")}} Par : {{comment.firstname}} {{comment.surname}}  
+                <div class="info-C">Commenté le : {{comment.createdAt | moment("DD  MM YYYY à HH:mm")}} Par : {{comment.firstname}} {{comment.surname}} 
+                  
                     <button class="btn-sup-comment" @click.prevent="deleteComment(comment.commentId)" v-if="$store.state.user.userId == comment.userId">Supprimer</button>
+                    
                 </div>
-                {{comment.content}}
+                  {{comment.content}}
             </div>
+            <div>
+                <div class="alert-message" v-html="errorMessage"/>
+                <div class="alert-message" v-html="message"/>
+            </div> 
         </div>
     </div> 
 </template>
@@ -23,6 +29,7 @@
 
 
 import post from '@/api/post';
+
 
 export default {
         name: 'Comments',
@@ -36,20 +43,22 @@ export default {
             message: null,
         }
     },
+     
      mounted() {
-            if(sessionStorage != undefined) {
-            this.getAllComment();
-            }
-        },
+
+         this.getAllComment();
+     },
         methods: { 
             
                 async publishComment() { 
 
+               
                     const postId = parseInt(this.$route.params.postId)
                     const userId = this.$store.state.user.userId
                     const content = document.getElementById('new-comment').value;
                     
                     console.log(postId)
+
                     post.newComment(`${postId}/comment/`,{
 
                         postId,
@@ -60,14 +69,20 @@ export default {
                     .then(response => {
 
                         console.log(response.data)
-                        this.message = "Votre commentaire a été publié !!";  
-                        location.reload();
+
+                        this.message = "Votre commentaire a été publié !!" 
+                        setTimeout(() => {
+                        this.message = "" 
+                        },1000)
+                        
+                                        
                     })
                         .catch (error=> {
                         this.errorMessage = "oppss!!";
                         console.log(error)
                     })
                     .then(this.getAllComment())
+                    
             },
                 async getAllComment() {
 
@@ -88,22 +103,24 @@ export default {
                
             async deleteComment(commentId) {
 
-                
-            if(confirm("Êtes-vous sûr de vouloir supprimer votre commentaire ?")){
+            
+            post.deleteComment(`${commentId}`,)
 
-                post.deleteComment(`${commentId}`,)
+            .then(() => {
 
-                .then(() => {
-
-                this.message = "Nous avons supprimer votre commentaire !!" 
-                this.$router.push({name: "Home"})
-                    
-                })
-               .catch (error => {
+                this.errorMessage = "Nous avons supprimé votre commentaire !!" 
+                setTimeout(() => {
+                     this.errorMessage = "" 
+                },1000)
+               
+               
+                this.comments = this.comments.filter( c => c.commentId != commentId)
+                 this.$router.push({name: "Post"}).catch(() =>{})    
+            })
+            .catch (error => {
                 this.errorMessage = "Something went wrong !!"
-               console.log(error)
-                })
-            }
+                console.log(error)
+             })
         },
     },
 }
@@ -146,15 +163,23 @@ button {
     margin: .8rem ;
     color:white;
 }
+.header-new-comment {
+    margin-left: 1rem;
+    color: green;
+}
+textarea {
+    width:100%;
+    border :solid 2px  rgba(4, 128, 31, 0.301);
+}
 input {
     margin-left: 1rem;
     border: none;
 }
-button {
-    background-color: green;
-    color: white;
-    border: none;
-}
+.info-C {
+        font-size:12px;
+        margin-bottom :1rem;
+    }
+
 .alert-message{
       background-color: rgba(98, 245, 130, 0.301);
       height:auto;
@@ -175,22 +200,29 @@ button {
 }
 .comment{
     position: relative;
+    
     width: auto;
     height: auto;
     margin :2rem;
+    border: solid 1px rgba(4, 128, 31, 0.301);
 }
-.comment-text {
-    height: auto;
-    width: auto;
-}
+
 .btn-sup-comment {
     float: right;
+    transition-duration: 0.2s;
 }
 
 @media screen and (max-width:680px) {
 
     .info-C {
         font-size:12px;
+        margin-bottom :1rem;
+    }
+    .text-comment {
+        line-height: 1%;
+    }
+    .btn-sup-comment {
+        margin-top: 1rem;
     }
 }
 </style>

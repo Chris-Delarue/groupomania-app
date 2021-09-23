@@ -45,6 +45,7 @@ export default {
     display: flex;
     justify-content: center;
     margin-top:3rem;
+   
 }
 
 .userProfil_btn{

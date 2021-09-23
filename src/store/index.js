@@ -1,6 +1,8 @@
+//import axios from 'axios';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from "vuex-persistedstate";
+//import httpClient from '../api/httpClient';
 //import auth from '../api/auth';
 
 
@@ -31,7 +33,11 @@ export default new Vuex.Store({
 
         SET_TOKEN : (state, token) => state.token = token, 
 
-        LOGOUT : state => state.token == null && state.user == null,
+        LOGOUT : state => {
+        state.token = null;
+        state.user =null;
+        sessionStorage.clear('vuex');
+        },
 
         SET_USER : (state, user) => state.user = user
 
@@ -40,6 +46,7 @@ export default new Vuex.Store({
     actions : {
         login({commit}, data) {
             commit("SET_TOKEN", data.token);
+            
         },
 
         logout({commit}) {
@@ -49,6 +56,7 @@ export default new Vuex.Store({
         setUser({commit}, user) {
             commit("SET_USER", user);
         }
+
 
     },
 });

@@ -10,7 +10,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component : Home
   },
   
 
@@ -18,7 +18,7 @@ const routes = [
   {
     path:'/post/:postId',
     name : 'Post',
-    component: () => import('../views/Post.vue'),
+    component : () => import('../views/Post.vue'),
     beforeEnter: (to, from, next) => {
       if(!sessionStorage.getItem("vuex")) {
         next("/");
@@ -31,7 +31,7 @@ const routes = [
   {
     path :'/signup',
     name : 'Signup',
-    component: () => import('../views/Signup.vue')
+    component : () => import('../views/Signup.vue')
   },
   {
   path :'/login',
@@ -41,7 +41,7 @@ const routes = [
   {
     path : '/profil',
     name : 'Profil/',
-    component: () => import('../views/Profil.vue'),
+    component : () => import('../views/Profil.vue'),
     beforeEnter: (to, from, next) => {
       if(!sessionStorage.getItem("vuex")) {
         next("/");

@@ -89,18 +89,18 @@ export default {
                     email: this.email,
                     password: this.password,
                     passwordConfirm : this.passwordConfirm,
-                }); 
-                this.message = "bienvenue sur votre réseau !!";
-                setTimeout(() => {
-                this.message =""}, 2000)
+                },
+
+                 this.message = "bienvenue sur votre réseau !!"
+
+                )
+                
                 this.$store.dispatch("login", response.data);
-                this.$router.push({name:"Login"})
+                this.$router.push({name:"Login"}) 
                 
             } catch (error) {
                 this.errorMessage ="oopps !!" ;
-                setTimeout(() => {
-                    this.errorMessage = "";
-                }, 2000)
+                
             }
         },
     },
