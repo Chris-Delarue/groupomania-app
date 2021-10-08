@@ -5,13 +5,16 @@
 
         <div class="modale_card">
             <div class="blocModale_card_title">
-                <h2>Etes-vous sûr de vouloir supprimer votre post ?</h2>
+                <h2>Êtes-vous sûr de vouloir supprimer votre post ?</h2>
             </div>
             <div class="blocModale_card_title_close">
                 <i @click="displayModale" class="far fa-times-circle fa-2x blocModale_card_title_close"></i>
             </div>
-        </div>
-        <button @click.prevent="deletePost" class="blocModale_card_btn"> oui, je supprime mon post</button>
+        
+            <div id="blocModale_card_btn">
+                <button @click.prevent="deletePost"  class="blocModale_card_btn"  v-if="authorized"> oui, je supprime mon post</button>
+            </div>
+        </div>    
         <div>
             <div class="alert-message" v-html="errorMessage"/>
             <div class="alert-message" v-html="message"/>
@@ -23,6 +26,8 @@
 <script>
 
 import post from '@/api/post';
+import store from "@/store/index"
+//import httpClient from '@/api/httpClient'
 
 export default {
 
@@ -32,7 +37,9 @@ export default {
     data() {
         return {
             message:"",
-            errorMessage: ""
+            errorMessage: "",
+            authorized: true,
+            post: []
         }
     },
 
@@ -40,31 +47,39 @@ export default {
 
         async deletePost() {
 
+            const postId = this.$route.params.postId
+
+            if(store.state.user.userId == this.post.userId || store.state.user.isAdmin == true) {
+                this.authorized = true
+            }
+            else {
+                this.authorized = false
+            }
             
-                const postId = this.$route.params.postId
+            post.deletePost(`${postId}`)
 
-                post.deletePost(`${postId}`,)
+             .then(()=> {
 
-                .then(() => {
+                this.message = "Nous avons supprimer votre post !!" 
+                setTimeout(() => {
+                    this.message=""
+                }, 2000)
 
-                    
-                
-                    this.message = "Nous avons supprimer votre post !!" 
-                    this.$router.push({name : "Home"});
+                this.$router.push({name : "Home"});
                    
-                })
+             })
 
-                .catch (error => {
-                    console.log(error)
-                    this.errorMessage = "Votre post n'a pas été supprimé  et/ou vous n'avez pas l'autorisation !!"
-                    this.$router.push({name : "Home"});
-                   
-                })
-            
+            .catch (error => {
+                console.log(error)
+
+                this.errorMessage = "Votre post n'a pas été supprimé  et/ou vous n'avez pas l'autorisation !!"
+                setTimeout(() => {
+                    this.errorMessage=""
+                },2000)
+                this.$router.push({name : "Home"});  
+            })
         },
-
     }
-
 }
 
 
@@ -98,27 +113,43 @@ export default {
     bottom:0;
     left:0;
 }
+.modale_card{
+    position: fixed;
+    display: flex wrap;
+    border: solid 1px;
+    padding:.8rem;
+    background-color:rgb(140, 207, 152);
+    width:60%;
+    height:30%;
+}
+
+.blocModale_card_title_close {
+    cursor: pointer;
+}
+i {
+    width: fit-content;
+    color: red; 
+}
 
 .blocModale_card_title {
     text-align: center;
 }
 button {
     border: solid 1px red;  
-    margin:20rem;
+
+}
+#blocModale_card_btn {
+    width: fit-content;
+    margin: auto auto .8rem auto;
 }
 
 .blocModale_card_btn {
-    position: absolute;
-    top:2;
-    bottom:0;
-    left:2;
-    right:2;
   
-    background-color: rgba(98, 245, 130, 0.301);
-    color: red;
+    background-color: green;
+    color: white;
     border-radius: 30px;
     padding:.5rem;
-    width:40%;
+    width:fit-content;
     
 }
 .alert-message{
@@ -130,7 +161,28 @@ button {
       text-align: center;
 }
 
+@media screen and (max-width:680px) {
 
+.modale_card {
+    position: fixed;
+    display: flex wrap;
+}
+
+#blocModale_card_btn {
+    width: fit-content;
+    margin: auto auto .8rem auto;
+}
+.blocModale_card_btn {
+    background-color: green;
+    color: white;
+    border-radius: 30px;
+    padding:.5rem;
+    width:fit-content;
+    margin: auto;
+}
+
+
+}
 
 
 </style>

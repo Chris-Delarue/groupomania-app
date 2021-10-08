@@ -1,10 +1,12 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <div class="blocNamelogo">
+            <div class="blocNameLogo">
                 <div class="navbar-brand" > {{ brand }}</div>
-                <div class="nav-name" v-if="User" > 
-                <h1  class="nav-nameText">Bonjour {{ User }} </h1></div>
+                <ul v-if="isLoggedIn" class="navbar-nav mr-auto text-right">
+                     <h1  class="nav-textLoggedIn">Bonjour {{ $store.state.user.firstname }} </h1>
+                </ul>
+                <h2 v-else class="nav-textLogout">Bonjour</h2>
             </div>
             <button 
                 class="navbar-toggler" 
@@ -15,22 +17,23 @@
             </button>
         
             <div class="collapse navbar-collapse"   id="navbarSupportedContent">
-                 <ul v-if="isLoggedIn" class="navbar-nav mr-auto text-right">
+                 <ul v-if="isLoggedIn" class="navbar-nav mr-auto text-right text-right-in">
+                     
                     <li class="nav-item">
-                         <router-link to="/" class="nav-link">fil actualité</router-link>
+                         <router-link to="/" class="nav-link textRouterIn">fil d'actualité</router-link>
                     </li>
                     <li class="nav-item" >
-                        <router-link  to="/profil" class="nav-link">Mon compte</router-link></li>
+                        <router-link  to="/profil" class="nav-link textRouterIn">Mon compte</router-link></li>
                     <li class="nav-item" >
                         <a class="nav-link" id="logout-btn" @click.prevent="logout">Se deconnecter</a>
                     </li>
                 </ul>
                 <ul v-else class="navbar-nav mr-auto  text-right text-right-notin ">
                     <li class="nav-item">
-                        <router-link class="textRouter" to="/login">Se connecter</router-link>
+                        <router-link class="textRouterOut" to="/login">Se connecter</router-link>
                     </li>
                      <li class="nav-item">
-                         <router-link class="textRouter" to="/signup">S'inscrire</router-link> 
+                         <router-link class="textRouterOut" to="/signup">S'inscrire</router-link> 
                     </li>
                 </ul>
                
@@ -41,23 +44,20 @@
 
 <script>
 
-
-
-
 export default {
     name: 'Nav',
       
     data () {
         return {
             brand : process.env.VUE_APP_APPNAME,
-          
+            
         }
     },
-    
+   
     computed : {
 
         isLoggedIn() { 
-            return this.$store.getters.isLogged
+            return this.$store.getters.isLogged 
         },
             
     },
@@ -67,14 +67,11 @@ export default {
         logout(){
         
         return this.$store.dispatch('logout'),
-        
-        this.$router.push({ name: 'Login'}).catch(() =>{})
-       
+        this.$router.push({ name: 'Home'}).catch(()=>{})
         },
-        
-               
        
-    },
+    }
+    
 }
 </script>
 
@@ -90,26 +87,50 @@ export default {
     padding: .5rem;
     color: black;
 }
-
-.nav-name {
-    color: white;
+.blocNameLogo {
+    display: flex wrap;
+    height: auto;
+    width: auto;
+    
 }
-.textRouter{
+.navbar-brand {
+    font-size: 20px;
+    margin:0;
+}
+
+.nav-textLogout {
+    display:flex;
+    color: green;
+    font-size:20px;
+}
+.textRouterIn {
+    padding:.5rem;
     text-decoration:  none;
     color: green;
-}
-.nav-nameText{
-    font-size: 15px;
-}
-/*.text-right-notin{
-    margin: auto;;
-    width: 30%;
-    display : flex;
-    justify-content: space-between
-}*/
-nav-link {
+    font-size:20px;
     width: fit-content;
-    float:right;
+}
+.textRouterOut{
+    padding: .5rem;
+    text-decoration:  none;
+    color: green;
+    font-size:20px;
+    width: fit-content;
+}
+.nav-textLoggedIn{
+    color: green;
+    margin: 0 ;
+}
+.text-right-in {
+    margin-left: 5rem;
+    width: fit-content;
+    float: right;
+    font-size:20px;
+}
+.text-right-notin{
+    float: right;
+    width: fit-content;
+    margin-left: 10rem;
 }
 #logout-btn {
     color:red;
@@ -117,18 +138,32 @@ nav-link {
 }
 @media screen and (max-width:680px) {
 
-.blocNamelogo {
-    display: flex-flow;
+.nav-textLogout {
+    font-size: 20px;
+    display: flex;
 }
 
-.navbar-brand {
+.textRouterIn {
     font-size: 15px;
-    
+    padding:.5rem;
+   
+}
+#logout-btn {
+    font-size : 15px;
+}
+.text-right-in {
+    margin: 0;
+}
+.textRouterOut {
+    font-size: 15px;
 }
 
-.nav-nameText{
-    font-size: 15px;
+.text-right-notin{
+    width: fit-content;
     
+}
+.nav-textLoggedIn{
+    font-size: 20px;
 }
 }
 </style>

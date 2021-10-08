@@ -12,33 +12,33 @@
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label for="firstname">Prénom</label>
-                                <input type="text" class="form-control" name="firstname" id="signup-firstname" v-model="firstname" />
+                                <input type="text" class="form-control" name="firstname" id="signup-firstname" required v-model="firstname" />
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label  for="surname">Nom</label>
-                                <input type="text" class="form-control" name="surname" id="signup-surname" v-model="surname"/>
+                                <input type="text" class="form-control" name="surname" id="signup-surname" required  v-model="surname"/>
                             </div>
                         </div>
 
                         <div class="col-12">
                              <div class="form-group">
                                 <label for="email">Email </label>
-                                <input type="text" class="form-control" name="email" id="signup-email" v-model="email"/>
+                                <input type="text" class="form-control" name="email" id="signup-email" required v-model="email"/>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6 ">
                             <div class="form-group">
                                 <label for="password">Mot de passe</label>
-                                <input type="password" class="form-control" name="password" id="signup-password" v-model="password"/>
+                                <input type="password" class="form-control" name="password" id="signup-password" required v-model="password"/>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label for="passwordConfirm">Confirmez le mot de passe</label>
                                 <input type="password" class="form-control" name="passwordConfirm" id="signup-passwordConfirm"
-                                v-model="passwordConfirm"/>
+                                required v-model="passwordConfirm"/>
                             </div>
                         </div>
                         <div>
@@ -49,7 +49,7 @@
                                 <button type="submit" class="btn btn-primary">S'inscrire</button>
                             </div>
                             <div class="col-12 col-sm-8 text-right text-signup">
-                                <a href="/login">Vous avez déja un compte</a>
+                                <router-link to="/login">Vous avez déja un compte</router-link>
                             </div>
                         </div>
                     </div>
@@ -91,7 +91,10 @@ export default {
                     passwordConfirm : this.passwordConfirm,
                 },
 
-                 this.message = "bienvenue sur votre réseau !!"
+                 this.message = "bienvenue sur votre réseau !!",
+                setTimeout(() => {
+                    this.message = "" 
+                    },1000)
 
                 )
                 

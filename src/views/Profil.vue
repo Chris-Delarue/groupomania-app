@@ -41,14 +41,14 @@ export default {
 
 img{
   width: 100%;
-  height:100%;
-  border-radius: 100px;
+  height:20%;
+  border-radius: 300px;
 }
 .logo{
   width: 30%;
-  height:30%;
-  margin: 1rem auto;
+  height:20%;
+  margin: 2.5rem auto;
   border: solid 2px green;
-  border-radius : 100px;
+  border-radius: 300px;
 }
 </style>
