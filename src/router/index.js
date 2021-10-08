@@ -21,7 +21,7 @@ const routes = [
     component : () => import('../views/Post.vue'),
     beforeEnter: (to, from, next) => {
       if(!sessionStorage.getItem("vuex")) {
-        next("/");
+        next({name: 'Home'});
      }else{
         next();
       }

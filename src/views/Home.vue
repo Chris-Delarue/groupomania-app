@@ -1,10 +1,10 @@
 <template>
   <div class="home" > 
-      
-        <h2 class="homeText">Bienvenue sur votre réseau social !!</h2>
-        <div class="logo" >
+      <div class="logo" >
         <img src="../assets/images/icon-above-font.png" alt="Logo Groupomania">
           </div>
+        <h2 class="homeText">Bienvenue sur votre réseau social !!</h2>
+        
       
     <LoginForm v-if="!loggedIn"/>
     
@@ -47,21 +47,21 @@ export default {
 <style scoped>
 
 .homeText {
-  font-size : 23px;
+  font-size : 30px;
   text-align: center;
   margin:2rem;
 }
 img{
   width: 100%;
-  height:100%;
-  border-radius: 100px;
+  height:20%;
+  border-radius: 300px;
 }
 .logo{
   width: 30%;
-  height:30%;
-  margin: auto;
+  height:20%;
+  margin: 2.5rem auto;
   border: solid 2px green;
-  border-radius : 100px;
+  border-radius: 300px;
 }
 
 </style>

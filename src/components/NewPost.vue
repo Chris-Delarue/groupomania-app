@@ -9,7 +9,7 @@
                     <span class="newPost-btn formClose" @click.prevent="visible= false">Fermer</span>
                     <form class="formPost" @submit.prevent="publishPost">
                         <div>
-                            <label for="titlePost" class="titlePost" >Titre :</label>
+                            <label for="titlePost" class="newPost-btn" >Titre :</label>
                             <input type="text" name="titlePost"  id="titlePost" v-model="title">
                         </div>
 
@@ -47,10 +47,10 @@
 
                         </editor>
                         
-                        <button id="newPost-btn" type="submit">Publier</button>
+                        <button id="send_btn" type="submit">Publier</button>
                         
                         <div class="alert-message"  v-html="errorMessage"/>
-                        <div class="alert-message"  v-html="message">
+                        <div class="alert-error-message"  v-html="message">
                         </div>
                     </form>
                 </div>
@@ -106,7 +106,6 @@ export default {
                 this.message = "Votre post a été publié !!";  
                 this.$router.go()
                 
-                
                 })        
                 .catch (error =>{
                     this.errorMessage = "oppss une erreur est survenue !!";
@@ -129,20 +128,26 @@ export default {
 .newPost-btn{
     cursor: pointer;
     color: green;
+    font-size: 18px;
+    font-weight: 700;
     padding-bottom: .5rem;
-}
-#newPost-btn{
-    margin: .7rem auto;
+    width: fit-content;
 }
 
-.titlePost{
-    padding-top : 1rem;
-    color: green;
-}
 #titlePost {
     margin-left: 2rem;
 }
+button  {
+    cursor: pointer;
+    color: white;
+    font-size: 18px;
+    margin: .8rem auto;
+    width: fit-content;
+    background-color : green;
+    border-radius: 10px;
+    border: none;
 
+}
 
 #newPostContent {
     height:200px;
@@ -152,11 +157,7 @@ export default {
     overflow-y: scroll;
     border: solid 1px red;
 }
-button {
-    color: green;
-    border: none;
-    
-}
+
 .alert-message{
       background-color: rgba(98, 245, 130, 0.301);
       height:fit-content;
@@ -165,6 +166,15 @@ button {
       color: black;
       text-align: center;
 }
+.alert-message{
+      background-color: rgba(236, 14, 14, 0.301);
+      height:fit-content;
+      width: fit-content;
+      margin: auto ;
+      color: black;
+      text-align: center;
+}
+
 .fade-enter-active, .fade-leave-active {
     transition : opacity .8s;
 }

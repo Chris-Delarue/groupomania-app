@@ -5,9 +5,9 @@ const httpClient = axios.create({
     baseURL: process.env.VUE_APP_BASE_URL,
     timeout: 3000,
     headers: {
-        Accept: 'application/json',
+        Accept: 'applcation/json',
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${store.getters.token}`
+        Authorization: `Bearer ${store.state.token}`
     }
  });
 

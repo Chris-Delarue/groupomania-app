@@ -1,5 +1,5 @@
 import httpClient from '../api/httpClient';
-import store from '../store/index';
+
 
 export default {
 
@@ -7,10 +7,10 @@ export default {
         return httpClient.post("/auth/signup", data);
     },
     login : data => {
+        console.log(data)
         return httpClient.post("/auth/login", data);
     },
     deleteAccount : userId  =>  {
-        console.log(store.getters.token);
         return httpClient.delete("/auth/" + userId);
     }
 };

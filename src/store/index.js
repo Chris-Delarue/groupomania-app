@@ -1,10 +1,10 @@
-//import axios from 'axios';
+
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from "vuex-persistedstate";
-//import httpClient from '../api/httpClient';
-//import auth from '../api/auth';
 
+
+import httpClient from '../api/httpClient';
 
 
 Vue.use(Vuex);
@@ -14,7 +14,6 @@ export default new Vuex.Store({
     state : {
         token: null,
         user: null,
-        
     },
     plugins : [createPersistedState ({
         storage : window.sessionStorage,
@@ -31,12 +30,16 @@ export default new Vuex.Store({
     },
     mutations : {
 
-        SET_TOKEN : (state, token) => state.token = token, 
+        SET_TOKEN : (state, token) =>  {
+            httpClient.defaults.headers.common['Authorization'] = `${token}`;
+           console.log(httpClient.defaults.headers);
+            state.token = token;
+            console.log(token);
+        },
 
         LOGOUT : state => {
-        state.token = null;
-        state.user =null;
-        sessionStorage.clear('vuex');
+            state.token = null;
+            state.user = null;
         },
 
         SET_USER : (state, user) => state.user = user
@@ -46,6 +49,7 @@ export default new Vuex.Store({
     actions : {
         login({commit}, data) {
             commit("SET_TOKEN", data.token);
+            console.log(data.token)
             
         },
 

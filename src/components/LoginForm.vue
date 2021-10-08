@@ -24,7 +24,7 @@
               <button type="submit" class="btn btn-primary">Se connecter</button>
             </div>
             <div class="col-12 col-sm-8 text-right">
-              <a  class="textPasCompte" href="/signup">Vous n'avez pas encore de compte?</a>
+              <router-link  class="textPasCompte" to="/signup">Vous n'avez pas encore de compte?</router-link>
             </div>
           </div>
         </form>
@@ -35,7 +35,7 @@
 <script>
 
 import auth from '@/api/auth'
-import httpClient from '@/api/httpClient';
+
 
 
 
@@ -61,16 +61,12 @@ export default {
           
           });
 
-         
+
           this.$store.dispatch("login", response.data)
           this.$store.dispatch("setUser", response.data)
-          
- 
-          httpClient.defaults.headers.common['Authorization'] = response.data.token;
 
           this.$router.push({name : "Home"}).catch(()=>{});
-           
-          
+          //this.$router.go()
         } catch (error) {
           this.errorMessage = "Etes vous bien inscrit !!";
           
@@ -89,6 +85,9 @@ export default {
   margin: auto;
   color: black;
   text-align: center;
+}
+.container {
+  margin-bottom: 1rem;
 }
 .btn {
   margin-top: .8rem;

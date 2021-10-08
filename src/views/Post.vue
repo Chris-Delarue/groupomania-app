@@ -37,7 +37,9 @@ export default{
 <style scoped>
 
 .Post{
-    background-color: #f3debb;
+   
+    width:80%;
+    margin:auto auto 1rem auto;
 }
 </style>
 

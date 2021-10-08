@@ -52,12 +52,15 @@
             </div>
         
             <div class="btn">
-                <button v-if="$store.state.user.userId == post.userId" @click.prevent="modify = true">Modifier</button>
+                <button v-if="authorized && !modify" @click.prevent="modify = true">Modifier</button>
+
                 <button v-if="modify" @click.prevent="annuler">Annuler</button>
-                <button v-if="modify" @click.prevent="modifyPost">Envoyer les modifications</button>
-            
+
+                <button v-if="modify" @click.prevent="modifyPost" >Envoyer les modifications</button>
+
                 <button v-if="modify" class="btn" v-on:click.prevent="displayModale">Supprimer le post</button>
-                <div class="alert-message"  v-html="errorMessage"/>
+
+                <div class="alert-error-message"  v-html="errorMessage"/>
                 <div class="alert-message"  v-html="message">
                 </div>
             </div>
@@ -70,7 +73,7 @@
 import Editor from '@tinymce/tinymce-vue';
 import post from '@/api/post';
 import ModalDeletePost from '@/components/ModalDeletePost';
-
+import store from '@/store/index'
 
 
 export default {
@@ -91,6 +94,7 @@ export default {
             message: null,
             errorMessage: null,
             modify: false,
+            authorized: false,
             revele: false
     
         }
@@ -113,9 +117,13 @@ export default {
             .then(response => {
 
                 this.post = response.data[0];
-                console.log(response.data[0]);
-                this.message ="";
 
+                  if(store.state.user.userId == this.post.userId || store.state.user.isAdmin == true) {
+                    this.authorized = true
+                 }
+                else {
+                    this.authorized = false
+                }
             })
             .catch (error =>{
                 this.errorMessage = "ooppss !!"
@@ -126,8 +134,12 @@ export default {
         async modifyPost(){
 
             if(this.contentModified.length === 0) {
-                   
+
                     this.errorMessage="Vous ne pouvez pas envoyer de message vide !!";
+                    setTimeout(()=> {
+                        this.errorMessage=""
+                    },2000)
+
                     
             }else {
 
@@ -139,14 +151,16 @@ export default {
                     
                     postId,
                     title,
-                    content
-                   
+                    content,
+                    
                 })
                 .then(response => {
-                    console.log(response.data)
-                    this.$router.push({ name: "Home"});
-                   
 
+                    console.log(response.data);
+
+                  
+                    
+                    this.$router.push({ name: "Home"});
                 })
                 .catch(error => {
                     console.log(error)
@@ -175,28 +189,28 @@ export default {
 
 img{
   width: 100%;
-  height:100%;
-  border-radius: 100px;
+  height:20%;
+  border-radius: 300px;
 }
 .logo{
   width: 30%;
-  height:30%;
-  margin:  3rem auto;
+  height:20%;
+  margin: 2.5rem auto;
   border: solid 2px green;
-  border-radius : 100px;
+  border-radius: 300px;
 }
 
 .onePost{
     border: solid 2px rgba(4, 128, 31, 0.301);
-    margin: 1rem auto;
+    margin: 2rem auto;
     width: auto;
     height:auto;
 }
 .post-wrapper {
-
-    margin: 50px auto 30px auto;
+    background-color: #f5f1eb;
+    margin: 1rem auto 30px auto;
     padding: 30px;
-    width: auto;
+    width:  auto;
     height:auto;
     text-align: left;
     box-shadow: 0px 0px 50px -7px rgba(0,0,0,0.1);
@@ -224,6 +238,14 @@ img{
 }
 .alert-message {
     background-color: rgba(98, 245, 130, 0.301);
+    height:auto;
+    width: auto;
+    margin: auto ;
+    color: black;
+    text-align: center;
+}
+.alert-error-message {
+    background-color: rgba(236, 14, 14, 0.301);
     height:auto;
     width: auto;
     margin: auto ;

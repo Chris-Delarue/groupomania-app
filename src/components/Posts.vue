@@ -12,9 +12,9 @@
             </div>
                 <h2 class="post-title">{{post.title}}</h2>
             <div class="post-content" v-html="post.content"></div>
-            <div>
-            <span class="post-modify" v-if="$store.state.user.userId == post.userId || $store.state.user.isAdmin === true">Modifier</span>
-            <span class="postComment" >Commenter</span>
+            <div class="post-btn">
+                <span class="post-modify" v-if="$store.state.user.userId == post.userId || $store.state.user.isAdmin == true">Modifier</span>
+                <span class="postComment" >Commenter</span>
             </div>
             </router-link>
         </div>
@@ -70,18 +70,18 @@ export default {
 
 
 .posts{
-    width:auto;
-    border: solid 1px rgba(4, 128, 31, 0.301);
+    width:80%;
+    border: solid 3px rgba(4, 128, 31, 0.301);
+    margin:auto auto 1rem auto;
    
 }
 .post{
-  
     border: solid 1px rgba(4, 128, 31, 0.301);
     width: auto;
     height: auto;
     margin :2rem;
     padding: .5rem;
-    
+    background-color: #f5f1eb;
 }
 .alert-message{
     background-color: rgba(98, 245, 130, 0.301);
@@ -90,6 +90,8 @@ export default {
     margin: auto ;
     color: black;
     text-align: center;
+    font-size: 20px;
+    font-weight:600;
 }
 .router-link{
     text-decoration: none;
@@ -131,14 +133,22 @@ export default {
     transition-duration: 0.2s;
     cursor: pointer;
     margin: .8rem;
+    text-align: center;
+    padding: .5rem;
 }
 
 @media screen and (max-width:680px) {
 
-    .info-P {
+.info-P {
         font-size: 13px;
-
     }
+.post-btn {
+    display: flex;
+    flex-direction: column ;
+    width: fit-content;
+    margin: auto;
+   
+}
 }
 
 </style>

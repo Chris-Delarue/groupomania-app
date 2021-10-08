@@ -27,15 +27,18 @@ export default{
 </script>
 
 <style>
+body{
+  background-image: url(./assets/images/BKG_IMAGE.jpg);
+}
+.container {
+  margin-bottom: 1rem;
+}
 
 .form-wrapper{
   border-radius: 7px;
   
 }
-.form-wrapper label{
-  font-weight: bold;
-  
-}
+
 .error-message li{
   list-style: none;
   width: 100%;
@@ -45,16 +48,6 @@ export default{
   padding-left: 0;
   margin-bottom: 0;
 }
-.logo{
-    width:200px;
-    margin: 1rem auto;
-    height:200px;
-   
-  }
-  img{
-    width:200px;
-    height:200px;
-  }
 
 @media (max-width: 768px){
   .form-wrapper .text-right{
