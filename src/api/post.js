@@ -23,7 +23,8 @@ export default {
         console.log(store.state.token);
         return httpClient.post("/post", data, {
             hearders : {
-                Authorization : `Bearer ${store.state.token}`
+                Authorization : `Bearer ${store.state.token}`,
+                'Content-Type':'multipart/form-data'
                 }
         }); 
         

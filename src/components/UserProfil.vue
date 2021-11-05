@@ -50,13 +50,13 @@ export default {
 
 .userProfil_btn{
     width:40%;
-    color:  red;
+    color:  white;
     font-weight:700;
     border: solid 1px red;
     border-radius: 30px;
     padding:.5rem;
     cursor: pointer;
-    background-color: rgba(98, 245, 130, 0.301);
+    background-color: rgba(29, 77, 112);
     font-size:20px;
 }
 

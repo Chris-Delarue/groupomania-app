@@ -51,74 +51,70 @@ export default {
 
          this.getAllComment();
      },
-        methods: { 
+     methods: { 
             
-                async publishComment() { 
-
-                    const postId = parseInt(this.$route.params.postId)
-                    const userId = this.$store.state.user.userId
-                    const content = document.getElementById('new-comment').value;
-                    
-                    console.log(postId)
-
+            async publishComment() { 
                    
+                const postId = parseInt(this.$route.params.postId)
+                const userId = this.$store.state.user.userId
+                const content = document.getElementById('new-comment').value;
+                    
+                console.log(postId)
 
-                    post.newComment(`${postId}/comment/`,{
+                post.newComment(`${postId}/comment/`,{
 
-                        postId,
-                        content,
-                        userId
-                        })
+                    postId,
+                    content,
+                    userId
+                    })
 
-                    .then(response => {
+                .then(response => {
 
                     console.log(response.data)
 
-                
-                        this.message = "Votre commentaire a été publié !!" 
-                        setTimeout(() => {
+                    this.message = "Votre commentaire a été publié !!" 
+                        
+                    setTimeout(() => {
                         this.message = "" 
-                        },1000)
-                       
-                                        
-                    })
-                        .catch (error=> {
-                        this.errorMessage = "oppss!!";
-                        console.log(error)
-                    })
-                    .then(this.getAllComment())
-                    
+                    },1000)
+                    this.$router.push({name : "Home"})
+
+                })
+                .catch (error=> {
+                    this.errorMessage = "oppss!!";
+                    console.log(error)
+                })      
             },
-                async getAllComment() {
+            async getAllComment() {
 
-                const postId = parseInt(this.$route.params.postId)
+            const postId = parseInt(this.$route.params.postId)
 
-                post.getComment(`${postId}/comment/`)
+            post.getComment(`${postId}/comment/`)
 
-                .then(response => {
+            .then(response => {
 
                 this.comments = response.data
                 console.log(response.data)
             })
-               .catch (error => {
+            .catch (error => {
                 this.errorMessage = "Something went wrong !!"
                 console.log(error)
             })
         },
                
-            async deleteComment(commentId) {
+        async deleteComment(commentId) {
 
-            
             post.deleteComment(`${commentId}`,)
 
             .then(()=> {
+
+                this.comments = this.comments.filter( c => c.commentId != commentId)
 
                 this.message = "Nous avons supprimé votre commentaire !!" 
                 setTimeout(() => {
                      this.message = "" 
                 },2000)
                
-                this.comments = this.comments.filter( c => c.commentId != commentId)
                 //this.$router.go()    
             })
             .catch (error => {
@@ -143,7 +139,7 @@ export default {
     margin: 1rem auto;
 }
 .form{
-    border: solid 1px green;
+    border: solid 1px rgba(29, 77, 112)
 }
 label {
     text-align : left !important;
@@ -161,7 +157,7 @@ button {
     padding: 5px;
     font-size: 1rem;
     color: white;
-    background-color: green;
+    background-color: rgba(29, 77, 112);
     border: none;
     border-radius: 10px;
     transition-duration: 0.2s;
@@ -175,13 +171,13 @@ button {
 }
 .header-new-comment {
     margin: auto auto .1rem 1rem ;
-    color: green;
+    color: rgba(29, 77, 112);
     font-weight: 700;
     padding-top:.5rem;
 }
 textarea {
     width:100%;
-    border :solid 2px  rgba(4, 128, 31, 0.301);
+    border :solid 2px  rgba(29, 77, 112);
 }
 input {
     margin-left: 1rem;
@@ -194,11 +190,11 @@ input {
     }
 
 .alert-message{
-      background-color: rgba(98, 245, 130, 0.301);
+      background-color: rgba(29, 77, 112);
       height:auto;
       width: auto;
       margin: auto ;
-      color: black;
+      color: white;
       text-align: center;
 }
 .alert-error-message{
@@ -215,13 +211,13 @@ input {
     display: flex;
     justify-content: center;
     padding-left: .5rem;
-    color: green;
+    color: rgba(29, 77, 112);
     font-weight: 700;
     margin-top: 1rem;
 }
 
 .comments { 
-    border :solid 2px rgba(4, 128, 31, 0.301);
+    border :solid 2px rgba(29, 77, 112);
     width:auto;
     height: auto;
    
@@ -231,7 +227,7 @@ input {
     width: auto;
     height: auto;
     margin :2rem;
-    border: solid 1px rgba(4, 128, 31, 0.301);
+    border: solid 1px rgba(29, 77, 112);
 }
 .text-comment {
     padding: 0 0 .5rem .5rem;

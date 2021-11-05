@@ -14,7 +14,7 @@
             <div class="post-content" v-html="post.content"></div>
             <div class="post-btn">
                 <span class="post-modify" v-if="$store.state.user.userId == post.userId || $store.state.user.isAdmin == true">Modifier</span>
-                <span class="postComment" >Commenter</span>
+                <span class="post-comment">Voir les commentaires</span>
             </div>
             </router-link>
         </div>
@@ -71,12 +71,12 @@ export default {
 
 .posts{
     width:80%;
-    border: solid 3px rgba(4, 128, 31, 0.301);
+    border: solid 3px rgb(29, 77, 112);
     margin:auto auto 1rem auto;
    
 }
 .post{
-    border: solid 1px rgba(4, 128, 31, 0.301);
+    border: solid 1px rgba(29, 77, 112);
     width: auto;
     height: auto;
     margin :2rem;
@@ -84,11 +84,11 @@ export default {
     background-color: #f5f1eb;
 }
 .alert-message{
-    background-color: rgba(98, 245, 130, 0.301);
+    background-color: rgb(29, 77, 112);
     height:auto;
     width: auto;
     margin: auto ;
-    color: black;
+    color: white;
     text-align: center;
     font-size: 20px;
     font-weight:600;
@@ -105,7 +105,7 @@ export default {
 .post-title  {
     margin: 0;
     padding: .5rem;
-    color: green;
+    color: rgb(29, 77, 112);
     font-size: 20px;
     text-align: left;
 
@@ -121,18 +121,18 @@ export default {
     font-size: 15px;
 }
 
-.post-modify, .postComment{
-   
-    margin-top: 20px;
-    padding: 5px;
+.post-btn{
+    display:  flex;
+}
+.post-modify, .post-comment {
     font-size: 1.1rem;
     color: white;
-    background-color: green;
+    background-color: rgba(29, 77, 112);
     border: none;
     border-radius: 10px;
     transition-duration: 0.2s;
     cursor: pointer;
-    margin: .8rem;
+    margin: 1rem;
     text-align: center;
     padding: .5rem;
 }

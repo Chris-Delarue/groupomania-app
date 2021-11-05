@@ -1,5 +1,8 @@
 <template>
     <div class="Post">
+      <div class="logo" >
+            <img src="../assets/images/icon-above-font.png" alt="Logo Groupomania">
+        </div>
       <LoginForm v-if="!loggedIn"/>
 
       <OnePost v-if="loggedIn"/>
@@ -40,6 +43,18 @@ export default{
    
     width:80%;
     margin:auto auto 1rem auto;
+}
+img{
+  width: 100%;
+  height:20%;
+  border-radius: 300px;
+}
+.logo{
+  width: 30%;
+  height:20%;
+  margin: 2.5rem auto;
+  border: solid 2px rgba(29, 77, 112);
+  border-radius: 300px;
 }
 </style>
 

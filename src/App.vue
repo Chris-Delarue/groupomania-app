@@ -28,7 +28,8 @@ export default{
 
 <style>
 body{
-  background-image: url(./assets/images/BKG_IMAGE.jpg);
+  background: url(./assets/images/BKG_IMAGE.png) no-repeat center center fixed;
+  background-size: cover;
 }
 .container {
   margin-bottom: 1rem;
@@ -50,6 +51,11 @@ body{
 }
 
 @media (max-width: 768px){
+
+  body {
+    background: url(./assets/images/BKG_IMAGE.png) no-repeat center center fixed;
+    background-size: cover;
+  }
   .form-wrapper .text-right{
     text-align: center !important;
   }

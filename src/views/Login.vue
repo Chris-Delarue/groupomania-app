@@ -27,7 +27,7 @@ export default {
 
 h2{
   text-align: center;
-  margin-top:5rem;
+
 }
 
 img{
@@ -39,7 +39,7 @@ img{
   width: 30%;
   height:20%;
   margin: 2.5rem auto;
-  border: solid 2px green;
+  border: solid 2px rgba(29, 77, 112);
   border-radius: 300px;
 }
 

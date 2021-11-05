@@ -1,5 +1,5 @@
 import axios from 'axios';
-import store from '../store/index';
+
 
 const httpClient = axios.create({
     baseURL: process.env.VUE_APP_BASE_URL,
@@ -7,8 +7,7 @@ const httpClient = axios.create({
     headers: {
         Accept: 'applcation/json',
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${store.state.token}`
-    }
+        }
  });
 
  

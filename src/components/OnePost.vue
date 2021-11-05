@@ -1,12 +1,12 @@
 <template>
     <div class="onePost" >
-        <div class="logo" >
-            <img src="../assets/images/icon-above-font.png" alt="Logo Groupomania">
-        </div>
         <div class="modale">
             <ModalDeletePost :revele="revele" :displayModale="displayModale"/>
             <div class="post-wrapper"  v-if="!modify">
                 <h2 class="titlePost">{{this.post.title}}</h2>
+                <div class="post-header">    
+                    <span class="info-P">Posté le : {{ this.post.createdAt | moment("DD.MM.YYYY à HH:mm")}} par : {{$store.state.user.firstname}} {{$store.getters.user.surname}}</span>      
+                </div>
                 <div class="contentPost" v-html="this.post.content"></div>
             </div>
 
@@ -96,28 +96,28 @@ export default {
             modify: false,
             authorized: false,
             revele: false
-    
         }
     },
 
     mounted(){
         
-        this.getPost();
+        this.getPost()
     },
 
     methods: {
 
         async getPost(){
-
-            const postId = this.$route.params.postId
-            
-             post.getOnePost(`${postId}` 
-
+          
+            const postId = this.$route.params.postId;
+         
+             post.getOnePost(`${postId}`, 
+                
              )
+            
             .then(response => {
-
-                this.post = response.data[0];
-
+                
+                this.post = response.data[0]
+                
                   if(store.state.user.userId == this.post.userId || store.state.user.isAdmin == true) {
                     this.authorized = true
                  }
@@ -132,15 +132,13 @@ export default {
             
         },
         async modifyPost(){
-
+            
             if(this.contentModified.length === 0) {
 
                     this.errorMessage="Vous ne pouvez pas envoyer de message vide !!";
                     setTimeout(()=> {
                         this.errorMessage=""
-                    },2000)
-
-                    
+                    },2000)  
             }else {
 
                 const postId = this.$route.params.postId
@@ -151,22 +149,17 @@ export default {
                     
                     postId,
                     title,
-                    content,
+                    content
                     
                 })
                 .then(response => {
 
                     console.log(response.data);
-
-                  
-                    
                     this.$router.push({ name: "Home"});
                 })
                 .catch(error => {
                     console.log(error)
                     this.errorMessage = "ooppss vous n'avez pas l'autorisation de modifier ce post et/ou le post est trop long!!"
-                    this.$router.push({ name: "Home"});
-                    
                 })
             }
         },
@@ -179,7 +172,6 @@ export default {
 
             this.$router.push({ name : "Home"})
         }
-       
     }
 }
 
@@ -187,42 +179,31 @@ export default {
 
 <style scoped>
 
-img{
-  width: 100%;
-  height:20%;
-  border-radius: 300px;
-}
-.logo{
-  width: 30%;
-  height:20%;
-  margin: 2.5rem auto;
-  border: solid 2px green;
-  border-radius: 300px;
-}
-
 .onePost{
-    border: solid 2px rgba(4, 128, 31, 0.301);
-    margin: 2rem auto;
+    border: solid 2px rgba(29, 77, 112);
+    margin: 0 auto 1rem auto;
     width: auto;
     height:auto;
 }
 .post-wrapper {
     background-color: #f5f1eb;
-    margin: 1rem auto 30px auto;
-    padding: 30px;
+    margin: 0 auto 2rem auto;
+    padding: 2rem;
     width:  auto;
     height:auto;
     text-align: left;
     box-shadow: 0px 0px 50px -7px rgba(0,0,0,0.1);
-    /*border-bottom: solid red 5px;*/
-
+}
+.post-header {
+    color:black;
+    font-size: 12px;
+    padding-bottom:.8rem;
 }
 
 .titlePost{
-  
     margin: auto;
     padding-bottom: 1rem;
-    color: green;
+    color: rgba(29, 77, 112);
     font-size: 25px;
 }
 .contentPost{
@@ -234,14 +215,14 @@ img{
     height: auto;
     padding: 0;
     color: black;
-    font-size: 15px;
+    font-size: 20px;
 }
 .alert-message {
-    background-color: rgba(98, 245, 130, 0.301);
+    background-color: rgba(29, 77, 112);
     height:auto;
     width: auto;
     margin: auto ;
-    color: black;
+    color: white;
     text-align: center;
 }
 .alert-error-message {
@@ -258,7 +239,7 @@ img{
     padding: 6px;
     font-size: 1.1rem;
     color: white;
-    background-color: green;
+    background-color: rgba(29, 77, 112);
     border: none;
     border-radius: 10px;
     transition-duration: 0.2s;
@@ -278,7 +259,7 @@ img{
     padding: 6px;
     font-size: 1.1rem;
     color: white;
-    background-color: green;
+    background-color: rgba(29, 77, 112);
     border: none;
     border-radius: 10px;
     transition-duration: 0.2s;
@@ -296,13 +277,14 @@ img{
     padding: 10px;
     resize: none;
     overflow-y: scroll;
+    font-size: 20px;
 }
 
 .modify-wrapper > label{
     
     font-size : .8rem;
     font-weight: bold;
-    color : green;
+    color : rgba(29, 77, 112);
     text-align :left;
     height: 1px;
     margin: -1px;

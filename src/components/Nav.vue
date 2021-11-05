@@ -20,10 +20,10 @@
                  <ul v-if="isLoggedIn" class="navbar-nav mr-auto text-right text-right-in">
                      
                     <li class="nav-item">
-                         <router-link to="/" class="nav-link textRouterIn">fil d'actualité</router-link>
+                         <router-link to="/" class="nav-link" id=" textRouterIn">fil d'actualité</router-link>
                     </li>
                     <li class="nav-item" >
-                        <router-link  to="/profil" class="nav-link textRouterIn">Mon compte</router-link></li>
+                        <router-link  to="/profil" class="nav-link" id=" textRouterIn">Mon compte</router-link></li>
                     <li class="nav-item" >
                         <a class="nav-link" id="logout-btn" @click.prevent="logout">Se deconnecter</a>
                     </li>
@@ -100,28 +100,24 @@ export default {
 
 .nav-textLogout {
     display:flex;
-    color: green;
+    color: rgba(29, 77, 112);
     font-size:20px;
 }
-.textRouterIn {
-    padding:.5rem;
-    text-decoration:  none;
-    color: green;
-    font-size:20px;
-    width: fit-content;
-}
+
 .textRouterOut{
+    text-decoration: none;
     padding: .5rem;
-    text-decoration:  none;
-    color: green;
+    color: rgba(29, 77, 112);
     font-size:20px;
     width: fit-content;
 }
+
 .nav-textLoggedIn{
-    color: green;
+    color: rgba(29, 77, 112);
     margin: 0 ;
 }
 .text-right-in {
+    color: rgba(29, 77, 112);
     margin-left: 5rem;
     width: fit-content;
     float: right;
@@ -143,16 +139,12 @@ export default {
     display: flex;
 }
 
-.textRouterIn {
-    font-size: 15px;
-    padding:.5rem;
-   
-}
 #logout-btn {
     font-size : 15px;
 }
 .text-right-in {
     margin: 0;
+    font-size: 15px;
 }
 .textRouterOut {
     font-size: 15px;

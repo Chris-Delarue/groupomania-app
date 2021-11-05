@@ -80,8 +80,8 @@ export default {
 
     methods: {
 
-         async signup() {
-            
+         async signup(e) {
+            e.preventDefaults
             try{
                 const response = await auth.signup({
                     firstname : this.firstname,
@@ -95,7 +95,6 @@ export default {
                 setTimeout(() => {
                     this.message = "" 
                     },1000)
-
                 )
                 
                 this.$store.dispatch("login", response.data);

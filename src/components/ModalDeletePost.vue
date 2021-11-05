@@ -6,6 +6,7 @@
         <div class="modale_card">
             <div class="blocModale_card_title">
                 <h2>Êtes-vous sûr de vouloir supprimer votre post ?</h2>
+                <p class="text_delete">En supprimant votre post, vous effacerez aussi tous vos  commentaires lié à ce post.</p>
             </div>
             <div class="blocModale_card_title_close">
                 <i @click="displayModale" class="far fa-times-circle fa-2x blocModale_card_title_close"></i>
@@ -46,8 +47,9 @@ export default {
     methods: {
 
         async deletePost() {
-
+               
             const postId = this.$route.params.postId
+            
 
             if(store.state.user.userId == this.post.userId || store.state.user.isAdmin == true) {
                 this.authorized = true
@@ -56,7 +58,9 @@ export default {
                 this.authorized = false
             }
             
-            post.deletePost(`${postId}`)
+            post.deletePost(`${postId}`,
+            
+            )
 
              .then(()=> {
 
@@ -118,7 +122,7 @@ export default {
     display: flex wrap;
     border: solid 1px;
     padding:.8rem;
-    background-color:rgb(140, 207, 152);
+    background-color:rgb(74, 165, 230);
     width:60%;
     height:30%;
 }
@@ -129,6 +133,10 @@ export default {
 i {
     width: fit-content;
     color: red; 
+}
+.text_delete {
+    font-weight:700;
+    padding:.5rem;
 }
 
 .blocModale_card_title {
@@ -145,7 +153,7 @@ button {
 
 .blocModale_card_btn {
   
-    background-color: green;
+    background-color: rgba(29, 77, 112);
     color: white;
     border-radius: 30px;
     padding:.5rem;
@@ -153,11 +161,11 @@ button {
     
 }
 .alert-message{
-      background-color: rgba(98, 245, 130, 0.301);
+      background-color: rgba(29, 77, 112);
       height:auto;
       width: auto;
       margin:  auto;
-      color: black;
+      color: white;
       text-align: center;
 }
 
@@ -173,7 +181,7 @@ button {
     margin: auto auto .8rem auto;
 }
 .blocModale_card_btn {
-    background-color: green;
+    background-color: rgba(29, 77, 112);
     color: white;
     border-radius: 30px;
     padding:.5rem;
