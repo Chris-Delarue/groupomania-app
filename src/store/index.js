@@ -31,7 +31,7 @@ export default new Vuex.Store({
     mutations : {
 
         SET_TOKEN : (state, token) =>  {
-            httpClient.defaults.headers.common['Authorization'] = `${token}`;
+            httpClient.defaults.headers.common['Authorization'] = `Bearer ${token}`;
            console.log(httpClient.defaults.headers);
             state.token = token;
             console.log(token);
@@ -40,6 +40,8 @@ export default new Vuex.Store({
         LOGOUT : state => {
             state.token = null;
             state.user = null;
+            localStorage.clear();
+            httpClient.defaults.headers.common['Authorization'] = undefined;
         },
 
         SET_USER : (state, user) => state.user = user
@@ -49,7 +51,7 @@ export default new Vuex.Store({
     actions : {
         login({commit}, data) {
             commit("SET_TOKEN", data.token);
-            console.log(data.token)
+            console.log(data.token);
             
         },
 

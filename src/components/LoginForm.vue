@@ -52,21 +52,24 @@ export default {
     },
   
     methods : {
-      async login() {
-        
+      async login(e) {
+        e.preventDefaults
         try {
           const response = await auth.login({
             email:    this.email,
             password: this.password,
           
-          });
-
+          }
+          );
+          this.message="Merci de votre retour !!"
+          setTimeout(()=> {
+            this.message=""
+          },2000)
 
           this.$store.dispatch("login", response.data)
           this.$store.dispatch("setUser", response.data)
+          this.$router.push({name : "Home"}).catch(()=>{})
 
-          this.$router.push({name : "Home"}).catch(()=>{});
-          //this.$router.go()
         } catch (error) {
           this.errorMessage = "Etes vous bien inscrit !!";
           
@@ -79,11 +82,11 @@ export default {
 <style scoped>
 
 .alert-message{
-  background-color: rgba(98, 245, 130, 0.301);
+  background-color: rgba(29, 77, 112);
   height:20px;
   width: 100%;
   margin: auto;
-  color: black;
+  color: white;
   text-align: center;
 }
 .container {

@@ -12,45 +12,51 @@
                             <label for="titlePost" class="newPost-btn" >Titre :</label>
                             <input type="text" name="titlePost"  id="titlePost" v-model="title">
                         </div>
-
+                        
                         <editor 
                             :apiKey="key"
                             v-model="content"
-                            :init="{
-                            entity_encoding : 'raw',
-                            height:500,
-                            paste_as_text: true,
-                            forced_root_block : '',
-                            force_br_newlines : true,
-                            force_p_newlines : false,
-                            language :'fr_FR',
-                            
-                            plugins: [
-                                'advlist autolink lists link image charmap',
-                                'searchreplace visualblocks code fullscreen',
-                                'print preview anchor insertdatetime media',
-                                'paste code help wordcount table'
-                            ],
-                            toolbar:
-                                'undo redo | formatselect | bold italic | \
-                                alignleft aligncenter alignright | \
-                                bullist numlist outdent indent | print preview media fullpage | ' +
-                                'forecolor backcolor emoticons |help',
-                            menu: {
-                            favs: {title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons'}
-                            },
-                            menubar: 'favs file edit view insert format tools table help',
-                            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
- 
-                            }"
-                            >
+                           
+                                :init="{
+                                    entity_encoding : 'raw',
+                                    height:500,
+                                    paste_as_text: true,
+                                    forced_root_block : '',
+                                    force_br_newlines : true,
+                                    force_p_newlines : false,
+                                    language :'fr_FR',
+                    
 
+                                    plugins: [
+                                    'advlist autolink lists link  image charmap',
+                                    'searchreplace visualblocks code fullscreen',
+                                    'print preview anchor insertdatetime media',
+                                    'paste code help wordcount table', 'emoticons'
+                                    ],
+                                    
+                                    toolbar:
+                                    'undo redo | formatselect | bold italic | \
+                                    alignleft aligncenter alignright | \
+                                    bullist numlist outdent indent image |print preview media fullpage | ' +
+                                    'forecolor backcolor emoticons |help',
+                                    menu: {
+                                    favs: {title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons'}
+                                    },
+                                    menubar: 'favs file edit view insert format tools table help',
+                                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                             }"
+                             >
+                          
                         </editor>
+                      
+                        <div class="form-group">
+                             <input type="file"  name="file" @change="onFileUpload">
+                        </div>
+            
+                            <button id="send_btn" type="submit">Publier</button>
                         
-                        <button id="send_btn" type="submit">Publier</button>
-                        
-                        <div class="alert-message"  v-html="errorMessage"/>
-                        <div class="alert-error-message"  v-html="message">
+                        <div class="alert-error-message"  v-html="errorMessage"/>
+                        <div class="alert-message"  v-html="message">
                         </div>
                     </form>
                 </div>
@@ -74,50 +80,69 @@ export default {
         },
         data() {
             return {
-
                 key : process.env.VUE_APP_TYNI,
                 visible : false,
                 title: "",
                 content: "",
+                file: "",
                 errorMessage: null,
                 message: null,
+                
             }
         },
         
         methods: {
-        
-            async publishPost() { 
 
-            if(this.content.length === 0) 
-           {
+            onFileUpload(event) {
+            this.file = event.target.files[0]
+            console.log(this.file)
+            },
+            async publishPost(e) { 
+                e.preventDefaults
+               
+                if(this.content.length === 0) 
+                {
                     this.errorMessage ="Vous ne pouvez pas envoyer de message vide !!"
                     setTimeout(() =>{
                         this.errorMessage=""
                     },2000)
-            }else {
 
-                post.newPost({
-                    title:      this.title,
-                    content :   this.content
-                })
+                    
+                }else {
+                const formData = new FormData()
+
+                formData.append('file', this.file)
+                formData.append('title', this.title)
+                formData.append('content', this.content)
+                console.log(formData)
+                post.newPost(formData)
+
                 .then(response => {
+                    
                 console.log(response.data)
 
                 this.message = "Votre post a été publié !!";  
-                this.$router.go()
-                
-                })        
+                this.$router.go()/*push({name: "Home"}).catch(() =>{})*/
+                })
+                    
                 .catch (error =>{
                     this.errorMessage = "oppss une erreur est survenue !!";
                     console.log(error)
-                })
+                }) 
             }
-        }   
+        },
+        
+
     }
 }
 </script>  
 
 <style scoped>
+
+.btn{
+    width:  fit-content;
+    height: fit-content;
+}
 
 .newPost{
     padding : 20px 20px 0px 20px;
@@ -127,7 +152,7 @@ export default {
 }
 .newPost-btn{
     cursor: pointer;
-    color: green;
+    color: rgb(29, 77, 112);
     font-size: 18px;
     font-weight: 700;
     padding-bottom: .5rem;
@@ -143,7 +168,7 @@ button  {
     font-size: 18px;
     margin: .8rem auto;
     width: fit-content;
-    background-color : green;
+    background-color : rgba(29, 77, 112);
     border-radius: 10px;
     border: none;
 
@@ -159,14 +184,15 @@ button  {
 }
 
 .alert-message{
-      background-color: rgba(98, 245, 130, 0.301);
+      background-color:  rgba(29, 77, 112);
       height:fit-content;
       width: fit-content;
       margin: auto ;
-      color: black;
+      color: white;
       text-align: center;
+      padding:.7rem;
 }
-.alert-message{
+.alert-error-message{
       background-color: rgba(236, 14, 14, 0.301);
       height:fit-content;
       width: fit-content;
@@ -180,6 +206,9 @@ button  {
 }
 .fade-enter, .fade-leave-to {
     opacity : 0;
+}
+.form{
+    border: solid 5px;
 }
 
 </style>

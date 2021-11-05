@@ -13,8 +13,6 @@ const routes = [
     component : Home
   },
   
-
- 
   {
     path:'/post/:postId',
     name : 'Post',

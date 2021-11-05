@@ -104,7 +104,7 @@ export default {
     display: flex wrap;
     border: solid 1px;
     padding:.8rem;
-    background-color:rgb(140, 207, 152);
+    background-color:rgba(74, 165, 230);
 }
 
 .blocModale_card_title_close {
@@ -130,7 +130,7 @@ button {
     margin: auto auto .8rem auto;
 }
 .blocModale_card_btn {
-    background-color: green;
+    background-color: rgba(29, 77, 112);
     color: white;
     border-radius: 30px;
     padding:.5rem;
@@ -138,11 +138,11 @@ button {
     
 }
 .alert-message{
-      background-color: rgba(98, 245, 130, 0.301);
+      background-color: rgba(29, 77, 112);
       height:auto;
       width: auto;
       margin:  auto;
-      color: black;
+      color: white;
       text-align: center;
 }
 
@@ -158,7 +158,7 @@ button {
     margin: auto auto .8rem auto;
 }
 .blocModale_card_btn {
-    background-color: green;
+    background-color: rgba(29, 77, 112);
     color: white;
     border-radius: 30px;
     padding:.5rem;
