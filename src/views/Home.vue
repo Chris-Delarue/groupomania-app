@@ -9,7 +9,7 @@
     <LoginForm v-if="!loggedIn"/>
     
    
-    <NewPost v-if="loggedIn"/>
+    
     <Posts v-if="loggedIn"/>
    
   
@@ -19,7 +19,7 @@
 
 <script>
 import LoginForm from '@/components/LoginForm.vue';
-import NewPost from '@/components/NewPost.vue';
+
 import Posts from '@/components/Posts.vue';
 
 
@@ -29,7 +29,7 @@ export default {
   components : { 
     LoginForm,
     Posts,
-    NewPost
+   
     },
  
     

@@ -1,4 +1,5 @@
 import axios from 'axios';
+//import store from '../store/index'
 
 
 const httpClient = axios.create({
@@ -7,8 +8,8 @@ const httpClient = axios.create({
     headers: {
         Accept: 'applcation/json',
         'Content-Type': 'application/json',
+        
         }
  });
 
- 
  export default httpClient;

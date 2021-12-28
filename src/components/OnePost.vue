@@ -1,71 +1,85 @@
 <template>
+
     <div class="onePost" >
         <div class="modale">
             <ModalDeletePost :revele="revele" :displayModale="displayModale"/>
-            <div class="post-wrapper"  v-if="!modify">
-                <h2 class="titlePost">{{this.post.title}}</h2>
-                <div class="post-header">    
-                    <span class="info-P">Posté le : {{ this.post.createdAt | moment("DD.MM.YYYY à HH:mm")}} par : {{$store.state.user.firstname}} {{$store.getters.user.surname}}</span>      
+            <div class="post-wrapper"  v-if="!modify"  >
+                <div class="post-header"  >    
+                    <span  class="info-P">Posté le : {{ post.createdAt | moment("DD.MM.YYYY à HH:mm")}} par : {{post.firstname}} {{post.surname}}</span>      
                 </div>
+                <h2 class="titlePost">{{this.post.title}}</h2>
                 <div class="contentPost" v-html="this.post.content"></div>
+                <div class="image" v-if="post.imageurl">
+                    <img class="post-image" :src="this.post.imageurl" alt="image" />
+                </div>
             </div>
+            <form class="formModify" @submit.prevent="modifyPost">
+                <div class=" modify-wrapper" v-if="modify">
+                    <label for="title" id="modify-title">Modifier le titre : </label>
+                    <input type="text" id="modify-title" 
+                    v-model="post.title">
 
-            <div class=" modify-wrapper" v-if="modify">
-                <label for="modify-title" class="modify-title">Modifier le titre : </label>
-                <input type="text" id="modify-title" v-model="post.title">
-
-                <label for="content-modified"> Modifier votre texte : </label>
-                <editor
-                    :initialValue="this.post.content"
-                    v-model="contentModified"
-                    :apiKey="key"
-                    :init="{
-                    height: 500,
-                    forced_root_block : false,
-                    force_br_newlines : true,
-                    force_p_newlines : false,  
-                    paste_as_text: true,  
-                    language: 'fr_FR',
-
-                     plugins: [
+                    <label for="content-modified"> Modifier votre texte : </label>
+               
+                    <editor
+                        :initialValue ="this.post.content"
+                        v-model="contentModified"
+                        :apiKey="key"
+                        :init="{  
+                        height: 500,
+                        forced_root_block : false,
+                        force_br_newlines : true,
+                        force_p_newlines : false,  
+                        paste_as_text: true,  
+                        paste_data_images: true,
+                        language: 'fr_FR',
+                        entity_encoding : 'raw',
+                  
+                        plugins: [
                                 'advlist autolink lists link image charmap',
                                 'searchreplace visualblocks code fullscreen',
                                 'print preview anchor insertdatetime media',
                                 'paste code help wordcount table'
                             ],
-                            toolbar:
+                        toolbar:
                                 'undo redo | formatselect | bold italic | \
                                 alignleft aligncenter alignright | \
                                 bullist numlist outdent indent  | print preview media fullpage | ' +
                                 'forecolor backcolor emoticons |help',
-                            menu: {
+                         menu: {
                             favs: {title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons'}
                             },
-                            menubar: 'favs file edit view insert format tools table help',
-                            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                        menubar: 'favs file edit view insert format tools table help',
+                        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
  
-                            }"
-                            >
-                          <textarea id="content-modified" v-model="this.post.content"></textarea> 
-                         
-                </editor>                   
-            </div>
-        
-            <div class="btn">
-                <button v-if="authorized && !modify" @click.prevent="modify = true">Modifier</button>
+                        }"
+                        >
+                    </editor>
+                       
+                    <div class="form-group">
+                        <input type="file"  name="file" @change="onFileUpload">
+                    </div>
+                </div>          
+            
+           
+                <div class="btn">
+                    <button v-if="authorized && !modify" @click.prevent="modify = true">Modifier</button>
 
-                <button v-if="modify" @click.prevent="annuler">Annuler</button>
+                    <button v-if="modify" @click.prevent="annuler">Annuler</button>
 
-                <button v-if="modify" @click.prevent="modifyPost" >Envoyer les modifications</button>
+                    <button v-if="modify" type="submit" >Envoyer les modifications</button>
 
-                <button v-if="modify" class="btn" v-on:click.prevent="displayModale">Supprimer le post</button>
+                    <button v-if="modify" class="btn" v-on:click.prevent="displayModale">Supprimer le post</button>
 
-                <div class="alert-error-message"  v-html="errorMessage"/>
-                <div class="alert-message"  v-html="message">
+                    <div class="alert-error-message"  v-html="errorMessage"/>
+                    <div class="alert-message"  v-html="message">
+                    </div>
                 </div>
-            </div>
-        </div>  
+            </form>
+        </div> 
+    
     </div>
+    
 </template>
 
 <script>
@@ -76,13 +90,16 @@ import ModalDeletePost from '@/components/ModalDeletePost';
 import store from '@/store/index'
 
 
+
+
 export default {
 
     name : "OnePost",
 
     components: {
         editor: Editor,
-        ModalDeletePost
+        ModalDeletePost,
+        
       
     },
 
@@ -90,34 +107,42 @@ export default {
         return {
             key : process.env.VUE_APP_TYNI,
             contentModified : "",
-            post: [],
+            title:"",
+            post:[],
             message: null,
             errorMessage: null,
             modify: false,
             authorized: false,
-            revele: false
+            revele: false,
+            file:"",
+            firstname: "", 
+            surname:""
         }
     },
-
+    
+   
     mounted(){
         
         this.getPost()
     },
+    
 
     methods: {
+
+        
 
         async getPost(){
           
             const postId = this.$route.params.postId;
-         
+            
              post.getOnePost(`${postId}`, 
-                
+              
              )
             
             .then(response => {
                 
                 this.post = response.data[0]
-                
+                console.log(this.post)
                   if(store.state.user.userId == this.post.userId || store.state.user.isAdmin == true) {
                     this.authorized = true
                  }
@@ -131,6 +156,11 @@ export default {
             })
             
         },
+        onFileUpload(event) {
+            this.file = event.target.files[0]
+            console.log(this.file)
+        },
+
         async modifyPost(){
             
             if(this.contentModified.length === 0) {
@@ -142,17 +172,17 @@ export default {
             }else {
 
                 const postId = this.$route.params.postId
-                const title = document.querySelector('#modify-title').value
-                const content = this.contentModified
                 
-                post.modifyPost(`${postId}`,{
-                    
-                    postId,
-                    title,
-                    content
-                    
-                })
+                const formData = new FormData()
+
+                formData.append('file', this.file)
+                formData.append('title', this.post.title)
+                formData.append('content', this.contentModified)
+                console.log(this.file, this.post.title, this.contentModified)
+                post.modifyPost(`${postId}`,formData )
+
                 .then(response => {
+                   
 
                     console.log(response.data);
                     this.$router.push({ name: "Home"});
@@ -161,7 +191,7 @@ export default {
                     console.log(error)
                     this.errorMessage = "ooppss vous n'avez pas l'autorisation de modifier ce post et/ou le post est trop long!!"
                 })
-            }
+            } 
         },
         displayModale() {
 
@@ -198,6 +228,16 @@ export default {
     color:black;
     font-size: 12px;
     padding-bottom:.8rem;
+}
+.image{
+    width: 100%;
+}
+.post-image{
+    width: 100%;
+    border: solid red 2px;
+}
+img{
+    object-fit: cover;
 }
 
 .titlePost{
@@ -267,17 +307,6 @@ export default {
     margin: .8rem;
     width: fit-content;
 
-}
-
-#content-modified{
-    
-    margin-top :20px;
-    height: 200px;
-    width: calc(100%-22px);
-    padding: 10px;
-    resize: none;
-    overflow-y: scroll;
-    font-size: 20px;
 }
 
 .modify-wrapper > label{
