@@ -1,17 +1,23 @@
 <template>
+<div>
+<NewPost />
     <div class="posts" >
         <div>
             <div class="alert-message" v-html="errorMessage"/>
             <div class="alert-message" v-html="message"/>
         </div> 
         <div class="post" v-for="post in posts" :key="post.postId">
-            <router-link class="router-link" :to="{ name: 'Post', params: {postId: post.postId}}">
+            <router-link class="router-link" :to="{name:'Post',  params: {postId: post.postId}}">
             <div class="post-header">    
                 <span class="info-P">Posté le : {{post.createdAt | moment("DD.MM.YYYY à HH:mm")}} par : {{post.firstname}} {{post.surname}}</span>
                     
             </div>
                 <h2 class="post-title">{{post.title}}</h2>
-            <div class="post-content" v-html="post.content"></div>
+            <div class="post-content" v-html="post.content">
+            </div>
+            <div class="image" v-if="post.imageurl">
+                <img class="post-image" :src="post.imageurl" alt="image" />
+            </div>
             <div class="post-btn">
                 <span class="post-modify" v-if="$store.state.user.userId == post.userId || $store.state.user.isAdmin == true">Modifier</span>
                 <span class="post-comment">Voir les commentaires</span>
@@ -19,21 +25,26 @@
             </router-link>
         </div>
     </div>  
+</div>
 </template>
 
 <script>
 
 import post from "@/api/post";
-
+import NewPost from "@/components/NewPost"
 
 
 export default {
     name : 'Posts',
+    components: {
+    NewPost
+    },
     
     data() {
         return {
             
             posts : [],
+            post: [],
             visible: false,
             errorMessage : null,
             message: null,
@@ -54,7 +65,7 @@ export default {
 
                 this.posts = response.data
                 console.log(response.data)
-               
+                
                 this.message = "Voici tous les postes actualisés !!"
               
                 })
@@ -119,6 +130,16 @@ export default {
     padding: .5rem;
     color: black;
     font-size: 15px;
+}
+.image{
+    width: 100%;
+}
+.post-image{
+    width: 100%;
+    border: solid red 2px;
+}
+img{
+    object-fit: cover;
 }
 
 .post-btn{

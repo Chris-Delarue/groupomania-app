@@ -9,8 +9,8 @@
                     <span class="newPost-btn formClose" @click.prevent="visible= false">Fermer</span>
                     <form class="formPost" @submit.prevent="publishPost">
                         <div>
-                            <label for="titlePost" class="newPost-btn" >Titre :</label>
-                            <input type="text" name="titlePost"  id="titlePost" v-model="title">
+                            <label for="title" class="newPost-btn" >Titre :</label>
+                            <input type="text" name="title"  id="titlePost" v-model="title">
                         </div>
                         
                         <editor 
@@ -18,13 +18,14 @@
                             v-model="content"
                            
                                 :init="{
-                                    entity_encoding : 'raw',
-                                    height:500,
-                                    paste_as_text: true,
-                                    forced_root_block : '',
+                                    height: 500,
+                                    forced_root_block : false,
                                     force_br_newlines : true,
-                                    force_p_newlines : false,
-                                    language :'fr_FR',
+                                    force_p_newlines : false,  
+                                    paste_as_text: true,  
+                                    paste_data_images: true,
+                                    language: 'fr_FR',
+                                    entity_encoding : 'raw',
                     
 
                                     plugins: [
@@ -67,7 +68,7 @@
 
 <script>
 import Editor from'@tinymce/tinymce-vue';
-import post from '../api/post';
+import post from '@/api/post';
 
 
 

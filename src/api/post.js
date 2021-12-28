@@ -22,7 +22,7 @@ export default {
     newPost :data => {
         console.log(store.state.token);
         return httpClient.post("/post", data, {
-            hearders : {
+            headers : {
                 Authorization : `Bearer ${store.state.token}`,
                 'Content-Type':'multipart/form-data'
                 }
@@ -32,15 +32,16 @@ export default {
     modifyPost :(postId, data) =>{
         console.log(store.state.token);
         return httpClient.put("/post/" + postId, data, {
-            hearders : {
-                Authorization : `Bearer ${store.state.token}`
+            headers : {
+                Authorization : `Bearer ${store.state.token}`,
+                'Content-Type':'multipart/form-data'
                 }
         });
     },
     deletePost : postId => {
         console.log(store.state.token);
         return httpClient.delete("/post/" + postId,{
-            hearders : {
+            headers : {
                 Authorization : `Bearer ${store.state.token}`
                 }
         } );
@@ -48,7 +49,7 @@ export default {
     getComment :postId=> {
         console.log(store.state.token);
         return httpClient.get("/post/" + postId, {
-            hearders : {
+            headers : {
                 Authorization : `Bearer ${store.state.token}`
                 }
             
@@ -58,7 +59,7 @@ export default {
     newComment :  (postId, data) =>{
         console.log(store.state.token);
         return httpClient.post("/post/" + postId , data, {
-            hearders : {
+            headers : {
                 Authorization : `Bearer ${store.state.token}`
                 }
         });
@@ -67,7 +68,7 @@ export default {
     deleteComment : commentId => {
         console.log(store.state.token);
         return httpClient.delete("/post/comment/" + commentId, {
-            hearders : {
+            headers : {
                 Authorization : `Bearer ${store.state.token}`
                 }
         });

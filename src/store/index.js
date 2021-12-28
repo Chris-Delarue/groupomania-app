@@ -47,6 +47,7 @@ export default new Vuex.Store({
         SET_USER : (state, user) => state.user = user
 
         },
+      
 
     actions : {
         login({commit}, data) {
@@ -61,8 +62,6 @@ export default new Vuex.Store({
 
         setUser({commit}, user) {
             commit("SET_USER", user);
-        }
-
-
+        },
     },
 });
