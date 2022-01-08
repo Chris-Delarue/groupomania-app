@@ -1,24 +1,4 @@
-# groupomania-app
 
-## Project setup
-```
-npm install
-```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+![image](https://user-images.githubusercontent.com/73162047/148641152-5312d673-62d2-45dc-b47f-629241da9da7.png)
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
