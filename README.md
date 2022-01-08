@@ -1,5 +1,5 @@
 
-![image](https://user-images.githubusercontent.com/73162047/148641164-0efb8f51-592f-4ea9-acc3-b730763001bf.png)
+![image](https://user-images.githubusercontent.com/73162047/148641509-839cc222-8d6e-4e6d-b372-320e298b9ad0.png)
 
 PARCOURS DEVELOPPEUR WEB - PROJECT 7 :
 
