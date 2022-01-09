@@ -72,8 +72,9 @@
                     <button v-if="modify" class="btn" v-on:click.prevent="displayModale">Supprimer le post</button>
 
                     <div class="alert-error-message"  v-html="errorMessage"/>
-                    <div class="alert-message"  v-html="message">
-                    </div>
+                    <div
+                    class="alert-message"  v-html="message">
+                   </div>
                 </div>
             </form>
         </div> 
@@ -150,15 +151,15 @@ export default {
                     this.authorized = false
                 }
             })
-            .catch (error =>{
+            .catch (() =>{
                 this.errorMessage = "ooppss !!"
-                console.log(error)
+                
             })
             
         },
         onFileUpload(event) {
             this.file = event.target.files[0]
-            console.log(this.file)
+          
         },
 
         async modifyPost(){
@@ -181,14 +182,12 @@ export default {
                 console.log(this.file, this.post.title, this.contentModified)
                 post.modifyPost(`${postId}`,formData )
 
-                .then(response => {
-                   
-
-                    console.log(response.data);
+                .then(() => {
+                    
                     this.$router.push({ name: "Home"});
                 })
-                .catch(error => {
-                    console.log(error)
+                .catch(() => {
+                    
                     this.errorMessage = "ooppss vous n'avez pas l'autorisation de modifier ce post et/ou le post est trop long!!"
                 })
             } 
@@ -257,6 +256,7 @@ img{
     color: black;
     font-size: 20px;
 }
+
 .alert-message {
     background-color: rgba(29, 77, 112);
     height:auto;
@@ -271,9 +271,9 @@ img{
     width: auto;
     margin: auto ;
     color: black;
-    text-align: center;
+    white-space: normal;
+    
 }
-
 .modale > button {
     margin-top: 20px;
     padding: 6px;

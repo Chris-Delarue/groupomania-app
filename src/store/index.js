@@ -32,9 +32,7 @@ export default new Vuex.Store({
 
         SET_TOKEN : (state, token) =>  {
             httpClient.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-           console.log(httpClient.defaults.headers);
             state.token = token;
-            console.log(token);
         },
 
         LOGOUT : state => {
@@ -52,8 +50,6 @@ export default new Vuex.Store({
     actions : {
         login({commit}, data) {
             commit("SET_TOKEN", data.token);
-            console.log(data.token);
-            
         },
 
         logout({commit}) {

@@ -15,10 +15,12 @@
            <label for="password">Mot de passe</label>
            <input type="password" class="form-control" name="password" id="login-password" v-model="password" >
           </div>
+          
           <div>
-          <div class="alert-message" v-html="errorMessage"/>
+          <div class="alert-error-message" v-html="errorMessage"/>
           <div class="alert-message" v-html="message"/>
           </div>
+            
           <div class="row">
             <div class="col-12 col-sm-4">
               <button type="submit" class="btn btn-primary">Se connecter</button>
@@ -39,39 +41,37 @@ import auth from '@/api/auth'
 
 
 
+
 export default {
     name : 'LoginForm',
+    
 
     data(){
         return {
             email : "",
             password : "",
             errorMessage: null,
-            message: null
+            message: null,
         }
     },
   
     methods : {
       async login(e) {
-        e.preventDefaults
+        e.preventDefault()
         try {
           const response = await auth.login({
             email:    this.email,
             password: this.password,
-          
+            
           }
-          );
-          this.message="Merci de votre retour !!"
-          setTimeout(()=> {
-            this.message=""
-          },2000)
-
+          )
+          
           this.$store.dispatch("login", response.data)
           this.$store.dispatch("setUser", response.data)
           this.$router.push({name : "Home"}).catch(()=>{})
-
+          
         } catch (error) {
-          this.errorMessage = "Etes vous bien inscrit !!";
+          this.errorMessage = "Opps mauvais Identifiant !!";
           
       }  
     },
@@ -82,11 +82,18 @@ export default {
 <style scoped>
 
 .alert-message{
-  background-color: rgba(29, 77, 112);
   height:20px;
   width: 100%;
   margin: auto;
-  color: white;
+  color: black;
+  text-align: center;
+}
+.alert-error-message{
+  background-color: transition(.8)  rgba(29, 77, 112); 
+  height:20px;
+  width: 100%;
+  margin: auto;
+  color: Black;
   text-align: center;
 }
 .container {

@@ -64,13 +64,13 @@ export default {
                 .then(response => {
 
                 this.posts = response.data
-                console.log(response.data)
+                
                 
                 this.message = "Voici tous les postes actualisés !!"
               
                 })
-                .catch (error => {
-                    console.log(error)
+                .catch (()=> {
+                   
                     this.errorMessage = "Something went wrong !!"
             })
         }, 
