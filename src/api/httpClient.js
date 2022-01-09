@@ -1,15 +1,15 @@
 import axios from 'axios';
-import store from '../store/index';
+
+
 
 const httpClient = axios.create({
     baseURL: process.env.VUE_APP_BASE_URL,
-    timeout: 1000,
+    timeout: 3000,
     headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    Authorization: `${store.state.token}`,
- 
-    }
- })
+        Accept: 'applcation/json',
+        'Content-Type': 'application/json',
+        
+        }
+ });
 
  export default httpClient;

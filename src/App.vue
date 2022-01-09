@@ -3,37 +3,42 @@
     
     <app-nav>
     </app-nav>
+    <div class="container">
      
-  <div class="container">
      <router-view/>
-     </div>
     </div>
+  </div>
 
 </template>
 
 <script>
 import Nav from './components/Nav'
+
+
 export default{
  name : "App",
  components : {
 
    appNav : Nav
 
-   
  }
 }
 </script>
 
 <style>
 body{
-  background-color: #e1e1e1;
+  background: url(./assets/images/BKG_IMAGE.png) no-repeat center center fixed;
+  background-size: cover;
 }
+.container {
+  margin-bottom: 1rem;
+}
+
 .form-wrapper{
   border-radius: 7px;
+  
 }
-.form-wrapper label{
-  font-weight: bold;
-}
+
 .error-message li{
   list-style: none;
   width: 100%;
@@ -43,18 +48,13 @@ body{
   padding-left: 0;
   margin-bottom: 0;
 }
-.logo{
-    width:200px;
-    margin: 1rem auto;
-    height:200px;
-   
-  }
-  img{
-    width:200px;
-    height:200px;
-  }
 
 @media (max-width: 768px){
+
+  body {
+    background: url(./assets/images/BKG_IMAGE.png) no-repeat center center fixed;
+    background-size: cover;
+  }
   .form-wrapper .text-right{
     text-align: center !important;
   }

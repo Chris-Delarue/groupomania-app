@@ -1,68 +1,63 @@
 <template>
-  <div class="home">
-
-    <h1 class=" logo" >
+  <div class="home" > 
+      <div class="logo" >
         <img src="../assets/images/icon-above-font.png" alt="Logo Groupomania">
-          </h1>
-    <h2>Bienvenue sur votre réseau social !!</h2>
-    
+          </div>
+        <h2 class="homeText">Bienvenue sur votre réseau social !!</h2>
+        
+      
     <LoginForm v-if="!loggedIn"/>
-  
-    <Nav v-if="loggedIn"/>
-    <NewPost v-if="loggedIn"/>
+    
     <Posts v-if="loggedIn"/>
+   
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
 import LoginForm from '@/components/LoginForm.vue';
-import Nav from '@/components/Nav.vue';
+
 import Posts from '@/components/Posts.vue';
-import NewPost from '@/components/NewPost.vue';
 
 
 export default {
+ 
   name: 'Home',
-  component: {
-
+  components : { 
     LoginForm,
-    Nav,
     Posts,
-    NewPost
+   
+    },
+ 
+    
+ computed: {
 
-  },
-  data(){
-    return{
-      loggedIn:  true
-    };
-  },
-  created() {
-    this.checkLoggedInOk() 
-  },
-  methods : {
-    checkLoggedInOk() {
-      if(localStorage.user !== undefined) {
-        this.loggedIn = true;
-        console.log(('Vous êtes connecté !!'));
-      }
-      else if(localStorage.user == undefined) {
-        this.loggedIn =  false;
-        console.log('Vous n\'êtes pas connecté !!');
-
-      }
+    loggedIn() {
+   
+        return this.$store.getters.isLogged
+       
     }
-  }
+  },
 }
 </script>
 
 <style scoped>
-h1{
-  margin-top: 5rem;
+
+.homeText {
+  font-size : 30px;
+  text-align: center;
+  margin:2rem;
+}
+img{
+  width: 100%;
+  height:20%;
+  border-radius: 300px;
+}
+.logo{
+  width: 30%;
+  height:20%;
+  margin: 2.5rem auto;
+  border: solid 2px rgba(29, 77, 112);
+  border-radius: 300px;
 }
 
-h2{
-  text-align: center;
-  margin-top:5rem;
-}
 </style>

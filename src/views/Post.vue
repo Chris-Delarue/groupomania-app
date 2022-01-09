@@ -1,54 +1,61 @@
 <template>
     <div class="Post">
-        <LoginForm v-if="!loggedIn"/>
-        
-        <Posts v-if="loggedIn"/>
-        <Nav v-if="loggedIn"/>
-        <OnePost v-if="loggedIn"/>
-        <Comments v-if="loggedIn"/>
+      <div class="logo" >
+            <img src="../assets/images/icon-above-font.png" alt="Logo Groupomania">
+        </div>
+      <LoginForm v-if="!loggedIn"/>
+
+      <OnePost v-if="loggedIn"/>
+      <Comments v-if="loggedIn"/>
     </div>
 </template>
 
 <script>
 
 import LoginForm from '@/components/LoginForm.vue';
-import Nav from '@/components/Nav.vue';
+
 import OnePost from '@/components/OnePost.vue';
 import Comments from '@/components/Comments.vue';
-import Posts from '@/components/Posts.vue';
-
 
 
 export default{
    name :'Post',
 
-   component : {
-     LoginForm,
-     Nav,
-     Posts,
-     OnePost,
-     Comments
+   components : {
+      LoginForm,
+      OnePost,
+      Comments
+      
    },
-   data() {
-     return{
-        loggedIn: true,
-        authorized : true
-     }
-   },
-   methods : {
-     checkLoggedInOk() {
-       if(localStorage.user !== undefined) {
-         this.loggedIn = true;
-         console.log('Vous êtes connecté');
-       }
-       else if(localStorage.user == undefined) {
-         this.loggedIn = false;
-         console.log('Vous n\'êtes pas connecté !')
-       }
-     }
-   },
-   created() {
-     this.checkLoggedInOk()
-   }
+  
+    computed : {
+
+        loggedIn() { 
+          return this.$store.getters.isLogged
+            }, 
+    },
 }
 </script>
+
+<style scoped>
+
+.Post{
+   
+    width:80%;
+    margin:auto auto 1rem auto;
+}
+img{
+  width: 100%;
+  height:20%;
+  border-radius: 300px;
+}
+.logo{
+  width: 30%;
+  height:20%;
+  margin: 2.5rem auto;
+  border: solid 2px rgba(29, 77, 112);
+  border-radius: 300px;
+}
+</style>
+
+

@@ -1,8 +1,6 @@
 <template>
     <div class="row">
-        <h1 class=" logo" >
-        <img src="../assets/images/icon-above-font.png" alt="Logo Groupomania">
-          </h1>
+        
         <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 mt-5 pt-3 pb-3 bg-white from-wrapper">
               
             <div class="container">
@@ -14,42 +12,44 @@
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label for="firstname">Prénom</label>
-                                <input type="text" class="form-control" name="firstname" id="signup-firstname" v-model="firstname" />
+                                <input type="text" class="form-control" name="firstname" id="signup-firstname" required v-model="firstname" />
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label  for="surname">Nom</label>
-                                <input type="text" class="form-control" name="surname" id="signup-surname" v-model="surname"/>
+                                <input type="text" class="form-control" name="surname" id="signup-surname" required  v-model="surname"/>
                             </div>
                         </div>
 
                         <div class="col-12">
                              <div class="form-group">
                                 <label for="email">Email </label>
-                                <input type="text" class="form-control" name="email" id="signup-email" v-model="email"/>
+                                <input type="text" class="form-control" name="email" id="signup-email" required v-model="email"/>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6 ">
                             <div class="form-group">
                                 <label for="password">Mot de passe</label>
-                                <input type="password" class="form-control" name="password" id="signup-password" v-model="password"/>
+                                <input type="password" class="form-control" name="password" id="signup-password" required v-model="password"/>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label for="passwordConfirm">Confirmez le mot de passe</label>
                                 <input type="password" class="form-control" name="passwordConfirm" id="signup-passwordConfirm"
-                                v-model="passwordConfirm"/>
+                                required v-model="passwordConfirm"/>
                             </div>
                         </div>
-                        <div class="error-message">{{message}}</div>
+                        <div>
+                        <div class="alert-error-message" v-html="errorMessage"/>
+                        <div class="alert-message" v-html="message"/></div>
                         <div class="row">
                             <div class="col-12 col-sm-4">
-                                <button type="submit" class="btn btn-primary">S'incrire</button>
+                                <button type="submit" class="btn btn-primary">S'inscrire</button>
                             </div>
-                            <div class="col-12 col-sm-8 text-right">
-                                <a href="/login">Vous avez déja un compte</a>
+                            <div class="col-12 col-sm-8 text-right text-signup">
+                                <router-link to="/login">Vous avez déja un compte</router-link>
                             </div>
                         </div>
                     </div>
@@ -61,74 +61,85 @@
 
 <script>
 
-import axios from 'axios'
+import auth from "@/api/auth"
 
 export default {
     name: 'SignupForm',
 
     data() {
         return {
-            message : "",
-            
+            firstname: "",
+            surname: "",
+            email: "",
+            password: "",
+            passwordConfirm: "",
+            errorMessage : null,
+            message: null,
+            visible: true,
         };
     },
 
     methods: {
 
-        signup() {
-            
-            const firstname = document.getElementById("signup-firstname").value;
-            const surname = document.getElementById("signup-surname").value;
-            const email = document.getElementById("signup-email").value;
-            const password = document.getElementById("signup-password").value;
-            const passwordConfirm = document.getElementById("signup-passwordConfirm").value;
-
-            if(password === passwordConfirm) {
-                axios.post(`${this.$apiUrl}/auth/signup`,
-                {
-                    firstname,
-                    surname,
-                    email,
-                    password,
-                    passwordConfirm
-                },
-                {
-                    headers : {
-
-                        'Content-Type' : 'application/json'
-                    }
-                }
-                )
-                .then(response => {
-                    if(response.status === 201){
-                        location.href = '/login'
-                        this.message = "Bienvenue sur votre réseau."
-                    }
+         async signup(e) {
+            e.preventDefaults
+            try{
+                const response = await auth.signup({
+                    firstname : this.firstname,
+                    surname : this.surname,
+                    email: this.email,
+                    password: this.password,
+                    passwordConfirm : this.passwordConfirm,
                 })
-                .catch((error) => {
-                    if (error.response.status === 401) {
-                        this.message= "Email non disponible"
-                    }
-                });
+                
+                 this.message = "bienvenue sur votre réseau !!",
+                setTimeout(() => {
+                    this.message = "" 
+                    },1000)
+                
+                
+                this.$store.dispatch("login", response.data);
+                this.$router.push({name:"Login"}) 
+                    
+            } catch (error) {
+                this.errorMessage ="oopps !!" ;    
             }
-            else if(password != passwordConfirm) {
-               this.message = " Vérifier votre émail ou/et votre mot de passe"
-           }
-        }
-    }
-}
+        },
+    },
+};
 </script>
 
 <style scoped>
-
- .error-message{
-        background-color: rgba(233, 77, 103, 0.301);
-        height:40px;
+ .alert-message{
+        /* background-color: rgba(29, 77, 112); */
+        text-align: center;   
+        height:20px;
         width:90%;
-        margin: auto auto 1rem auto;
+        margin: auto ;
+        color: black;
+    }
+.alert-error-message {
+        /* background-color: rgba(29, 77, 112); */
+        text-align: center;   
+        height:20px;
+        width:90%;
+        margin: auto ;
         color: black;
 }
-
-
-
+.btn-primary {
+    margin-top:1rem;
+}
+.text-signup {
+    margin-top: 1rem;
+}
+.text-signup > a {
+    
+    text-decoration: none;
+}
+.fade-enter-active, .fade-leave-active {
+    transition : opacity .8s;
+}
+.fade-enter, .fade-leave-to {
+    opacity : 0;
+}
 </style>

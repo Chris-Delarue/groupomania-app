@@ -1,57 +1,64 @@
 <template>
-    <div class="UserProfil">
-        <div class="infoProfil">
-            <h1 class="text-Uprofil">Bonjour {{this.$user.firstname}},</h1>
-        </div>
-        <div class="deleteProfil">
-            <a  class="textDelete" @click.prevent="deleteAccount">Supprimer votre compte</a>
-        </div>
+    <div class="modale">
+        <ModalDeleteAccount :revele="revele" :displayModale="displayModale"/>
+        <button class="userProfil_btn" v-on:click="displayModale"> Supprimer mon compte </button>
+
     </div>
 </template>
 
+
 <script>
 
-import axios from 'axios' ;
 
+import ModalDeleteAccount from './ModalDeleteAccount';
 
 export default {
-    mane: 'UserProfil',
+    name: 'UserProfil',
+    components :{
+        ModalDeleteAccount
+    },
+ 
+    data() {
+        return {
+            message: null,
+            errorMessage: null,
+            revele: false
+            
+        }
+    },
+   
 
     methods : {
-        deleteAccount() {
-
-            const userId = this.$user.userId;
-
-            axios.delete(`${this.apiUrl}/auth/${userId}`,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization' : `Bearer ${this.$token}`
-                }
-            })
-            .then(localStorage.removeItem('user'))
-            .then(location.href = "/");
-
-        }
+        
+            displayModale() {
+                this.revele = !this.revele
+                
+            }
     }
-    
 }
+
 </script>
 
 <style scoped>
 
-.UserProfil{
-    margin-top:2rem;
+.modale {
+    display: flex;
+    justify-content: center;
+    margin-top:3rem;
+   
 }
-.infoProfil{
-    margin: auto;
-}
-a {
+
+.userProfil_btn{
+    width:40%;
+    color:  white;
+    font-weight:700;
+    border: solid 1px red;
+    border-radius: 30px;
+    padding:.5rem;
     cursor: pointer;
+    background-color: rgba(29, 77, 112);
+    font-size:20px;
 }
-.deleteProfil{
-    color: red;
-    margin-bottom: 2rem;
-}
+
 
 </style>

@@ -1,24 +1,29 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
-import store from './store';
+import store from './store/index';
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import httpClient from './api/httpClient';
 
 
+Vue.config.productionTip = false;
 
-Vue.config.productionTip = false
+const moment = require('moment');
+require('moment/locale/fr');
 
-Vue.prototype.$apiUrl = "http://localhost:3000/api";
-
-if(localStorage.user != undefined) {
-  Vue.prototype.$token = JSON.parse(localStorage.user).token;
-
-  Vue.prototype.$user = JSON.parse(localStorage.user);
-
+const token = `Bearer ${store.state.token}`
+if(token) {
+  httpClient.defaults.headers.common['Authorization'] = token;
 }
 
+Vue.use(require('vue-moment'), {
+  moment
+});
+
 new Vue({
-  router, 
+  router,
   store,
-  
+
   render: h => h(App)
 }).$mount('#app');

@@ -1,16 +1,16 @@
-import httpClient from '../httpClient';
+import httpClient from './httpClient';
 
 export default {
 
     signup(data) {
-        return httpClient().post("/auth/signup", data);
+        return httpClient.post("/auth/signup", data);
     },
     login(data) {
-        return httpClient().post("/auth/login", data);
+        return httpClient.post("/auth/login", data);
     },
     deleteAccount(userId) {
-        return httpClient().delete("/", + userId);
+        return httpClient.delete("/", + userId);
     }
-}
+};
 
 
