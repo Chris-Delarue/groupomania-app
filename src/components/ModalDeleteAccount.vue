@@ -16,8 +16,7 @@
             </div>
         </div>    
         <div>
-            <div class="alert-message" v-html="errorMessage"/>
-            <div class="alert-message" v-html="message"/>
+            <div class="alert-error-message" v-html="errorMessage"/>
         </div>   
     </div>
 </template>
@@ -36,7 +35,6 @@ export default {
 
     data() {
         return {
-            message:"",
             errorMessage: ""
         }
     },
@@ -53,14 +51,14 @@ export default {
 
                 httpClient.defaults.headers.common['Authorization'] = response.data.token;
 
-                console.log(response)
-                this.message = "Nous avons supprimé votre compte !!" ;   
+               
+                
                 this.$store.dispatch('logout')
                 this.$router.push({name:"Login"});
                 
             })
-            .catch (error => {
-                console.log(error)
+            .catch (()=> {
+                
                 this.errorMessage = "Votre compte n'a pas été supprimé !!"
             })
         },
@@ -138,6 +136,14 @@ button {
     
 }
 .alert-message{
+      background-color: rgba(29, 77, 112);
+      height:auto;
+      width: auto;
+      margin:  auto;
+      color: white;
+      text-align: center;
+}
+.alert-error-message{
       background-color: rgba(29, 77, 112);
       height:auto;
       width: auto;

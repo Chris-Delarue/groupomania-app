@@ -8,12 +8,8 @@
       
     <LoginForm v-if="!loggedIn"/>
     
-   
-    
     <Posts v-if="loggedIn"/>
    
-  
-
   </div>
 </template>
 

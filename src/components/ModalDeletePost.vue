@@ -28,7 +28,7 @@
 
 import post from '@/api/post';
 import store from "@/store/index"
-//import httpClient from '@/api/httpClient'
+
 
 export default {
 
@@ -72,9 +72,7 @@ export default {
                 this.$router.push({name : "Home"});
                    
              })
-
-            .catch (error => {
-                console.log(error)
+            .catch (() => {
 
                 this.errorMessage = "Votre post n'a pas été supprimé  et/ou vous n'avez pas l'autorisation !!"
                 setTimeout(() => {

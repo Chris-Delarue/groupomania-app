@@ -59,7 +59,7 @@ export default {
                 const userId = this.$store.state.user.userId
                 const content = document.getElementById('new-comment').value;
                     
-                console.log(postId)
+            
 
                 post.newComment(`${postId}/comment/`,{
 
@@ -68,9 +68,9 @@ export default {
                     userId
                     })
 
-                .then(response => {
+                .then(() => {
 
-                    console.log(response.data)
+                    
 
                     this.message = "Votre commentaire a été publié !!" 
                         
@@ -80,9 +80,9 @@ export default {
                     this.$router.push({name : "Home"})
 
                 })
-                .catch (error=> {
+                .catch (()=> {
                     this.errorMessage = "oppss!!";
-                    console.log(error)
+                    
                 })      
             },
             async getAllComment() {
@@ -94,11 +94,11 @@ export default {
             .then(response => {
 
                 this.comments = response.data
-                console.log(response.data)
+                
             })
-            .catch (error => {
+            .catch (() => {
                 this.errorMessage = "Something went wrong !!"
-                console.log(error)
+                
             })
         },
                
@@ -114,15 +114,14 @@ export default {
                 setTimeout(() => {
                      this.message = "" 
                 },2000)
-               
-                //this.$router.go()    
+                
             })
-            .catch (error => {
+            .catch (()=> {
                 this.errorMessage = "Commentaire non supprimé !!"
                 setTimeout(() => {
                      this.errorMessage = "" 
                 },2000)
-                console.log(error)
+                
              })
         },
     },

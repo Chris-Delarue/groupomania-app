@@ -70,9 +70,6 @@
 import Editor from'@tinymce/tinymce-vue';
 import post from '@/api/post';
 
-
-
-
 export default {
         name : 'NewPost',
 
@@ -87,8 +84,7 @@ export default {
                 content: "",
                 file: "",
                 errorMessage: null,
-                message: null,
-                
+                message: null 
             }
         },
         
@@ -118,22 +114,18 @@ export default {
                 console.log(formData)
                 post.newPost(formData)
 
-                .then(response => {
+                .then(()=> {
                     
-                console.log(response.data)
-
                 this.message = "Votre post a été publié !!";  
-                this.$router.go()/*push({name: "Home"}).catch(() =>{})*/
+                this.$router.go()
                 })
                     
-                .catch (error =>{
+                .catch (() =>{
                     this.errorMessage = "oppss une erreur est survenue !!";
-                    console.log(error)
+                    
                 }) 
             }
         },
-        
-
     }
 }
 </script>  
@@ -191,7 +183,6 @@ button  {
       margin: auto ;
       color: white;
       text-align: center;
-      padding:.7rem;
 }
 .alert-error-message{
       background-color: rgba(236, 14, 14, 0.301);

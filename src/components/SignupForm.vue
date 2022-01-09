@@ -42,7 +42,7 @@
                             </div>
                         </div>
                         <div>
-                        <div class="alert-message" v-html="errorMessage"/>
+                        <div class="alert-error-message" v-html="errorMessage"/>
                         <div class="alert-message" v-html="message"/></div>
                         <div class="row">
                             <div class="col-12 col-sm-4">
@@ -75,6 +75,7 @@ export default {
             passwordConfirm: "",
             errorMessage : null,
             message: null,
+            visible: true,
         };
     },
 
@@ -89,20 +90,19 @@ export default {
                     email: this.email,
                     password: this.password,
                     passwordConfirm : this.passwordConfirm,
-                },
-
+                })
+                
                  this.message = "bienvenue sur votre réseau !!",
                 setTimeout(() => {
                     this.message = "" 
                     },1000)
-                )
+                
                 
                 this.$store.dispatch("login", response.data);
                 this.$router.push({name:"Login"}) 
-                
+                    
             } catch (error) {
-                this.errorMessage ="oopps !!" ;
-                
+                this.errorMessage ="oopps !!" ;    
             }
         },
     },
@@ -112,13 +112,21 @@ export default {
 <style scoped>
 
  .alert-message{
-        background-color: rgba(98, 245, 130, 0.301);
+        /* background-color: rgba(29, 77, 112); */
         text-align: center;   
         height:20px;
         width:90%;
         margin: auto ;
         color: black;
     }
+.alert-error-message {
+        /* background-color: rgba(29, 77, 112); */
+        text-align: center;   
+        height:20px;
+        width:90%;
+        margin: auto ;
+        color: black;
+}
 .btn-primary {
     margin-top:1rem;
 }
@@ -130,6 +138,11 @@ export default {
     text-decoration: none;
 }
 
-
+.fade-enter-active, .fade-leave-active {
+    transition : opacity .8s;
+}
+.fade-enter, .fade-leave-to {
+    opacity : 0;
+}
 
 </style>
