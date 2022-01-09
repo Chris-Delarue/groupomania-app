@@ -51,8 +51,6 @@ export default {
 
                 httpClient.defaults.headers.common['Authorization'] = response.data.token;
 
-               
-                
                 this.$store.dispatch('logout')
                 this.$router.push({name:"Login"});
                 

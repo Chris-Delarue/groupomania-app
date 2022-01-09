@@ -17,14 +17,7 @@
             </button>
         
             <div class="collapse navbar-collapse"   id="navbarSupportedContent">
-                <ul v-if="isLoggedIn" class="navbar-nav mr-auto text-right">
-                    <li class="nav-item" >
-                        <router-link  to="/profil" class="nav-link">Mon compte</router-link></li>
-                    <li class="nav-item" >
-                        <a class="nav-link" @click.prevent="logout">Se deconnecter</a>
-                    </li>
-                </ul>
-                <ul v-if="!isLoggedIn"  class="navbar-nav mr-auto text-right">
+                <ul v-if="isLoggedIn"  class="navbar-nav mr-auto text-right">
                     <li class="nav-item">
                          <router-link to="/" class="nav-link" id=" textRouterIn">fil d'actualité</router-link>
                     </li>
@@ -104,9 +97,6 @@ export default {
     margin:0;
 }
 
-.nav-link{
-    cursor: pointer;
-}
 .nav-textLogout {
     display:flex;
     color: rgba(29, 77, 112);
