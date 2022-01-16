@@ -40,7 +40,7 @@ __________________________________________
 
 		 npm install
 	 
-	* puis une fois l'installation terminée :
+* puis une fois l'installation terminée :
 	
 		npm run serve
 		
