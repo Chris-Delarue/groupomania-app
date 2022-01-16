@@ -35,6 +35,7 @@ __________________________________________
   * Node.js (npm install),
   * Mysql,
   * Git,
+  * Vue cli 2.6.11
 
 * Ouvrez le terminal et faites : 
 
