@@ -27,12 +27,14 @@ __________________________________________
 INSTRUCTIONS
 __________________________________________
 
-
+* Cloner ce dépost Github git clone
+	
 * Il vous faudra installé sur votre machine :
   * Node.js (npm install),
   * Mysql,
-  * Git
+  * Git,
   * Vue cli 2.6.11
+
 	
 
 
