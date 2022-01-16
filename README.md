@@ -29,10 +29,10 @@ __________________________________________
 
 
 * Il vous faudra installé sur votre machine :
-  ¤ Node.js (npm install),
-  ¤ Mysql,
-  ¤ Git
-  ¤ Vue cli 2.6.11
+  * Node.js (npm install),
+  * Mysql,
+  * Git
+  * Vue cli 2.6.11
 	
 
 
