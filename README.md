@@ -3,7 +3,7 @@
 
 
 
-PARCOURS DEVELOPPEUR WEB - PROJECT 7 :
+PARCOURS DEVELOPPEUR WEB - PROJECT 7  FRONT-END:
 
 _________________________________________
 
