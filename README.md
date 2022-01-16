@@ -32,7 +32,7 @@ __________________________________________
   ¤ Node.js (npm install),
   ¤ Mysql,
   ¤ Git
-  ¤ Vue cli
+  ¤ Vue cli 14
 
 
 
