@@ -35,7 +35,18 @@ __________________________________________
   * Node.js (npm install),
   * Mysql,
   * Git,
-  * Vue cli 2.6.11
+
+* Ouvrez le terminal et faites : 
+	* npm install
+	* puis une fois l'installation terminée
+		* npm run serve
+		
+Vous aurez un message similaire à celui-ci :
+
+	App running at :
+		- Local :	http//localhost:8080/
+		-Network :	http://192.168.1.43:8080/
+	
 
 	
 
