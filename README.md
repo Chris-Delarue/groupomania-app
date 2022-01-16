@@ -20,7 +20,7 @@ Réaliser un MVP ( Produit Minimal Viable ) pour la création d’un réseau soc
 
 Les Spécifications :
 
-Groupomania_Specs_FR_DWJ_VF.pdf
+https://github.com/Chris-Delarue/groupomania-app/blob/b1f8e4ddde5b2601116c4e059020c04a1b3318e0/Groupomania_Specs_FR_DWJ_VF.pdf
 
 
 
