@@ -37,9 +37,9 @@ __________________________________________
   * Git,
 
 * Ouvrez le terminal et faites : 
-	* npm install
+	 npm install
 	* puis une fois l'installation terminée
-		* npm run serve
+		 npm run serve
 		
 Vous aurez un message similaire à celui-ci :
 
