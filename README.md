@@ -27,7 +27,7 @@ __________________________________________
 INSTRUCTIONS
 __________________________________________
 
-* Cloner ce dépost Github git clone
+* Cloner ce repository Github git clone
 	* https://github.com/Chris-Delarue/groupomania-app.git
 
 	
