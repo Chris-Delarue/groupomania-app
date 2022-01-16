@@ -28,6 +28,7 @@ INSTRUCTIONS
 __________________________________________
 
 * Cloner ce dépost Github git clone
+	https://github.com/Chris-Delarue/groupomania-app.git
 	
 * Il vous faudra installé sur votre machine :
   * Node.js (npm install),
