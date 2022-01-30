@@ -27,8 +27,7 @@ export default{
 
 <style>
 body{
-  background: url(./assets/images/BKG_IMAGE.png) no-repeat center center fixed;
-  background-size: cover;
+  background-color: rgb(103, 90, 116) 
 }
 .container {
   margin-bottom: 1rem;
