@@ -27,7 +27,7 @@ export default{
 
 <style>
 body{
-  background-color: rgb(103, 90, 116) 
+  background: rgb(35, 5, 65) 
 }
 .container {
   margin-bottom: 1rem;
@@ -51,8 +51,7 @@ body{
 @media (max-width: 768px){
 
   body {
-    background: url(./assets/images/BKG_IMAGE.png) no-repeat center center fixed;
-    background-size: cover;
+    background: rgb(35, 5, 65) 
   }
   .form-wrapper .text-right{
     text-align: center !important;
