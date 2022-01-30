@@ -27,7 +27,7 @@ export default{
 
 <style>
 body{
-  background: rgb(35, 5, 65) 
+  background-color: white
 }
 .container {
   margin-bottom: 1rem;
@@ -51,7 +51,7 @@ body{
 @media (max-width: 768px){
 
   body {
-    background: rgb(35, 5, 65) 
+    background-color: white
   }
   .form-wrapper .text-right{
     text-align: center !important;
