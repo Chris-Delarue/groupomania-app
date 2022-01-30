@@ -1,7 +1,8 @@
 <template>
     <div  class="newComment">
         <form @submit.prevent="publishComment" class="form">
-            <label for="new-comment" class="header-new-comment">Commenter le post :</label>
+            <label for="new-comment" 
+            class="header-new-comment">Commenter le post :</label>
             <textarea name="newComment" id="new-comment" placeholder="Rédiger votre commentaire..." required></textarea>
             <button type="submit" id="newComment-btn">Publier</button>
         </form>
@@ -59,8 +60,6 @@ export default {
                 const userId = this.$store.state.user.userId
                 const content = document.getElementById('new-comment').value;
                     
-            
-
                 post.newComment(`${postId}/comment/`,{
 
                     postId,
