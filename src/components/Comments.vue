@@ -137,7 +137,8 @@ export default {
     margin: 1rem auto;
 }
 .form{
-    border: solid 1px rgba(29, 77, 112)
+    border: solid 1px rgba(29, 77, 112);
+    border-radius: 20px;
 }
 label {
     text-align : left !important;
@@ -149,6 +150,7 @@ textarea {
     padding: 10px;
     resize: none;
     overflow-y: scroll;
+    border-radius:20px;
 }
 button {
     margin-top: 20px;
@@ -176,6 +178,7 @@ button {
 textarea {
     width:100%;
     border :solid 2px  rgba(29, 77, 112);
+    border-radius:20px;
 }
 input {
     margin-left: 1rem;
@@ -218,7 +221,7 @@ input {
     border :solid 2px rgba(29, 77, 112);
     width:auto;
     height: auto;
-   
+   border-radius:20px;
 }
 .comment{
      background-color: #f5f1eb ;
@@ -226,6 +229,7 @@ input {
     height: auto;
     margin :2rem;
     border: solid 1px rgba(29, 77, 112);
+    border-radius: 20px;
 }
 .text-comment {
     padding: 0 0 .5rem .5rem;

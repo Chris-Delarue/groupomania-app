@@ -85,7 +85,8 @@ export default {
     width:80%;
     border: solid 3px rgb(29, 77, 112);
     margin:auto auto 1rem auto;
-   
+    border-radius: 20px;
+    box-shadow: 5px rgb(29, 77, 112);
 }
 .post{
     border: solid 1px rgba(29, 77, 112);
@@ -94,6 +95,7 @@ export default {
     margin :2rem;
     padding: .5rem;
     background-color: #f5f1eb;
+    border-radius: 20px;
 }
 .alert-message{
     background-color: rgb(29, 77, 112);
@@ -104,6 +106,7 @@ export default {
     text-align: center;
     font-size: 20px;
     font-weight:600;
+    border-radius:10px;
 }
 .router-link{
     text-decoration: none;
@@ -113,6 +116,7 @@ export default {
     height: auto;
     padding:.5rem;
     color: black;
+    border-radius: 20px;
 }  
 .post-title  {
     margin: 0;
@@ -120,6 +124,7 @@ export default {
     color: rgb(29, 77, 112);
     font-size: 20px;
     text-align: left;
+    border-radius:20px;
 
 }
 .post-content  {
@@ -138,6 +143,7 @@ export default {
 .post-image{
     width: 100%;
     border: solid red 2px;
+    border-radius: 20px;
 }
 img{
     object-fit: cover;

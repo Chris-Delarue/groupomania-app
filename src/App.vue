@@ -27,7 +27,13 @@ export default{
 
 <style>
 body{
-  background-color: white
+  background-image: url("https://www.lenouveleconomiste.fr/wp-content/uploads/2018/03/INTRANET.jpg");
+  background-repeat: no-repeat;
+  background-size:100%;
+  background-position: auto;
+  
+
+  
 }
 .container {
   margin-bottom: 1rem;
@@ -37,7 +43,6 @@ body{
   border-radius: 7px;
   
 }
-
 .error-message li{
   list-style: none;
   width: 100%;
@@ -51,22 +56,15 @@ body{
 @media (max-width: 768px){
 
   body {
-    background-color: white
+    background-image: url("https://www.lenouveleconomiste.fr/wp-content/uploads/2018/03/INTRANET.jpg");
+    background-repeat: no-repeat;
+    background-size:100%;
+    background-position: 5% 12%;
   }
   .form-wrapper .text-right{
     text-align: center !important;
   }
-  .logo{
-    width:200px;
-    margin: 1rem auto;
-    height:200px;
-   
-  }
-  img{
-    width:200px;
-    height:200px;
-  }
-
+  
   .form-wrapper .btn-primary{
     display: block;
     margin: 0 auto;

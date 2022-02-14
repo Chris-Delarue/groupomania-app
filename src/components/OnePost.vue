@@ -213,6 +213,7 @@ export default {
     margin: 0 auto 1rem auto;
     width: auto;
     height:auto;
+    border-radius: 20px;
 }
 .post-wrapper {
     background-color: #f5f1eb;
@@ -234,6 +235,7 @@ export default {
 .post-image{
     width: 100%;
     border: solid red 2px;
+    border-radius:20px;
 }
 img{
     object-fit: cover;
